@@ -1,14 +1,17 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { Ionicons } from "react-native-vector-icons";
+import { View, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
+import { Icon } from "react-native-vector-icons/Ionicons";
 import LoginForm from "../containers/LoginForm";
 
-class LoginView extends Component {
+export default class LoginView extends Component {
   render() {
     return (
       <View style={{ flex: 1, flexDirection: "column" }}>
         <View style={styles.banner}>
-          <TouchableOpacity style={{ flex: 1 }} onPress={() => navigate("App")}>
+          <TouchableOpacity
+            style={{ flex: 1 }}
+            onPress={() => this.props.navigation.navigate("Month")}
+          >
             <View
               style={{
                 height: 50,
@@ -16,11 +19,7 @@ class LoginView extends Component {
                 justifyContent: "center"
               }}
             >
-              <Ionicons
-                name="md-arrow-round-back"
-                size={30}
-                style={{ color: "white" }}
-              />
+              <Icon name="md-arrow-back" size={30} style={{ color: "white" }} />
             </View>
           </TouchableOpacity>
           <View style={{ flex: 5, alignItems: "center" }}>
@@ -29,12 +28,23 @@ class LoginView extends Component {
         </View>
         <View style={{ flex: 8, backgroundColor: "#2a2a2a" }}>
           <LoginForm />
+          <View style={{ paddingHorizontal: 10, flexDirection: "column" }}>
+            <Text
+              style={{ color: "white", textAlign: "center", marginBottom: 10 }}
+            >
+              LUB
+            </Text>
+            <Button
+              title="Zarejestruj się"
+              color="#ff8833"
+              onPress={() => this.props.navigation.navigate("Register")}
+            />
+          </View>
         </View>
       </View>
     );
   }
 }
-export default LoginView;
 
 const styles = StyleSheet.create({
   banner: {
@@ -48,7 +58,7 @@ const styles = StyleSheet.create({
   header: {
     color: "white",
     fontSize: 20,
-    paddingRight: 55, 
+    paddingRight: 55,
     fontFamily: "avenir-heavy"
   }
 });
