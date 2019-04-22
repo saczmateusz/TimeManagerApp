@@ -8,7 +8,7 @@ import store from "./store";
 
 import LoginForm from "./containers/LoginForm";
 import RegisterForm from "./containers/RegisterForm";
-import MonthView from "./views/MonthView";
+import MonthCalendar from "./components/MonthCalendar";
 
 export default class App extends Component{
   render() {
@@ -65,11 +65,11 @@ class LoginScreen extends Component {
 class MonthScreen extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.container}>
-          <MonthView />
+      <View style={{ flex: 1, flexDirection: "column", backgroundColor: "#2a2a2a" }}>
+        <View style={{ paddingTop: 30,flex: 5 }}>
+          <MonthCalendar />
         </View>
-        <View style={styles.container}>
+        <View style={{ flex: 2 }}>
           <Button
             title="wróc do logowania"
             onPress={() => this.props.navigation.navigate("Login")}
