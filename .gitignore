@@ -58,3 +58,4 @@ buck-out/
 
 package-lock.json
 .vscode
+*.log

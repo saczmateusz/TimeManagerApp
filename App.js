@@ -1,20 +1,21 @@
-import React, {Component} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, Button} from 'react-native';
+import React, { Component } from "react";
+import { StyleSheet, Text, View, TouchableOpacity, Button } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import './config/axios';
+import "./config/axios";
 import { Provider } from "react-redux";
 import { createSwitchNavigator, createAppContainer } from "react-navigation";
 import store from "./store";
 
 import LoginForm from "./containers/LoginForm";
+import LoginView from "./views/LoginView";
 import RegisterForm from "./containers/RegisterForm";
 import MonthCalendar from "./components/MonthCalendar";
 
-export default class App extends Component{
+export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-          <AppContainer />
+        <AppContainer />
       </Provider>
     );
   }
@@ -35,11 +36,7 @@ class LoginScreen extends Component {
                 justifyContent: "center"
               }}
             >
-              <Icon
-                name="md-arrow-back"
-                size={30}
-                style={{ color: "white" }}
-              />
+              <Icon name="md-arrow-back" size={30} style={{ color: "white" }} />
             </View>
           </TouchableOpacity>
           <View style={{ flex: 5, alignItems: "center" }}>
@@ -49,7 +46,11 @@ class LoginScreen extends Component {
         <View style={{ flex: 8, backgroundColor: "#2a2a2a" }}>
           <LoginForm />
           <View style={{ paddingHorizontal: 10, flexDirection: "column" }}>
-            <Text style={{ color: "white", textAlign: "center", marginBottom: 10 }}>LUB</Text>
+            <Text
+              style={{ color: "white", textAlign: "center", marginBottom: 10 }}
+            >
+              LUB
+            </Text>
             <Button
               title="Zarejestruj się"
               color="#ff8833"
@@ -65,16 +66,10 @@ class LoginScreen extends Component {
 class MonthScreen extends Component {
   render() {
     return (
-      <View style={{ flex: 1, flexDirection: "column", backgroundColor: "#2a2a2a" }}>
-        <View style={{ paddingTop: 30,flex: 5 }}>
-          <MonthCalendar />
-        </View>
-        <View style={{ flex: 2 }}>
-          <Button
-            title="wróc do logowania"
-            onPress={() => this.props.navigation.navigate("Login")}
-          />
-        </View>
+      <View
+        style={{ flex: 1, flexDirection: "column", backgroundColor: "#2a2a2a" }}
+      >
+        <MonthCalendar navigation={this.props.navigation} />
       </View>
     );
   }
@@ -101,11 +96,7 @@ class RegisterScreen extends Component {
                 justifyContent: "center"
               }}
             >
-              <Icon
-                name="md-arrow-back"
-                size={30}
-                style={{ color: "white" }}
-              />
+              <Icon name="md-arrow-back" size={30} style={{ color: "white" }} />
             </View>
           </TouchableOpacity>
           <View style={{ flex: 5, alignItems: "center" }}>
@@ -113,7 +104,7 @@ class RegisterScreen extends Component {
           </View>
         </View>
         <View style={{ flex: 8, backgroundColor: "#2a2a2a" }}>
-          <RegisterForm navigation={this.props.navigation}/>
+          <RegisterForm navigation={this.props.navigation} />
         </View>
       </View>
     );
