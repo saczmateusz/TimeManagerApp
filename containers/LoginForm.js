@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { connect } from 'react-redux';
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { connect } from "react-redux";
 import axios from "axios";
+import { setUser } from "../reducers/actions/user";
+import { setToken } from "../reducers/actions/token";
 
 class LoginForm extends Component {
   state = {
@@ -19,9 +21,11 @@ class LoginForm extends Component {
         password: this.state.passwd
       })
       .then(response => {
-        //response.data.token
-        //response.data.user
-        this.setState({ error: null, loading: false })
+        this.props.setUser(response.data.user);
+        this.props.setToken(response.data.token);
+        this.setState({ error: null, loading: false });
+
+        this.props.navigation.navigate("Month");
       })
       .catch(error => {
         this.setState({ error, loading: false });
@@ -51,8 +55,14 @@ class LoginForm extends Component {
           secureTextEntry
           style={styles.form}
         />
-        
-        <View style={{ paddingHorizontal: 10, paddingTop: 20, flexDirection: "column" }}>
+
+        <View
+          style={{
+            paddingHorizontal: 10,
+            paddingTop: 20,
+            flexDirection: "column"
+          }}
+        >
           <Button
             color="#ff8833"
             title={this.state.loading ? "Wysyłanie..." : "Zaloguj"}
@@ -63,6 +73,14 @@ class LoginForm extends Component {
         <View style={{ alignItems: "center", paddingHorizontal: 10 }}>
           <Text style={{ color: "white" }}>
             {this.state.error ? "Logowanie nie powiodło się" : ""}
+          </Text>
+
+          <Text style={{ color: "white" }}>
+            {JSON.stringify(this.props.user)}
+          </Text>
+
+          <Text style={{ color: "white" }}>
+            {JSON.stringify(this.props.token)}
           </Text>
         </View>
       </View>
@@ -89,5 +107,17 @@ const styles = StyleSheet.create({
   }
 });
 
-export default LoginForm;
+const mapStateToProps = state => ({
+  user: state.user,
+  token: state.token
+});
 
+const mapActionsToProps = {
+  setUser,
+  setToken
+};
+
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(LoginForm);
