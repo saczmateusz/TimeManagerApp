@@ -8,7 +8,9 @@ import store from "./store";
 
 //import LoginForm from "./containers/LoginForm";
 import LoginView from "./views/LoginView";
-import RegisterForm from "./containers/RegisterForm";
+//import RegisterForm from "./containers/RegisterForm";
+import RegisterView from "./views/RegisterView";
+
 import MonthCalendar from "./components/MonthCalendar";
 
 export default class App extends Component {
@@ -45,32 +47,7 @@ class RegisterScreen extends Component {
     }
   }*/
   render() {
-    return (
-      <View style={{ flex: 1, flexDirection: "column" }}>
-        <View style={styles.banner}>
-          <TouchableOpacity
-            style={{ flex: 1 }}
-            onPress={() => this.props.navigation.navigate("Login")}
-          >
-            <View
-              style={{
-                height: 50,
-                alignItems: "center",
-                justifyContent: "center"
-              }}
-            >
-              <Icon name="md-arrow-back" size={30} style={{ color: "white" }} />
-            </View>
-          </TouchableOpacity>
-          <View style={{ flex: 5, alignItems: "center" }}>
-            <Text style={styles.header}>Rejestracja</Text>
-          </View>
-        </View>
-        <View style={{ flex: 8, backgroundColor: "#2a2a2a" }}>
-          <RegisterForm navigation={this.props.navigation} />
-        </View>
-      </View>
-    );
+    return <RegisterView navigation={this.props.navigation} />;
   }
 }
 
