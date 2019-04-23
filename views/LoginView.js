@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
-import { Icon } from "react-native-vector-icons/Ionicons";
+import Icon from "react-native-vector-icons/Ionicons";
 import LoginForm from "../containers/LoginForm";
 
 export default class LoginView extends Component {
@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
   banner: {
     flex: 1,
     flexDirection: "row",
-    paddingTop: 20,
     alignItems: "center",
     justifyContent: "space-between",
     backgroundColor: "#1a1a1a"
