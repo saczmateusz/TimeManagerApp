@@ -47,24 +47,3 @@ const AppSwitchNavigator = createSwitchNavigator({
 });
 
 const AppContainer = createAppContainer(AppSwitchNavigator);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#2a2a2a"
-  },
-  banner: {
-    flex: 1,
-    flexDirection: "row",
-    paddingTop: 20,
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#1a1a1a"
-  },
-  header: {
-    color: "white",
-    fontSize: 20,
-    paddingRight: 55,
-    fontFamily: "avenir-heavy"
-  }
-});
