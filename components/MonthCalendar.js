@@ -118,7 +118,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     alignItems: "stretch",
-    marginTop: 50
+    paddingTop: 50,
+    backgroundColor: "#2a2a2a"
   },
   text: {
     color: "white"

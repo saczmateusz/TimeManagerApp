@@ -30,13 +30,7 @@ class LoginScreen extends Component {
 
 class MonthScreen extends Component {
   render() {
-    return (
-      <View
-        style={{ flex: 1, flexDirection: "column", backgroundColor: "#2a2a2a" }}
-      >
-        <MonthCalendar navigation={this.props.navigation} />
-      </View>
-    );
+    return <MonthCalendar navigation={this.props.navigation} />;
   }
 }
 
