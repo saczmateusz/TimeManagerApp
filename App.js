@@ -1,16 +1,11 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Button } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
 import "./config/axios";
 import { Provider } from "react-redux";
 import { createSwitchNavigator, createAppContainer } from "react-navigation";
 import store from "./store";
 
-//import LoginForm from "./containers/LoginForm";
 import LoginView from "./views/LoginView";
-//import RegisterForm from "./containers/RegisterForm";
 import RegisterView from "./views/RegisterView";
-
 import MonthCalendar from "./components/MonthCalendar";
 
 export default class App extends Component {
