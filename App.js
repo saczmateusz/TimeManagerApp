@@ -17,6 +17,7 @@ export default class App extends Component {
     );
   }
 }
+
 class LoginScreen extends Component {
   render() {
     return <LoginView navigation={this.props.navigation} />;

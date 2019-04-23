@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { connect } from 'react-redux';
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { connect } from "react-redux";
 import axios from "axios";
-import { setUser } from '../reducers/actions/user'
-import { setToken } from '../reducers/actions/token'
+import { setUser } from "../reducers/actions/user";
+import { setToken } from "../reducers/actions/token";
 
 class RegisterForm extends Component {
   state = {
@@ -16,24 +16,24 @@ class RegisterForm extends Component {
   };
 
   registerSubmit = () => {
-    if (this.state.passwd === this.state.passrt){
+    if (this.state.passwd === this.state.passrt) {
       this.setState({ loading: true, error: null });
       axios
-      .post("/auth/register", {
-        username: this.state.username,
-        email: this.state.email,
-        password: this.state.passwd
-      })
-      .then(response => {
-        this.props.setUser(response.data.user);
-        this.props.setToken(response.data.token);
-        this.setState({ error: null, loading: false });
+        .post("/auth/register", {
+          username: this.state.username,
+          email: this.state.email,
+          password: this.state.passwd
+        })
+        .then(response => {
+          this.props.setUser(response.data.user);
+          this.props.setToken(response.data.token);
+          this.setState({ error: null, loading: false });
 
-        this.props.navigation.navigate("Month")
-      })
-      .catch(error => {
-        this.setState({ error, loading: false });
-      });
+          this.props.navigation.navigate("Month");
+        })
+        .catch(error => {
+          this.setState({ error, loading: false });
+        });
 
       this.setState({
         username: "",
@@ -42,7 +42,6 @@ class RegisterForm extends Component {
         passrt: ""
       });
     }
-    
   };
 
   render() {
@@ -78,7 +77,13 @@ class RegisterForm extends Component {
           secureTextEntry
           style={styles.form}
         />
-        <View style={{ paddingHorizontal: 10, paddingTop: 20, flexDirection: "column" }}>
+        <View
+          style={{
+            paddingHorizontal: 10,
+            paddingTop: 20,
+            flexDirection: "column"
+          }}
+        >
           <Button
             color="#ff8833"
             title={this.state.loading ? "Wysyłanie..." : "Zarejestruj się"}
@@ -128,7 +133,11 @@ const mapStateToProps = state => ({
 });
 
 const mapActionsToProps = {
-  setUser, setToken
-}
+  setUser,
+  setToken
+};
 
-export default connect(mapStateToProps, mapActionsToProps)(RegisterForm);
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(RegisterForm);
