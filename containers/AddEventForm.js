@@ -58,6 +58,10 @@ class AddEventForm extends Component {
     return (
       <View style={styles.container}>
         <View style={{ marginHorizontal: 20, marginVertical: 10 }}>
+          <Text style={{ color: "white" }}>
+            {JSON.stringify(this.state.error)}
+          </Text>
+
           <DateTimeButton
             onSelectDate={this.handleStartDate}
             name="rozpoczęcia"
