@@ -6,6 +6,7 @@ import store from "./store";
 
 import LoginView from "./views/LoginView";
 import RegisterView from "./views/RegisterView";
+import AddEventView from "./views/AddEventView";
 import MonthCalendar from "./components/MonthCalendar";
 
 export default class App extends Component {
@@ -41,10 +42,17 @@ class RegisterScreen extends Component {
   }
 }
 
+class AddEventScreen extends Component {
+  render() {
+    return <AddEventView navigation={this.props.navigation} />;
+  }
+}
+
 const AppSwitchNavigator = createSwitchNavigator({
   Login: { screen: LoginScreen },
   Month: { screen: MonthScreen },
-  Register: { screen: RegisterScreen }
+  Register: { screen: RegisterScreen },
+  AddEvent: { screen: AddEventScreen }
 });
 
 const AppContainer = createAppContainer(AppSwitchNavigator);

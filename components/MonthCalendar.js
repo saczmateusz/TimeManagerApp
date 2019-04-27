@@ -47,7 +47,7 @@ LocaleConfig.locales["pl"] = {
 
 LocaleConfig.defaultLocale = "pl";
 
-class MonthCalendar extends Component {
+export default class MonthCalendar extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -103,6 +103,7 @@ class MonthCalendar extends Component {
               backgroundColor: "orange",
               borderRadius: 50
             }}
+            onPress={() => this.props.navigation.navigate("AddEvent")}
           >
             <Icon name={"md-add"} size={30} color="white" />
           </TouchableOpacity>
@@ -111,7 +112,6 @@ class MonthCalendar extends Component {
     );
   }
 }
-export default MonthCalendar;
 
 const styles = StyleSheet.create({
   container: {
