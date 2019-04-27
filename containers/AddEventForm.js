@@ -14,8 +14,15 @@ class AddEventForm extends Component {
     start_date: "",
     end_date: "",
     body: "",
-    priority: "",
-    data: ""
+    priority: ""
+  };
+
+  handleStartDate = date => {
+    this.setState({ start_date: date });
+  };
+
+  handleEndDate = date => {
+    this.setState({ end_date: date });
   };
 
   addEventSubmit = () => {
@@ -23,18 +30,19 @@ class AddEventForm extends Component {
     axios
       .post("/api/tasks", {
         start_date: this.state.start_date,
-        end_date: moment(this.state.end_date, "YYYY-MM-DD HH:mm:ss"),
+        end_date: this.state.end_date,
         body: this.state.body,
         priority: this.state.priority
       })
       .then(response => {
-        this.data(response.data);
-        this.setState({ error: null, loading: false });
+        this.setState({
+          error: null,
+          loading: false
+        });
 
         this.props.navigation.navigate("Month");
       })
       .catch(error => {
-        alert("alert");
         this.setState({ error, loading: false });
       });
 
@@ -49,21 +57,18 @@ class AddEventForm extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {/* <TextInput
-          onChangeText={start_date => this.setState({ start_date })}
-          value={this.state.start_date}
-          placeholder="Data rozpoczęcia"
-          placeholderTextColor="#565554"
-          style={styles.form}
-        /> */}
-        <DateTimeButton start_date={this.props.date} />
-        <TextInput
-          onChangeText={end_date => this.setState({ end_date })}
-          value={this.state.end_date}
-          placeholder="Data zakończenia"
-          placeholderTextColor="#565554"
-          style={styles.form}
-        />
+        <View style={{ marginHorizontal: 20, marginVertical: 10 }}>
+          <DateTimeButton
+            onSelectDate={this.handleStartDate}
+            name="rozpoczęcia"
+          />
+        </View>
+        <View style={{ marginHorizontal: 20, marginVertical: 10 }}>
+          <DateTimeButton
+            onSelectDate={this.handleEndDate}
+            name="zakończenia"
+          />
+        </View>
         <TextInput
           onChangeText={body => this.setState({ body })}
           value={this.state.body}
@@ -97,11 +102,6 @@ class AddEventForm extends Component {
           <Text style={{ color: "white" }}>
             {this.state.error ? "Dodawanie nie powiodło się" : ""}
           </Text>
-
-          <Text style={{ color: "white" }}>
-            {JSON.stringify(this.props.user)}
-          </Text>
-          <Text style={{ color: "white" }}>{this.state.start_date}</Text>
         </View>
       </View>
     );

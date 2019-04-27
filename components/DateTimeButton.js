@@ -22,6 +22,7 @@ export default class DateTimeButton extends Component {
 
   handleDatePicked = datetime => {
     this.setState({ date: moment(datetime).format("YYYY-MM-DD HH:mm:ss") });
+    this.props.onSelectDate(this.state.date);
     this.hideDateTimePicker();
   };
 
@@ -29,9 +30,13 @@ export default class DateTimeButton extends Component {
     return (
       <>
         <Button
-          title={this.state.date ? this.state.date : "show dtp"}
+          title={
+            this.state.date
+              ? this.state.date
+              : "wybierz datę " + this.props.name
+          }
           onPress={this.showDateTimePicker}
-          color="#ff8833"
+          color="#cc8833"
         />
         <DateTimePicker
           isVisible={this.state.isVisible}
