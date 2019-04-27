@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import { connect } from "react-redux";
 import axios from "axios";
+import { connect } from "react-redux";
 import { setUser } from "../reducers/actions/user";
 import { setToken } from "../reducers/actions/token";
 import DateTimeButton from "../components/DateTimeButton";
@@ -28,13 +28,23 @@ class AddEventForm extends Component {
   addEventSubmit = () => {
     this.setState({ loading: true, error: null });
     axios
-      .post("/api/tasks", {
-        start_date: this.state.start_date,
-        end_date: this.state.end_date,
-        body: this.state.body,
-        priority: this.state.priority
-      })
+      .post(
+        "/api/tasks",
+        {
+          start_date: this.state.start_date,
+          end_date: this.state.end_date,
+          body: this.state.body,
+          priority: this.state.priority
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.props.token
+          }
+        }
+      )
       .then(response => {
+        alert("ok");
         this.setState({
           error: null,
           loading: false
