@@ -38,8 +38,7 @@ class AddEventForm extends Component {
         },
         {
           headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + this.props.token
+            "Content-Type": "application/json"
           }
         }
       )
