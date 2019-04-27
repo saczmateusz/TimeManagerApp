@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import axios from "axios";
-import { connect } from "react-redux";
-import { setUser } from "../reducers/actions/user";
-import { setToken } from "../reducers/actions/token";
 import DateTimeButton from "../components/DateTimeButton";
-import moment from "moment";
 
 class AddEventForm extends Component {
   state = {
@@ -42,8 +38,7 @@ class AddEventForm extends Component {
           }
         }
       )
-      .then(response => {
-        alert("ok");
+      .then(() => {
         this.setState({
           error: null,
           loading: false
@@ -67,10 +62,6 @@ class AddEventForm extends Component {
     return (
       <View style={styles.container}>
         <View style={{ marginHorizontal: 20, marginVertical: 10 }}>
-          <Text style={{ color: "white" }}>
-            {JSON.stringify(this.state.error)}
-          </Text>
-
           <DateTimeButton
             onSelectDate={this.handleStartDate}
             name="rozpoczęcia"
@@ -140,17 +131,4 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = state => ({
-  user: state.user,
-  token: state.token
-});
-
-const mapActionsToProps = {
-  setUser,
-  setToken
-};
-
-export default connect(
-  mapStateToProps,
-  mapActionsToProps
-)(AddEventForm);
+export default AddEventForm;
