@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { connect } from "react-redux";
+import { addTask } from "../reducers/actions/task";
 import axios from "axios";
 import DateTimeButton from "../components/DateTimeButton";
 
@@ -38,7 +40,8 @@ class AddEventForm extends Component {
           }
         }
       )
-      .then(() => {
+      .then(response => {
+        this.props.addTask(response.data);
         this.setState({
           error: null,
           loading: false
@@ -131,4 +134,15 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AddEventForm;
+const mapStateToProps = state => ({
+  task: state.task
+});
+
+const mapActionsToProps = {
+  addTask
+};
+
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(AddEventForm);
