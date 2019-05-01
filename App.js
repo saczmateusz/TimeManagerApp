@@ -7,7 +7,7 @@ import store from "./store";
 import LoginView from "./views/LoginView";
 import RegisterView from "./views/RegisterView";
 import AddEventView from "./views/AddEventView";
-import MonthCalendar from "./components/MonthCalendar";
+import MonthView from "./views/MonthView";
 
 export default class App extends Component {
   render() {
@@ -27,16 +27,16 @@ class LoginScreen extends Component {
 
 class MonthScreen extends Component {
   render() {
-    return <MonthCalendar navigation={this.props.navigation} />;
+    return <MonthView navigation={this.props.navigation} />;
   }
 }
 
 class RegisterScreen extends Component {
-  /*componentDidMount() {
-    if(store.getState().user.email) {
-      this.props.navigation.navigate("Month")
+  componentDidMount() {
+    if (store.getState().user.email) {
+      this.props.navigation.navigate("Month");
     }
-  }*/
+  }
   render() {
     return <RegisterView navigation={this.props.navigation} />;
   }

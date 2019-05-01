@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
-
 import Icon from "react-native-vector-icons/Ionicons";
 
 LocaleConfig.locales["pl"] = {
@@ -78,13 +77,6 @@ export default class MonthCalendar extends Component {
               textMonthFontSize: 16,
               textDayHeaderFontSize: 16
             }}
-          />
-        </View>
-        <View style={{ flex: 1, paddingHorizontal: 10 }}>
-          <Button
-            title="wróc do logowania"
-            onPress={() => this.props.navigation.navigate("Login")}
-            color="#ff8833"
           />
         </View>
         <View
