@@ -47,6 +47,13 @@ LocaleConfig.locales["pl"] = {
 LocaleConfig.defaultLocale = "pl";
 
 export default class MonthCalendar extends Component {
+  componentDidMount() {
+    if (store.getState().task.body) {
+      store.getState().user.tasks.push(store.getState().task);
+      store.getState().task = {};
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
