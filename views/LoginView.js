@@ -28,18 +28,6 @@ export default class LoginView extends Component {
         </View>
         <View style={{ flex: 8, backgroundColor: "#2a2a2a" }}>
           <LoginForm navigation={this.props.navigation} />
-          <View style={{ paddingHorizontal: 10, flexDirection: "column" }}>
-            <Text
-              style={{ color: "white", textAlign: "center", marginBottom: 10 }}
-            >
-              LUB
-            </Text>
-            <Button
-              title="Zarejestruj się"
-              color="#ff8833"
-              onPress={() => this.props.navigation.navigate("Register")}
-            />
-          </View>
         </View>
       </View>
     );

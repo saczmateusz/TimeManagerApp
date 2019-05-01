@@ -25,8 +25,10 @@ class LoginForm extends Component {
         this.props.setToken(response.data.token);
         this.setState({ error: null, loading: false });
 
-        axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
-      
+        axios.defaults.headers.common["Authorization"] = `Bearer ${
+          response.data.token
+        }`;
+
         this.props.navigation.navigate("Month");
       })
       .catch(error => {
@@ -84,6 +86,18 @@ class LoginForm extends Component {
           <Text style={{ color: "white" }}>
             {JSON.stringify(this.props.token)}
           </Text>
+        </View>
+        <View style={{ paddingHorizontal: 10 }}>
+          <Text
+            style={{ color: "white", textAlign: "center", marginBottom: 10 }}
+          >
+            LUB
+          </Text>
+          <Button
+            title="Zarejestruj się"
+            color="#ff8833"
+            onPress={() => this.props.navigation.navigate("Register")}
+          />
         </View>
       </View>
     );
