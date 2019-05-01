@@ -40,6 +40,17 @@ class LoginForm extends Component {
       passwd: ""
     });
   };
+  userTasks = () => {
+    if (this.props.user.email) {
+      return this.props.user.tasks.map(task => {
+        return (
+          <Text style={{ color: "white" }} key={task.id}>
+            Notatka {task.id}: {task.body}
+          </Text>
+        );
+      });
+    }
+  };
 
   render() {
     return (
@@ -83,9 +94,7 @@ class LoginForm extends Component {
             {this.props.user.email ? "Zalogowano jako " : ""}
             {JSON.stringify(this.props.user.username)}
           </Text>
-          <Text style={{ color: "white" }}>
-            {JSON.stringify(this.props.user.tasks)}
-          </Text>
+          {this.userTasks()}
         </View>
         <View style={{ paddingHorizontal: 10 }}>
           <Text
