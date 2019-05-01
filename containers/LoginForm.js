@@ -80,11 +80,11 @@ class LoginForm extends Component {
           </Text>
 
           <Text style={{ color: "white" }}>
-            {JSON.stringify(this.props.user)}
+            {this.props.user.email ? "Zalogowano jako " : ""}
+            {JSON.stringify(this.props.user.username)}
           </Text>
-
           <Text style={{ color: "white" }}>
-            {JSON.stringify(this.props.token)}
+            {JSON.stringify(this.props.user.tasks)}
           </Text>
         </View>
         <View style={{ paddingHorizontal: 10 }}>
