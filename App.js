@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import "./config/axios";
 import { Provider } from "react-redux";
 import { createSwitchNavigator, createAppContainer } from "react-navigation";
 import store from "./store";
+import "./config/axios";
 
 import LoginView from "./views/LoginView";
 import RegisterView from "./views/RegisterView";
-import AddEventView from "./views/AddEventView";
+import AddTaskView from "./views/AddTaskView";
 import MonthView from "./views/MonthView";
 
 export default class App extends Component {
@@ -25,12 +25,6 @@ class LoginScreen extends Component {
   }
 }
 
-class MonthScreen extends Component {
-  render() {
-    return <MonthView navigation={this.props.navigation} />;
-  }
-}
-
 class RegisterScreen extends Component {
   componentDidMount() {
     if (store.getState().user.email) {
@@ -42,9 +36,15 @@ class RegisterScreen extends Component {
   }
 }
 
-class AddEventScreen extends Component {
+class AddTaskScreen extends Component {
   render() {
-    return <AddEventView navigation={this.props.navigation} />;
+    return <AddTaskView navigation={this.props.navigation} />;
+  }
+}
+
+class MonthScreen extends Component {
+  render() {
+    return <MonthView navigation={this.props.navigation} />;
   }
 }
 
@@ -52,7 +52,7 @@ const AppSwitchNavigator = createSwitchNavigator({
   Login: { screen: LoginScreen },
   Month: { screen: MonthScreen },
   Register: { screen: RegisterScreen },
-  AddEvent: { screen: AddEventScreen }
+  AddTask: { screen: AddTaskScreen }
 });
 
 const AppContainer = createAppContainer(AppSwitchNavigator);

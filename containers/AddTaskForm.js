@@ -5,7 +5,7 @@ import { addTask } from "../reducers/actions/task";
 import axios from "axios";
 import DateTimeButton from "../components/DateTimeButton";
 
-class AddEventForm extends Component {
+class AddTaskForm extends Component {
   state = {
     loading: false,
     error: null,
@@ -145,4 +145,4 @@ const mapActionsToProps = {
 export default connect(
   mapStateToProps,
   mapActionsToProps
-)(AddEventForm);
+)(AddTaskForm);

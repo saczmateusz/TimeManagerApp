@@ -102,7 +102,7 @@ export default class MonthCalendar extends Component {
               backgroundColor: "orange",
               borderRadius: 50
             }}
-            onPress={() => this.props.navigation.navigate("AddEvent")}
+            onPress={() => this.props.navigation.navigate("AddTask")}
           >
             <Icon name={"md-add"} size={30} color="white" />
           </TouchableOpacity>

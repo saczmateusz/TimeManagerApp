@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import AddEventForm from "../containers/AddEventForm";
+import AddEventForm from "../containers/AddTaskForm";
 
-export default class AddEventView extends Component {
+export default class AddTaskView extends Component {
   render() {
     return (
       <View style={{ flex: 1, flexDirection: "column" }}>
