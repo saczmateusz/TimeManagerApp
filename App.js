@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import SplashScreen from "react-native-splash-screen";
 import { Provider } from "react-redux";
 import { createSwitchNavigator, createAppContainer } from "react-navigation";
 import store from "./store";
@@ -10,6 +11,10 @@ import AddTaskView from "./views/AddTaskView";
 import MonthView from "./views/MonthView";
 
 export default class App extends Component {
+  componentDidMount() {
+    SplashScreen.hide();
+  }
+
   render() {
     return (
       <Provider store={store}>
