@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import Icon from "react-native-vector-icons/Ionicons";
 
@@ -76,10 +76,9 @@ export default class MonthCalendar extends Component {
               selectedDotColor: "#ffffff",
               arrowColor: "orange",
               monthTextColor: "orange",
-              textDayFontFamily: "monospace",
-              textMonthFontFamily: "monospace",
-              textDayHeaderFontFamily: "monospace",
-              textMonthFontWeight: "bold",
+              textDayFontFamily: "Roboto-Light",
+              textMonthFontFamily: "Roboto-Light",
+              textDayHeaderFontFamily: "Roboto-Light",
               textDayFontSize: 16,
               textMonthFontSize: 16,
               textDayHeaderFontSize: 16
