@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity
+} from "react-native";
 import { connect } from "react-redux";
 import axios from "axios";
 import { setUser } from "../reducers/actions/user";
@@ -74,15 +80,24 @@ class LoginForm extends Component {
         <View
           style={{
             paddingHorizontal: 10,
-            paddingTop: 20,
-            flexDirection: "column"
+            paddingTop: 20
           }}
         >
-          <Button
-            color="#ff8833"
-            title={this.state.loading ? "Wysyłanie..." : "Zaloguj"}
-            onPress={() => this.loginSubmit()}
-          />
+          <TouchableOpacity onPress={() => this.loginSubmit()}>
+            <View
+              style={{
+                height: 35,
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "#ff8833",
+                borderRadius: 2
+              }}
+            >
+              <Text style={{ color: "white", fontSize: 18 }}>
+                {this.state.loading ? "Wysyłanie..." : "Zaloguj"}
+              </Text>
+            </View>
+          </TouchableOpacity>
         </View>
 
         <View style={{ alignItems: "center", paddingHorizontal: 10 }}>
@@ -102,11 +117,23 @@ class LoginForm extends Component {
           >
             LUB
           </Text>
-          <Button
-            title="Zarejestruj się"
-            color="#ff8833"
+          <TouchableOpacity
             onPress={() => this.props.navigation.navigate("Register")}
-          />
+          >
+            <View
+              style={{
+                height: 35,
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "#ff8833",
+                borderRadius: 2
+              }}
+            >
+              <Text style={{ color: "white", fontSize: 18 }}>
+                Zarejestruj się
+              </Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -127,7 +154,8 @@ const styles = StyleSheet.create({
     padding: 5,
     margin: 10,
     marginLeft: 20,
-    marginRight: 20
+    marginRight: 20,
+    fontFamily: "Roboto-Light"
   }
 });
 

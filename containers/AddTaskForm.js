@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet
+} from "react-native";
 import { connect } from "react-redux";
 import { addTask } from "../reducers/actions/task";
 import axios from "axios";
@@ -98,11 +104,21 @@ class AddTaskForm extends Component {
             flexDirection: "column"
           }}
         >
-          <Button
-            color="#ff8833"
-            title={this.state.loading ? "Wysyłanie..." : "Dodaj"}
-            onPress={() => this.addEventSubmit()}
-          />
+          <TouchableOpacity onPress={() => this.addEventSubmit()}>
+            <View
+              style={{
+                height: 35,
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "#ff8833",
+                borderRadius: 2
+              }}
+            >
+              <Text style={{ color: "white", fontSize: 18 }}>
+                {this.state.loading ? "Wysyłanie..." : "Dodaj"}
+              </Text>
+            </View>
+          </TouchableOpacity>
         </View>
 
         <View style={{ alignItems: "center", paddingHorizontal: 10 }}>
@@ -129,7 +145,8 @@ const styles = StyleSheet.create({
     padding: 5,
     margin: 10,
     marginLeft: 20,
-    marginRight: 20
+    marginRight: 20,
+    fontFamily: "Roboto-Light"
   }
 });
 
