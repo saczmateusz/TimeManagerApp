@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
   header: {
     color: "white",
     fontSize: 20,
-    paddingRight: 55,
-    fontFamily: "avenir-heavy"
+    paddingRight: 55
   }
 });

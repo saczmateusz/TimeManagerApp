@@ -127,8 +127,7 @@ const styles = StyleSheet.create({
     padding: 5,
     margin: 10,
     marginLeft: 20,
-    marginRight: 20,
-    fontFamily: "avenir-light"
+    marginRight: 20
   }
 });
 

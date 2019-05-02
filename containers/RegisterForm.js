@@ -28,9 +28,11 @@ class RegisterForm extends Component {
           this.props.setUser(response.data.user);
           this.props.setToken(response.data.token);
           this.setState({ error: null, loading: false });
-          
-          axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
-        
+
+          axios.defaults.headers.common["Authorization"] = `Bearer ${
+            response.data.token
+          }`;
+
           this.props.navigation.navigate("Month");
         })
         .catch(error => {
@@ -124,8 +126,7 @@ const styles = StyleSheet.create({
     padding: 5,
     margin: 10,
     marginLeft: 20,
-    marginRight: 20,
-    fontFamily: "avenir-light"
+    marginRight: 20
   }
 });
 
