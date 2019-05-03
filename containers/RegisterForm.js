@@ -31,6 +31,7 @@ class RegisterForm extends Component {
           password: this.state.passwd
         })
         .then(response => {
+          response.data.user.tasks = [];
           this.props.setUser(response.data.user);
           this.props.setToken(response.data.token);
           this.setState({ error: null, loading: false });
