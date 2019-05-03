@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import MonthCalendar from "../components/MonthCalendar";
+import Navbar from "../components/Navbar";
 
 class MonthView extends Component {
   render() {
@@ -26,7 +27,12 @@ class MonthView extends Component {
             </View>
           </TouchableOpacity>
         </View>
-        <View style={{ flex: 8, backgroundColor: "#2a2a2a" }}>
+        <Navbar navigation={this.props.navigation} current={"Month"} />
+        <View
+          style={{
+            flex: 6
+          }}
+        >
           <MonthCalendar navigation={this.props.navigation} />
         </View>
         <View
