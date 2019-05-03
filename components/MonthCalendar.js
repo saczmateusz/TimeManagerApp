@@ -90,23 +90,6 @@ export default class MonthCalendar extends Component {
               textMonthFontSize: 16,
               textDayHeaderFontSize: 16
             }}
-          />
-        </View>
-        <View
-          style={{
-            flex: 1,
-            padding: 5,
-            marginLeft: 285
-          }}
-        >
-          <TouchableOpacity
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              width: 60,
-              height: 60,
-              backgroundColor: "orange",
-              borderRadius: 50
             markedDates={{
               "2019-05-25": {
                 dots: [vacation, massage, workout],
@@ -115,10 +98,6 @@ export default class MonthCalendar extends Component {
               },
               "2019-05-26": { dots: [massage, workout], disabled: true }
             }}
-            onPress={() => this.props.navigation.navigate("AddTask")}
-          >
-            <Icon name={"md-add"} size={30} color="white" />
-          </TouchableOpacity>
             markingType={"multi-dot"}
           />
         </View>
