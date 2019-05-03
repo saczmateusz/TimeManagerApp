@@ -101,22 +101,9 @@ export default class MonthCalendar extends Component {
             markingType={"multi-dot"}
           />
         </View>
-        <View
-          style={{
-            flex: 1,
-            marginLeft: 285,
-            marginBottom: 20
-          }}
-        >
+        <View style={styles.addTaskView}>
           <TouchableOpacity
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              width: 60,
-              height: 60,
-              backgroundColor: "orange",
-              borderRadius: 50
-            }}
+            style={styles.addTaskTouch}
             onPress={() => this.props.navigation.navigate("AddTask")}
           >
             <Icon name={"md-add"} size={30} color="white" />
@@ -137,5 +124,18 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "white"
+  },
+  addTaskView: {
+    position: "absolute",
+    right: 5,
+    bottom: 5
+  },
+  addTaskTouch: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 60,
+    height: 60,
+    backgroundColor: "orange",
+    borderRadius: 50
   }
 });
