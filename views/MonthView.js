@@ -6,7 +6,7 @@ import MonthCalendar from "../components/MonthCalendar";
 class MonthView extends Component {
   render() {
     return (
-      <View style={{ flex: 1, flexDirection: "column" }}>
+      <View style={styles.container}>
         <View style={styles.banner}>
           <View style={{ flex: 5, alignItems: "center" }}>
             <Text style={styles.header}>Terminarz</Text>
@@ -36,6 +36,11 @@ class MonthView extends Component {
 export default MonthView;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: "column",
+    backgroundColor: "#2a2a2a"
+  },
   banner: {
     flex: 1,
     flexDirection: "row",

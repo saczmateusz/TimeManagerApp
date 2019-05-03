@@ -55,6 +55,13 @@ export default class MonthCalendar extends Component {
   }
 
   render() {
+    const vacation = {
+      key: "vacation",
+      color: "red",
+      selectedDotColor: "blue"
+    };
+    const massage = { key: "massage", color: "blue", selectedDotColor: "blue" };
+    const workout = { key: "workout", color: "green" };
     return (
       <View style={styles.container}>
         <View style={{ flex: 6, alignItems: "stretch" }}>
@@ -100,11 +107,20 @@ export default class MonthCalendar extends Component {
               height: 60,
               backgroundColor: "orange",
               borderRadius: 50
+            markedDates={{
+              "2019-05-25": {
+                dots: [vacation, massage, workout],
+                selected: true,
+                selectedColor: "red"
+              },
+              "2019-05-26": { dots: [massage, workout], disabled: true }
             }}
             onPress={() => this.props.navigation.navigate("AddTask")}
           >
             <Icon name={"md-add"} size={30} color="white" />
           </TouchableOpacity>
+            markingType={"multi-dot"}
+          />
         </View>
       </View>
     );
