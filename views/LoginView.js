@@ -1,16 +1,22 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import LoginForm from "../containers/LoginForm";
 
-export default class LoginView extends Component {
+class LoginView extends Component {
+  isSignedIn = () => {
+    if (store.getState().user.email) {
+      this.props.navigation.navigate("Day");
+    } else alert("Zaloguj się");
+  };
+
   render() {
     return (
       <View style={{ flex: 1, flexDirection: "column" }}>
         <View style={styles.banner}>
           <TouchableOpacity
             style={{ flex: 1 }}
-            onPress={() => this.props.navigation.navigate("Month")}
+            onPress={() => this.isSignedIn()}
           >
             <View
               style={{
@@ -48,3 +54,5 @@ const styles = StyleSheet.create({
     paddingRight: 55
   }
 });
+
+export default LoginView;
