@@ -68,7 +68,7 @@ export default class MonthCalendar extends Component {
           <Calendar
             firstDay={1}
             style={{
-              height: 350
+              height: 300
             }}
             theme={{
               backgroundColor: "#333333",
@@ -100,6 +100,27 @@ export default class MonthCalendar extends Component {
             }}
             markingType={"multi-dot"}
           />
+        </View>
+        <View
+          style={{
+            flex: 1,
+            marginLeft: 285,
+            marginBottom: 20
+          }}
+        >
+          <TouchableOpacity
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              width: 60,
+              height: 60,
+              backgroundColor: "orange",
+              borderRadius: 50
+            }}
+            onPress={() => this.props.navigation.navigate("AddTask")}
+          >
+            <Icon name={"md-add"} size={30} color="white" />
+          </TouchableOpacity>
         </View>
       </View>
     );

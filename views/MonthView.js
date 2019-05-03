@@ -30,31 +30,10 @@ class MonthView extends Component {
         <Navbar navigation={this.props.navigation} current={"Month"} />
         <View
           style={{
-            flex: 6
+            flex: 7
           }}
         >
           <MonthCalendar navigation={this.props.navigation} />
-        </View>
-        <View
-          style={{
-            flex: 1,
-            padding: 5,
-            marginLeft: 285
-          }}
-        >
-          <TouchableOpacity
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              width: 60,
-              height: 60,
-              backgroundColor: "orange",
-              borderRadius: 50
-            }}
-            onPress={() => this.props.navigation.navigate("AddTask")}
-          >
-            <Icon name={"md-add"} size={30} color="white" />
-          </TouchableOpacity>
         </View>
       </View>
     );
