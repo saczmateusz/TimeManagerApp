@@ -40,7 +40,7 @@ class RegisterForm extends Component {
             response.data.token
           }`;
 
-          this.props.navigation.navigate("Month");
+          this.props.navigation.navigate("Day");
         })
         .catch(error => {
           this.setState({ error, loading: false });

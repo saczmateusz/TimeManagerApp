@@ -48,7 +48,7 @@ class LoginScreen extends Component {
 class RegisterScreen extends Component {
   componentDidMount() {
     if (store.getState().user.email) {
-      this.props.navigation.navigate("Month");
+      this.props.navigation.navigate("Day");
     }
   }
   render() {

@@ -35,7 +35,7 @@ class LoginForm extends Component {
           response.data.token
         }`;
 
-        this.props.navigation.navigate("Month");
+        this.props.navigation.navigate("Day");
       })
       .catch(error => {
         this.setState({ error, loading: false });
@@ -45,17 +45,6 @@ class LoginForm extends Component {
       username: "",
       passwd: ""
     });
-  };
-  userTasks = () => {
-    if (this.props.user.email) {
-      return this.props.user.tasks.map(task => {
-        return (
-          <Text style={{ color: "white" }} key={task.id}>
-            Notatka {task.id}: {task.body}
-          </Text>
-        );
-      });
-    }
   };
 
   render() {
@@ -99,21 +88,9 @@ class LoginForm extends Component {
             </View>
           </TouchableOpacity>
         </View>
-
-        <View style={{ alignItems: "center", paddingHorizontal: 10 }}>
-          <Text style={{ color: "white" }}>
-            {this.state.error ? "Logowanie nie powiodło się" : ""}
-          </Text>
-
-          <Text style={{ color: "white" }}>
-            {this.props.user.email ? "Zalogowano jako " : ""}
-            {JSON.stringify(this.props.user.username)}
-          </Text>
-          {this.userTasks()}
-        </View>
         <View style={{ paddingHorizontal: 10 }}>
           <Text
-            style={{ color: "white", textAlign: "center", marginBottom: 10 }}
+            style={{ color: "white", textAlign: "center", marginVertical: 10 }}
           >
             LUB
           </Text>
@@ -134,6 +111,16 @@ class LoginForm extends Component {
               </Text>
             </View>
           </TouchableOpacity>
+        </View>
+        <View style={{ alignItems: "center", paddingHorizontal: 10 }}>
+          <Text style={{ color: "white" }}>
+            {this.state.error ? "Logowanie nie powiodło się" : ""}
+          </Text>
+
+          <Text style={{ color: "white" }}>
+            {this.props.user.email ? "Zalogowano jako " : ""}
+            {JSON.stringify(this.props.user.username)}
+          </Text>
         </View>
       </View>
     );

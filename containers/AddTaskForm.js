@@ -29,7 +29,7 @@ class AddTaskForm extends Component {
     this.setState({ end_date: date });
   };
 
-  addEventSubmit = () => {
+  addTaskSubmit = () => {
     this.setState({ loading: true, error: null });
     axios
       .post(
@@ -52,8 +52,18 @@ class AddTaskForm extends Component {
           error: null,
           loading: false
         });
-
-        this.props.navigation.navigate("Month");
+        //wiem, ze reducer tutaj jest niepotrzebny i wystarczyloby
+        //dodac lokalnego taska recznie do taskow usera
+        //ale tak jest smieszniej i wiecej zabawy
+        //przy okazji nauczylem sie reduxa
+        //bo najpierw to aktualizowanie taskow usera bylo w MonthCalendar, ale przenioslem,
+        //bo tu jest bardziej uniwersalne, nie pisze 3 razy tego samego (month, week, day update)
+        //XD
+        if (store.getState().task.body) {
+          store.getState().user.tasks.push(store.getState().task);
+          store.getState().task = {};
+        }
+        this.props.navigation.navigate("Day");
       })
       .catch(error => {
         this.setState({ error, loading: false });
@@ -104,7 +114,7 @@ class AddTaskForm extends Component {
             flexDirection: "column"
           }}
         >
-          <TouchableOpacity onPress={() => this.addEventSubmit()}>
+          <TouchableOpacity onPress={() => this.addTaskSubmit()}>
             <View
               style={{
                 height: 35,
@@ -119,12 +129,6 @@ class AddTaskForm extends Component {
               </Text>
             </View>
           </TouchableOpacity>
-        </View>
-
-        <View style={{ alignItems: "center", paddingHorizontal: 10 }}>
-          <Text style={{ color: "white" }}>
-            {this.state.error ? "Dodawanie nie powiodło się" : ""}
-          </Text>
         </View>
       </View>
     );
