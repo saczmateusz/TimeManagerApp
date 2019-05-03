@@ -10,6 +10,7 @@ import LoginView from "./views/LoginView";
 import RegisterView from "./views/RegisterView";
 import AddTaskView from "./views/AddTaskView";
 import MonthView from "./views/MonthView";
+import WeekView from "./views/WeekView";
 import DayView from "./views/DayView";
 
 export default class App extends Component {
@@ -67,6 +68,12 @@ class MonthScreen extends Component {
   }
 }
 
+class WeekScreen extends Component {
+  render() {
+    return <WeekView navigation={this.props.navigation} />;
+  }
+}
+
 class DayScreen extends Component {
   render() {
     return <DayView navigation={this.props.navigation} />;
@@ -78,6 +85,7 @@ const AppSwitchNavigator = createSwitchNavigator({
   Register: { screen: RegisterScreen },
   AddTask: { screen: AddTaskScreen },
   Month: { screen: MonthScreen },
+  Week: { screen: WeekScreen },
   Day: { screen: DayScreen }
 });
 
