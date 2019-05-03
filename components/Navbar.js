@@ -10,7 +10,7 @@ export default class Navbar extends Component {
     mColor: "white",
     wColor: "white",
     dColor: "white",
-    aColor: "white"
+    aColor: "grey"
   };
 
   componentDidMount() {
@@ -24,9 +24,9 @@ export default class Navbar extends Component {
       case "Day":
         this.setState({ dColor: "orange" });
         break;
-      case "Archive":
-        this.setState({ aColor: "orange" });
-        break;
+      // case "Archive":
+      //   this.setState({ aColor: "orange" });
+      //   break;
     }
   }
 
