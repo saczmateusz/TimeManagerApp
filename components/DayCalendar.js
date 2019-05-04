@@ -61,16 +61,37 @@ class DayCalendar extends Component {
     });
   };
 
+  findIndexOfDate = obj => {
+    var index = 0;
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        if (key === this.props.day) {
+          return index;
+        }
+      }
+      ++index;
+    }
+  };
+
   render() {
-    const tasks = this.createList(
-      this.groupByDate(
-        this.sortByKey(store.getState().user.tasks, "start_date")
-      )
+    const grouped = this.groupByDate(
+      this.sortByKey(store.getState().user.tasks, "start_date")
     );
+
+    var index = this.props.day;
+    if (this.props.day) {
+      index = this.findIndexOfDate(grouped);
+    }
+
     return (
       <View style={styles.container}>
-        <Swiper loop={false} showsPagination={false} style={styles.swiper}>
-          {tasks}
+        <Swiper
+          index={index}
+          loop={false}
+          showsPagination={false}
+          style={styles.swiper}
+        >
+          {this.createList(grouped)}
         </Swiper>
         <View style={styles.addTaskView}>
           <TouchableOpacity

@@ -76,7 +76,8 @@ class WeekScreen extends Component {
 
 class DayScreen extends Component {
   render() {
-    return <DayView navigation={this.props.navigation} />;
+    var day = this.props.navigation.getParam("day", 0);
+    return <DayView navigation={this.props.navigation} day={day} />;
   }
 }
 
