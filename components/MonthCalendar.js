@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import Icon from "react-native-vector-icons/Ionicons";
+import AddButton from "./AddButton";
 
 LocaleConfig.locales["pl"] = {
   monthNames: [
@@ -48,7 +49,21 @@ LocaleConfig.defaultLocale = "pl";
 
 export default class MonthCalendar extends Component {
   state = {
-    glob: 0
+    glob: 0,
+    dotArray: [
+      { color: "#ff8080" },
+      { color: "#ffff80" },
+      { color: "#0080ff" },
+      { color: "#80ff80" },
+      { color: "#ff8040" },
+      { color: "#80ffff" },
+      { color: "#ff80c0" },
+      { color: "#00ff80" },
+      { color: "#0080c0" },
+      { color: "#ff80ff" },
+      { color: "#8080ff" },
+      { color: "#00ffff" }
+    ]
   };
 
   sortByKey = (array, key) => {
@@ -69,10 +84,11 @@ export default class MonthCalendar extends Component {
   };
 
   fun = len => {
-    const dotArray = [{ color: "red" }, { color: "green" }, { color: "blue" }];
     var tab = [];
     for (var i = 0; i < len; ++i) {
-      tab.push(dotArray[this.state.glob++ % dotArray.length]);
+      tab.push(
+        this.state.dotArray[this.state.glob++ % this.state.dotArray.length]
+      );
     }
     return tab;
   };
@@ -129,14 +145,7 @@ export default class MonthCalendar extends Component {
             markingType="multi-dot"
           />
         </View>
-        <View style={styles.addTaskView}>
-          <TouchableOpacity
-            style={styles.addTaskTouch}
-            onPress={() => this.props.navigation.navigate("AddTask")}
-          >
-            <Icon name={"md-add"} size={30} color="white" />
-          </TouchableOpacity>
-        </View>
+        <AddButton navigation={this.props.navigation} />
       </View>
     );
   }
@@ -148,18 +157,5 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "stretch",
     backgroundColor: "#2a2a2a"
-  },
-  addTaskView: {
-    position: "absolute",
-    right: 5,
-    bottom: 5
-  },
-  addTaskTouch: {
-    alignItems: "center",
-    justifyContent: "center",
-    width: 60,
-    height: 60,
-    backgroundColor: "#ff8833",
-    borderRadius: 50
   }
 });
