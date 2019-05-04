@@ -27,17 +27,17 @@ class DayCalendar extends Component {
     }, {});
   };
 
-  createList = tasks => {
+  createList = days => {
     var views = [];
-    for (var key in tasks) {
-      if (tasks.hasOwnProperty(key)) {
+    for (var key in days) {
+      if (days.hasOwnProperty(key)) {
         views.push(
-          <ScrollView key={key} style={styles.dayTile}>
+          <View key={key} style={styles.dayTile}>
             <View style={{ alignItems: "center" }}>
               <Text style={styles.dayHeader}>{key}</Text>
             </View>
-            <View>{this.createDay(tasks[key])}</View>
-          </ScrollView>
+            <ScrollView>{this.createDay(days[key])}</ScrollView>
+          </View>
         );
       }
     }
@@ -99,7 +99,8 @@ const styles = StyleSheet.create({
   dayTile: {
     backgroundColor: "orange",
     borderRadius: 3,
-    margin: 5
+    margin: 5,
+    flex: 1
   },
   dayHeader: {
     color: "white",
