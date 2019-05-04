@@ -8,7 +8,7 @@ export default class Navbar extends Component {
   }
   state = {
     mColor: "white",
-    wColor: "white",
+    wColor: "grey",
     dColor: "white",
     aColor: "grey"
   };
@@ -24,9 +24,9 @@ export default class Navbar extends Component {
       case "Day":
         this.setState({ dColor: "orange" });
         break;
-      // case "Archive":
-      //   this.setState({ aColor: "orange" });
-      //   break;
+      case "Archive":
+        this.setState({ aColor: "orange" });
+        break;
     }
   }
 
@@ -55,6 +55,7 @@ export default class Navbar extends Component {
           </View>
         </TouchableOpacity>
         <TouchableOpacity
+          disabled={true}
           style={{ flex: 1 }}
           onPress={() => this.props.navigation.navigate("Week")}
         >
@@ -97,6 +98,7 @@ export default class Navbar extends Component {
           </View>
         </TouchableOpacity>
         <TouchableOpacity
+          disabled={true}
           style={{ flex: 1 }}
           onPress={() => this.props.navigation.navigate("Archive")}
         >

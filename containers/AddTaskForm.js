@@ -30,51 +30,60 @@ class AddTaskForm extends Component {
   };
 
   addTaskSubmit = () => {
-    this.setState({ loading: true, error: null });
-    axios
-      .post(
-        "/api/tasks",
-        {
-          start_date: this.state.start_date,
-          end_date: this.state.end_date,
-          body: this.state.body,
-          priority: this.state.priority
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
+    if (
+      this.state.start_date &&
+      this.state.end_date &&
+      this.state.body &&
+      this.state.priority
+    ) {
+      this.setState({ loading: true, error: null });
+      axios
+        .post(
+          "/api/tasks",
+          {
+            start_date: this.state.start_date,
+            end_date: this.state.end_date,
+            body: this.state.body,
+            priority: this.state.priority
+          },
+          {
+            headers: {
+              "Content-Type": "application/json"
+            }
           }
-        }
-      )
-      .then(response => {
-        this.props.addTask(response.data);
-        this.setState({
-          error: null,
-          loading: false
+        )
+        .then(response => {
+          this.props.addTask(response.data);
+          this.setState({
+            error: null,
+            loading: false
+          });
+          //wiem, ze reducer tutaj jest niepotrzebny i wystarczyloby
+          //dodac lokalnego taska recznie do taskow usera
+          //ale tak jest smieszniej i wiecej zabawy
+          //przy okazji nauczylem sie reduxa
+          //bo najpierw to aktualizowanie taskow usera bylo w MonthCalendar, ale przenioslem,
+          //bo tu jest bardziej uniwersalne, nie pisze 3 razy tego samego (month, week, day update)
+          //XD
+          if (store.getState().task.body) {
+            store.getState().user.tasks.push(store.getState().task);
+            store.getState().task = {};
+          }
+          this.props.navigation.navigate("Day", {
+            day: response.data.start_date.substring(0, 10)
+          });
+        })
+        .catch(error => {
+          this.setState({ error, loading: false });
         });
-        //wiem, ze reducer tutaj jest niepotrzebny i wystarczyloby
-        //dodac lokalnego taska recznie do taskow usera
-        //ale tak jest smieszniej i wiecej zabawy
-        //przy okazji nauczylem sie reduxa
-        //bo najpierw to aktualizowanie taskow usera bylo w MonthCalendar, ale przenioslem,
-        //bo tu jest bardziej uniwersalne, nie pisze 3 razy tego samego (month, week, day update)
-        //XD
-        if (store.getState().task.body) {
-          store.getState().user.tasks.push(store.getState().task);
-          store.getState().task = {};
-        }
-        this.props.navigation.navigate("Day");
-      })
-      .catch(error => {
-        this.setState({ error, loading: false });
-      });
 
-    this.setState({
-      start_date: "",
-      end_date: "",
-      body: "",
-      priority: ""
-    });
+      this.setState({
+        start_date: "",
+        end_date: "",
+        body: "",
+        priority: ""
+      });
+    } else alert("Uzupełnij wszystkie pola");
   };
 
   render() {

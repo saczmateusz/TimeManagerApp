@@ -20,31 +20,33 @@ class LoginForm extends Component {
   };
 
   loginSubmit = () => {
-    this.setState({ loading: true, error: null });
-    axios
-      .post("/auth/login", {
-        username: this.state.username,
-        password: this.state.passwd
-      })
-      .then(response => {
-        this.props.setUser(response.data.user);
-        this.props.setToken(response.data.token);
-        this.setState({ error: null, loading: false });
+    if (this.state.username && this.state.passwd) {
+      this.setState({ loading: true, error: null });
+      axios
+        .post("/auth/login", {
+          username: this.state.username,
+          password: this.state.passwd
+        })
+        .then(response => {
+          this.props.setUser(response.data.user);
+          this.props.setToken(response.data.token);
+          this.setState({ error: null, loading: false });
 
-        axios.defaults.headers.common["Authorization"] = `Bearer ${
-          response.data.token
-        }`;
+          axios.defaults.headers.common["Authorization"] = `Bearer ${
+            response.data.token
+          }`;
 
-        this.props.navigation.navigate("Day");
-      })
-      .catch(error => {
-        this.setState({ error, loading: false });
+          this.props.navigation.navigate("Day");
+        })
+        .catch(error => {
+          this.setState({ error, loading: false });
+        });
+
+      this.setState({
+        username: "",
+        passwd: ""
       });
-
-    this.setState({
-      username: "",
-      passwd: ""
-    });
+    } else alert("Uzupełnij wszystkie pola");
   };
 
   render() {

@@ -22,37 +22,39 @@ class RegisterForm extends Component {
   };
 
   registerSubmit = () => {
-    if (this.state.passwd === this.state.passrt) {
-      this.setState({ loading: true, error: null });
-      axios
-        .post("/auth/register", {
-          username: this.state.username,
-          email: this.state.email,
-          password: this.state.passwd
-        })
-        .then(response => {
-          response.data.user.tasks = [];
-          this.props.setUser(response.data.user);
-          this.props.setToken(response.data.token);
-          this.setState({ error: null, loading: false });
+    if (this.state.username && this.state.email && this.state.passwd) {
+      if (this.state.passwd === this.state.passrt) {
+        this.setState({ loading: true, error: null });
+        axios
+          .post("/auth/register", {
+            username: this.state.username,
+            email: this.state.email,
+            password: this.state.passwd
+          })
+          .then(response => {
+            response.data.user.tasks = [];
+            this.props.setUser(response.data.user);
+            this.props.setToken(response.data.token);
+            this.setState({ error: null, loading: false });
 
-          axios.defaults.headers.common["Authorization"] = `Bearer ${
-            response.data.token
-          }`;
+            axios.defaults.headers.common["Authorization"] = `Bearer ${
+              response.data.token
+            }`;
 
-          this.props.navigation.navigate("Day");
-        })
-        .catch(error => {
-          this.setState({ error, loading: false });
+            this.props.navigation.navigate("Day");
+          })
+          .catch(error => {
+            this.setState({ error, loading: false });
+          });
+
+        this.setState({
+          username: "",
+          email: "",
+          passwd: "",
+          passrt: ""
         });
-
-      this.setState({
-        username: "",
-        email: "",
-        passwd: "",
-        passrt: ""
-      });
-    }
+      } else alert("Hasła różne");
+    } else alert("Uzupełnij wszystkie pola");
   };
 
   render() {
