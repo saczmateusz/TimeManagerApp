@@ -47,6 +47,10 @@ LocaleConfig.locales["pl"] = {
 LocaleConfig.defaultLocale = "pl";
 
 export default class MonthCalendar extends Component {
+  state = {
+    glob: 0
+  };
+
   sortByKey = (array, key) => {
     return array.sort(function(a, b) {
       var x = a[key];
@@ -64,8 +68,31 @@ export default class MonthCalendar extends Component {
     }, {});
   };
 
+  fun = len => {
+    const dotArray = [{ color: "red" }, { color: "green" }, { color: "blue" }];
+    var tab = [];
+    for (var i = 0; i < len; ++i) {
+      tab.push(dotArray[this.state.glob++ % dotArray.length]);
+    }
+    return tab;
+  };
+
+  createList = days => {
+    for (var key in days) {
+      if (days.hasOwnProperty(key)) {
+        const len = days[key].length;
+        days[key] = {
+          dots: this.fun(len < 6 ? len : 5)
+        };
+      }
+    }
+  };
+
   render() {
-    const dotArray = [{ color: "blue" }, { color: "red" }, { color: "green" }];
+    const dotList = this.groupByDate(
+      this.sortByKey(store.getState().user.tasks, "start_date")
+    );
+    this.createList(dotList);
     return (
       <View style={styles.container}>
         <View style={{ flex: 6, alignItems: "stretch" }}>
@@ -94,20 +121,10 @@ export default class MonthCalendar extends Component {
               textMonthFontSize: 16,
               textDayHeaderFontSize: 16
             }}
-            markedDates={{
-              "2019-05-25": {
-                dots: [
-                  dotArray[0],
-                  dotArray[2],
-                  dotArray[1],
-                  dotArray[0],
-                  dotArray[2]
-                ]
-              },
-              "2019-05-26": {
-                dots: [dotArray[2], dotArray[0]]
-              }
+            onDayPress={day => {
+              this.props.navigation.navigate("Day", { day: day.dateString });
             }}
+            markedDates={dotList}
             // Date marking style [simple/period/multi-dot/custom]. Default = 'simple'
             markingType="multi-dot"
           />
