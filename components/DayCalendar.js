@@ -7,6 +7,7 @@ import {
   ScrollView
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import Swiper from "react-native-swiper";
 
 class DayCalendar extends Component {
   sortByKey = (array, key) => {
@@ -31,12 +32,12 @@ class DayCalendar extends Component {
     for (var key in tasks) {
       if (tasks.hasOwnProperty(key)) {
         views.push(
-          <View key={key} style={styles.dayTile}>
+          <ScrollView key={key} style={styles.dayTile}>
             <View style={{ alignItems: "center" }}>
               <Text style={styles.dayHeader}>{key}</Text>
             </View>
             <View>{this.createDay(tasks[key])}</View>
-          </View>
+          </ScrollView>
         );
       }
     }
@@ -48,8 +49,12 @@ class DayCalendar extends Component {
       return (
         <View key={task.id} style={styles.taskTile}>
           <Text style={styles.taskText}>Nazwa: {task.body}</Text>
-          <Text style={styles.taskText}>Początek: {task.start_date}</Text>
-          <Text style={styles.taskText}>Koniec: {task.end_date}</Text>
+          <Text style={styles.taskText}>
+            Początek: {task.start_date.substring(11, 16)}
+          </Text>
+          <Text style={styles.taskText}>
+            Koniec: {task.end_date.substring(11, 16)}
+          </Text>
           <Text style={styles.taskText}>Priorytet: {task.priority}</Text>
         </View>
       );
@@ -64,7 +69,9 @@ class DayCalendar extends Component {
     );
     return (
       <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scroll}>{tasks}</ScrollView>
+        <Swiper loop={false} showsPagination={false} style={styles.swiper}>
+          {tasks}
+        </Swiper>
         <View style={styles.addTaskView}>
           <TouchableOpacity
             style={styles.addTaskTouch}
@@ -104,6 +111,7 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 5,
     paddingHorizontal: 10,
+    paddingVertical: 5,
     borderRadius: 3
   },
   taskText: {
