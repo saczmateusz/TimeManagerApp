@@ -47,21 +47,25 @@ LocaleConfig.locales["pl"] = {
 LocaleConfig.defaultLocale = "pl";
 
 export default class MonthCalendar extends Component {
-  // componentDidMount() {
-  //   if (store.getState().task.body) {
-  //     store.getState().user.tasks.push(store.getState().task);
-  //     store.getState().task = {};
-  //   }
-  // }
+  sortByKey = (array, key) => {
+    return array.sort(function(a, b) {
+      var x = a[key];
+      var y = b[key];
+      return x < y ? -1 : x > y ? 1 : 0;
+    });
+  };
+
+  groupByDate = data => {
+    return data.reduce(function(group, object) {
+      group[object.start_date.substring(0, 10)] =
+        group[object.start_date.substring(0, 10)] || [];
+      group[object.start_date.substring(0, 10)].push(object);
+      return group;
+    }, {});
+  };
 
   render() {
-    const vacation = {
-      key: "vacation",
-      color: "red",
-      selectedDotColor: "blue"
-    };
-    const massage = { key: "massage", color: "blue", selectedDotColor: "blue" };
-    const workout = { key: "workout", color: "green" };
+    const dotArray = [{ color: "blue" }, { color: "red" }, { color: "green" }];
     return (
       <View style={styles.container}>
         <View style={{ flex: 6, alignItems: "stretch" }}>
@@ -92,13 +96,20 @@ export default class MonthCalendar extends Component {
             }}
             markedDates={{
               "2019-05-25": {
-                dots: [vacation, massage, workout],
-                selected: true,
-                selectedColor: "red"
+                dots: [
+                  dotArray[0],
+                  dotArray[2],
+                  dotArray[1],
+                  dotArray[0],
+                  dotArray[2]
+                ]
               },
-              "2019-05-26": { dots: [massage, workout], disabled: true }
+              "2019-05-26": {
+                dots: [dotArray[2], dotArray[0]]
+              }
             }}
-            markingType={"multi-dot"}
+            // Date marking style [simple/period/multi-dot/custom]. Default = 'simple'
+            markingType="multi-dot"
           />
         </View>
         <View style={styles.addTaskView}>
@@ -119,11 +130,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     alignItems: "stretch",
-    paddingTop: 50,
     backgroundColor: "#2a2a2a"
-  },
-  text: {
-    color: "white"
   },
   addTaskView: {
     position: "absolute",
@@ -135,7 +142,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: 60,
     height: 60,
-    backgroundColor: "orange",
+    backgroundColor: "#ff8833",
     borderRadius: 50
   }
 });
