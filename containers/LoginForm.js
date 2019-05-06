@@ -12,11 +12,16 @@ import { setUser } from "../reducers/actions/user";
 import { setToken } from "../reducers/actions/token";
 
 class LoginForm extends Component {
+  componentDidMount() {
+    this.setState({ shownUser: this.props.user.username });
+  }
+
   state = {
     loading: false,
     error: null,
     username: "",
-    passwd: ""
+    passwd: "",
+    shownUser: ""
   };
 
   loginSubmit = () => {
@@ -114,14 +119,43 @@ class LoginForm extends Component {
             </View>
           </TouchableOpacity>
         </View>
+        <View style={{ paddingHorizontal: 10 }}>
+          <Text
+            style={{ color: "white", textAlign: "center", marginVertical: 10 }}
+          >
+            LUB
+          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              store.getState().user = {};
+              store.getState().token = "";
+              this.setState({ shownUser: "0" });
+            }}
+          >
+            <View
+              style={{
+                height: 35,
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "#ff8833",
+                borderRadius: 2
+              }}
+            >
+              <Text style={{ color: "white", fontSize: 18 }}>Wyloguj się</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
         <View style={{ alignItems: "center", paddingHorizontal: 10 }}>
           <Text style={{ color: "white" }}>
             {this.state.error ? "Logowanie nie powiodło się" : ""}
           </Text>
 
           <Text style={{ color: "white" }}>
-            {this.props.user.email ? "Zalogowano jako " : ""}
-            {JSON.stringify(this.props.user.username)}
+            {this.state.shownUser
+              ? this.state.shownUser === "0"
+                ? "Wylogowano"
+                : "Zalogowano jako " + this.state.shownUser
+              : ""}
           </Text>
         </View>
       </View>

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
-import Icon from "react-native-vector-icons/Ionicons";
 import AddButton from "./AddButton";
 
 LocaleConfig.locales["pl"] = {
