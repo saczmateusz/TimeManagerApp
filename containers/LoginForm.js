@@ -56,70 +56,102 @@ class LoginForm extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <TextInput
-          onChangeText={username => this.setState({ username })}
-          value={this.state.username}
-          placeholder="Nazwa użytkownika"
-          placeholderTextColor="#565554"
-          style={styles.form}
-        />
-        <TextInput
-          onChangeText={passwd => this.setState({ passwd })}
-          value={this.state.passwd}
-          placeholder="Hasło"
-          placeholderTextColor="#565554"
-          secureTextEntry
-          style={styles.form}
-        />
-
-        <View
-          style={{
+      <View>
+        {this.state.shownUser ? (
+          <View  style={{
             paddingHorizontal: 20,
             paddingTop: 20
-          }}
-        >
-          <TouchableOpacity onPress={() => this.loginSubmit()}>
-            <View
-              style={styles.button}
+          }}>
+            <Text
+              style={{
+                color: "black",
+                textAlign: "center",
+                marginVertical: 10
+              }}
             >
-              <Text style={styles.buttonText}>
-                {this.state.loading ? "Wysyłanie..." : "Zaloguj"}
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={{ paddingHorizontal: 20 }}>
-          <Text
-            style={{ color: "black", textAlign: "center", marginVertical: 10 }}
-          >
-            LUB
-          </Text>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate("Register")}
-          >
-            <View
-              style={{...styles.button, backgroundColor: "#ececec"}}
+              {"Zalogowano jako " + this.state.shownUser}
+            </Text>
+            <TouchableOpacity
+              onPress={() => {
+                store.getState().user = {};
+                store.getState().token = "";
+                this.setState({ shownUser: "" });
+              }}
             >
-              <Text style={{...styles.buttonText, color: "#333"}}>
-                Zarejestruj się
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={{ alignItems: "center", paddingHorizontal: 10 }}>
-          <Text style={{ color: "black" }}>
-            {this.state.error ? "Logowanie nie powiodło się" : ""}
-          </Text>
+              <View style={{ ...styles.button }}>
+                <Text style={{ ...styles.buttonText }}>
+                  Wyloguj się
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <View style={styles.container}>
+            <TextInput
+              onChangeText={username => this.setState({ username })}
+              value={this.state.username}
+              placeholder="Nazwa użytkownika"
+              placeholderTextColor="#565554"
+              style={styles.form}
+            />
+            <TextInput
+              onChangeText={passwd => this.setState({ passwd })}
+              value={this.state.passwd}
+              placeholder="Hasło"
+              placeholderTextColor="#565554"
+              secureTextEntry
+              style={styles.form}
+            />
 
-          <Text style={{ color: "black" }}>
-            {this.state.shownUser
-              ? this.state.shownUser === "0"
-                ? "Wylogowano"
-                : "Zalogowano jako " + this.state.shownUser
-              : ""}
-          </Text>
-        </View>
+            <View
+              style={{
+                paddingHorizontal: 20,
+                paddingTop: 20
+              }}
+            >
+              <TouchableOpacity onPress={() => this.loginSubmit()}>
+                <View style={styles.button}>
+                  <Text style={styles.buttonText}>
+                    {this.state.loading ? "Wysyłanie..." : "Zaloguj"}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View style={{ paddingHorizontal: 20 }}>
+              <Text
+                style={{
+                  color: "black",
+                  textAlign: "center",
+                  marginVertical: 10
+                }}
+              >
+                LUB
+              </Text>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate("Register")}
+              >
+                <View style={{ ...styles.button, backgroundColor: "#ececec" }}>
+                  <Text style={{ ...styles.buttonText, color: "#333" }}>
+                    Zarejestruj się
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View style={{ alignItems: "center", paddingHorizontal: 10 }}>
+              <Text style={{ color: "black" }}>
+                {this.state.error ? "Logowanie nie powiodło się" : ""}
+              </Text>
+
+              <Text style={{ color: "black" }}>
+                {this.state.shownUser
+                  ? this.state.shownUser === "0"
+                    ? "Wylogowano"
+                    : "Zalogowano jako " + this.state.shownUser
+                  : ""}
+              </Text>
+            </View>
+          </View>
+        )}
       </View>
     );
   }
@@ -180,7 +212,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontSize: 15,
-    textTransform: "uppercase" 
+    textTransform: "uppercase"
   }
 });
 
