@@ -72,18 +72,40 @@ class LoginForm extends Component {
               {"Zalogowano jako " + this.state.shownUser}
             </Text>
             <TouchableOpacity
-              onPress={() => {
+              
+              onPress={() => this.props.navigation.navigate("Day")}
+            >
+              <View style={{ ...styles.button }}>
+                <Text style={{ ...styles.buttonText }}>
+                  Wróć do kalendarza
+                </Text>
+              </View>
+            </TouchableOpacity>
+
+            
+              <Text
+                style={{
+                  color: "black",
+                  textAlign: "center",
+                  marginVertical: 10
+                }}
+              >
+                LUB
+              </Text>
+              <TouchableOpacity
+               onPress={() => {
                 store.getState().user = {};
                 store.getState().token = "";
                 this.setState({ shownUser: "" });
               }}
-            >
-              <View style={{ ...styles.button }}>
-                <Text style={{ ...styles.buttonText }}>
-                  Wyloguj się
-                </Text>
-              </View>
-            </TouchableOpacity>
+              >
+                <View style={{ ...styles.button, backgroundColor: "#ececec" }}>
+                  <Text style={{ ...styles.buttonText, color: "#333" }}>
+                    Wyloguj się
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            
           </View>
         ) : (
           <View style={styles.container}>

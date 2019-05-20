@@ -7,9 +7,9 @@ export default class Navbar extends Component {
     super(props);
   }
   state = {
-    mColor: "white",
+    mColor: "#565554",
     wColor: "grey",
-    dColor: "white",
+    dColor: "#565554",
     aColor: "grey"
   };
 
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#3a3a3a"
+    backgroundColor: "#e8e8e8"
   },
   iconView: {
     height: 50,
