@@ -36,7 +36,7 @@ export default class DateTimeButton extends Component {
               : "wybierz datę " + this.props.name
           }
           onPress={this.showDateTimePicker}
-          color="#cc8833"
+          color="#ff8833"
         />
         <DateTimePicker
           isVisible={this.state.isVisible}
