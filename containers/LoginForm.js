@@ -75,29 +75,23 @@ class LoginForm extends Component {
 
         <View
           style={{
-            paddingHorizontal: 10,
+            paddingHorizontal: 20,
             paddingTop: 20
           }}
         >
           <TouchableOpacity onPress={() => this.loginSubmit()}>
             <View
-              style={{
-                height: 35,
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#ff8833",
-                borderRadius: 2
-              }}
+              style={styles.button}
             >
-              <Text style={{ color: "white", fontSize: 18 }}>
+              <Text style={styles.buttonText}>
                 {this.state.loading ? "Wysyłanie..." : "Zaloguj"}
               </Text>
             </View>
           </TouchableOpacity>
         </View>
-        <View style={{ paddingHorizontal: 10 }}>
+        <View style={{ paddingHorizontal: 20 }}>
           <Text
-            style={{ color: "white", textAlign: "center", marginVertical: 10 }}
+            style={{ color: "black", textAlign: "center", marginVertical: 10 }}
           >
             LUB
           </Text>
@@ -105,43 +99,11 @@ class LoginForm extends Component {
             onPress={() => this.props.navigation.navigate("Register")}
           >
             <View
-              style={{
-                height: 35,
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#ff8833",
-                borderRadius: 2
-              }}
+              style={{...styles.button, backgroundColor: "#ececec"}}
             >
-              <Text style={{ color: "white", fontSize: 18 }}>
+              <Text style={{...styles.buttonText, color: "#333"}}>
                 Zarejestruj się
               </Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={{ paddingHorizontal: 10 }}>
-          <Text
-            style={{ color: "white", textAlign: "center", marginVertical: 10 }}
-          >
-            LUB
-          </Text>
-          <TouchableOpacity
-            onPress={() => {
-              store.getState().user = {};
-              store.getState().token = "";
-              this.setState({ shownUser: "0" });
-            }}
-          >
-            <View
-              style={{
-                height: 35,
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#ff8833",
-                borderRadius: 2
-              }}
-            >
-              <Text style={{ color: "white", fontSize: 18 }}>Wyloguj się</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -162,7 +124,34 @@ class LoginForm extends Component {
     );
   }
 }
-
+/*
+<View style={{ paddingHorizontal: 10 }}>
+<Text
+  style={{ color: "white", textAlign: "center", marginVertical: 10 }}
+>
+  LUB
+</Text>
+<TouchableOpacity
+  onPress={() => {
+    store.getState().user = {};
+    store.getState().token = "";
+    this.setState({ shownUser: "0" });
+  }}
+>
+  <View
+    style={{
+      height: 35,
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: "#ff8833",
+      borderRadius: 2
+    }}
+  >
+    <Text style={{ color: "white", fontSize: 18 }}>Wyloguj się</Text>
+  </View>
+</TouchableOpacity>
+</View>
+*/
 const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
@@ -170,15 +159,27 @@ const styles = StyleSheet.create({
     alignItems: "stretch"
   },
   form: {
-    borderWidth: 1,
-    borderColor: "orange",
-    backgroundColor: "orange",
+    borderBottomWidth: 2,
+    borderColor: "#e4e4e4",
+    backgroundColor: "#e8e8e8",
     height: 50,
-    padding: 5,
-    margin: 10,
-    marginLeft: 20,
-    marginRight: 20,
-    fontFamily: "Roboto-Light"
+    padding: 15,
+    margin: 20,
+    borderTopLeftRadius: 4,
+    borderTopRightRadius: 4
+  },
+  button: {
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#ff8833",
+    borderRadius: 4,
+    elevation: 1
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 15,
+    textTransform: "uppercase" 
   }
 });
 
