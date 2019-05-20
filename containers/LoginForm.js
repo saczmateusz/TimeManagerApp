@@ -108,11 +108,11 @@ class LoginForm extends Component {
           </TouchableOpacity>
         </View>
         <View style={{ alignItems: "center", paddingHorizontal: 10 }}>
-          <Text style={{ color: "white" }}>
+          <Text style={{ color: "black" }}>
             {this.state.error ? "Logowanie nie powiodło się" : ""}
           </Text>
 
-          <Text style={{ color: "white" }}>
+          <Text style={{ color: "black" }}>
             {this.state.shownUser
               ? this.state.shownUser === "0"
                 ? "Wylogowano"

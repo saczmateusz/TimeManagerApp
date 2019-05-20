@@ -94,27 +94,21 @@ class RegisterForm extends Component {
           style={{
             paddingHorizontal: 10,
             paddingTop: 20,
-            flexDirection: "column"
+           // flexDirection: "column"
           }}
         >
           <TouchableOpacity onPress={() => this.registerSubmit()}>
             <View
-              style={{
-                height: 35,
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#ff8833",
-                borderRadius: 2
-              }}
+              style={styles.button}
             >
-              <Text style={{ color: "white", fontSize: 18 }}>
+              <Text style={styles.buttonText}>
                 {this.state.loading ? "Wysyłanie..." : "Zarejestruj się"}
               </Text>
             </View>
           </TouchableOpacity>
         </View>
-        <View style={{ alignItems: "center", padding: 10 }}>
-          <Text style={{ color: "white" }}>
+        <View style={{ alignItems: "center", paddingHorizontal: 10 }}>
+          <Text style={{ color: "black" }}>
             {this.state.error ? "Rejestracja nie powiodła się" : ""}
           </Text>
         </View>
@@ -123,7 +117,7 @@ class RegisterForm extends Component {
   }
 }
 
-const styles = StyleSheet.create({
+/*const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
     paddingTop: 20,
@@ -139,6 +133,38 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
     fontFamily: "Roboto-Light"
+  }
+});*/
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "column",
+    paddingTop: 20,
+    alignItems: "stretch"
+  },
+  form: {
+    borderBottomWidth: 2,
+    borderColor: "#e4e4e4",
+    backgroundColor: "#e8e8e8",
+    height: 50,
+    padding: 15,
+    margin: 20,
+    marginVertical: 10,
+    borderTopLeftRadius: 4,
+    borderTopRightRadius: 4
+  },
+  button: {
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#ff8833",
+    borderRadius: 4,
+    elevation: 1
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 15,
+    textTransform: "uppercase" 
   }
 });
 
