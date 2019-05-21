@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import { addTask } from "../reducers/actions/task";
 import axios from "axios";
 import DateTimeButton from "../components/DateTimeButton";
+import NumericInput from "../components/NumericInput";
 
 class AddTaskForm extends Component {
   state = {
@@ -108,7 +109,7 @@ class AddTaskForm extends Component {
           placeholderTextColor="#565554"
           style={styles.form}
         />
-        <TextInput
+        <NumericInput
           onChangeText={priority => this.setState({ priority })}
           value={this.state.priority}
           placeholder="Priorytet"
