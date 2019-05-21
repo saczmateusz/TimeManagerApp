@@ -27,13 +27,13 @@ class DayView extends Component {
             </View>
           </TouchableOpacity>
         </View>
-        <Navbar navigation={this.props.navigation} current={"Day"} />
         <View style={{ flex: 7 }}>
           <DayCalendar
             navigation={this.props.navigation}
             day={this.props.day}
           />
         </View>
+        <Navbar navigation={this.props.navigation} current={"Day"} />
       </View>
     );
   }

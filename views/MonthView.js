@@ -27,7 +27,6 @@ class MonthView extends Component {
             </View>
           </TouchableOpacity>
         </View>
-        <Navbar navigation={this.props.navigation} current={"Month"} />
         <View
           style={{
             flex: 7
@@ -35,6 +34,7 @@ class MonthView extends Component {
         >
           <MonthCalendar navigation={this.props.navigation} />
         </View>
+        <Navbar navigation={this.props.navigation} current={"Month"} />
       </View>
     );
   }
