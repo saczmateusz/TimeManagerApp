@@ -44,18 +44,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: "#2a2a2a"
+    backgroundColor: "#f5f5f6"
   },
   banner: {
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#1a1a1a"
+    backgroundColor: "#ff9800"
   },
   header: {
     color: "white",
-    fontSize: 20,
+    fontSize: 25,
     paddingLeft: 55
   }
 });

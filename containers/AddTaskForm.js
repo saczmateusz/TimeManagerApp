@@ -152,14 +152,14 @@ const styles = StyleSheet.create({
   },
   form: {
     borderWidth: 1,
-    borderColor: "orange",
-    backgroundColor: "orange",
+    borderColor: "#e4e4e4",
+    backgroundColor: "#e8e8e8",
     height: 50,
     padding: 5,
     margin: 10,
     marginLeft: 20,
     marginRight: 20,
-    fontFamily: "Roboto-Light"
+    //fontFamily: "Roboto-Light"
   }
 });
 

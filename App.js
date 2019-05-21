@@ -19,7 +19,7 @@ export default class App extends Component {
 
     const customTextProps = {
       style: {
-        fontFamily: "Roboto-Light"
+        fontFamily: "RobotoMono-Regular"
       }
     };
 

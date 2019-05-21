@@ -49,7 +49,7 @@ LocaleConfig.defaultLocale = "pl";
 export default class MonthCalendar extends Component {
   state = {
     glob: 0,
-    dotArray: [
+    dotArray: [ // TODO: widoczność na tle
       { color: "#ff8080" },
       { color: "#ffff80" },
       { color: "#0080ff" },
@@ -117,18 +117,18 @@ export default class MonthCalendar extends Component {
               height: 300
             }}
             theme={{
-              backgroundColor: "#333333",
-              calendarBackground: "#333333",
-              textSectionTitleColor: "#b6c1cd",
+              backgroundColor: "#f5f5f6",
+              calendarBackground: "#f5f5f6",
+              textSectionTitleColor: "grey",//dni tygodnia
               selectedDayBackgroundColor: "#00adf5",
               selectedDayTextColor: "#ffffff",
-              todayTextColor: "orange",
-              dayTextColor: "#d9e1e8",
-              textDisabledColor: "#555555",
+              todayTextColor: "#ff8833",//dzisiaj
+              dayTextColor: "#565554",// dni
+              textDisabledColor: "#b6c1cd", // dni spoza miesiąca
               dotColor: "#00adf5",
               selectedDotColor: "#ffffff",
-              arrowColor: "orange",
-              monthTextColor: "orange",
+              arrowColor: "#ff9800",
+              monthTextColor: "#ff9800",
               textDayFontFamily: "Roboto-Light",
               textMonthFontFamily: "Roboto-Light",
               textDayHeaderFontFamily: "Roboto-Light",
@@ -155,6 +155,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     alignItems: "stretch",
-    backgroundColor: "#2a2a2a"
+    backgroundColor: "#f5f5f6"
   }
 });

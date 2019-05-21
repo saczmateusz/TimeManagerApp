@@ -26,7 +26,7 @@ export default class AddTaskView extends Component {
             <Text style={styles.header}>Dodaj</Text>
           </View>
         </View>
-        <View style={{ flex: 8, backgroundColor: "#2a2a2a" }}>
+        <View style={{ flex: 8, backgroundColor: "#f5f5f6" }}>
           <AddEventForm navigation={this.props.navigation} />
         </View>
       </View>
@@ -40,11 +40,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#1a1a1a"
+    backgroundColor: "#ff9800"
   },
   header: {
     color: "white",
-    fontSize: 20,
+    fontSize: 25,
     paddingRight: 55
   }
 });

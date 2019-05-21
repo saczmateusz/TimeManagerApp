@@ -56,113 +56,156 @@ class LoginForm extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <TextInput
-          onChangeText={username => this.setState({ username })}
-          value={this.state.username}
-          placeholder="Nazwa użytkownika"
-          placeholderTextColor="#565554"
-          style={styles.form}
-        />
-        <TextInput
-          onChangeText={passwd => this.setState({ passwd })}
-          value={this.state.passwd}
-          placeholder="Hasło"
-          placeholderTextColor="#565554"
-          secureTextEntry
-          style={styles.form}
-        />
-
-        <View
-          style={{
-            paddingHorizontal: 10,
+      <View>
+        {this.state.shownUser ? (
+          <View  style={{
+            paddingHorizontal: 20,
             paddingTop: 20
-          }}
-        >
-          <TouchableOpacity onPress={() => this.loginSubmit()}>
-            <View
+          }}>
+            <Text
               style={{
-                height: 35,
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#ff8833",
-                borderRadius: 2
+                color: "black",
+                textAlign: "center",
+                marginVertical: 10
               }}
             >
-              <Text style={{ color: "white", fontSize: 18 }}>
-                {this.state.loading ? "Wysyłanie..." : "Zaloguj"}
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={{ paddingHorizontal: 10 }}>
-          <Text
-            style={{ color: "white", textAlign: "center", marginVertical: 10 }}
-          >
-            LUB
-          </Text>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate("Register")}
-          >
-            <View
-              style={{
-                height: 35,
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#ff8833",
-                borderRadius: 2
-              }}
+              {"Zalogowano jako " + this.state.shownUser}
+            </Text>
+            <TouchableOpacity
+              
+              onPress={() => this.props.navigation.navigate("Day")}
             >
-              <Text style={{ color: "white", fontSize: 18 }}>
-                Zarejestruj się
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={{ paddingHorizontal: 10 }}>
-          <Text
-            style={{ color: "white", textAlign: "center", marginVertical: 10 }}
-          >
-            LUB
-          </Text>
-          <TouchableOpacity
-            onPress={() => {
-              store.getState().user = {};
-              store.getState().token = "";
-              this.setState({ shownUser: "0" });
-            }}
-          >
-            <View
-              style={{
-                height: 35,
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#ff8833",
-                borderRadius: 2
-              }}
-            >
-              <Text style={{ color: "white", fontSize: 18 }}>Wyloguj się</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={{ alignItems: "center", paddingHorizontal: 10 }}>
-          <Text style={{ color: "white" }}>
-            {this.state.error ? "Logowanie nie powiodło się" : ""}
-          </Text>
+              <View style={{ ...styles.button }}>
+                <Text style={{ ...styles.buttonText }}>
+                  Wróć do kalendarza
+                </Text>
+              </View>
+            </TouchableOpacity>
 
-          <Text style={{ color: "white" }}>
-            {this.state.shownUser
-              ? this.state.shownUser === "0"
-                ? "Wylogowano"
-                : "Zalogowano jako " + this.state.shownUser
-              : ""}
-          </Text>
-        </View>
+            
+              <Text
+                style={{
+                  color: "black",
+                  textAlign: "center",
+                  marginVertical: 10
+                }}
+              >
+                LUB
+              </Text>
+              <TouchableOpacity
+               onPress={() => {
+                store.getState().user = {};
+                store.getState().token = "";
+                this.setState({ shownUser: "" });
+              }}
+              >
+                <View style={{ ...styles.button, backgroundColor: "#ececec" }}>
+                  <Text style={{ ...styles.buttonText, color: "#333" }}>
+                    Wyloguj się
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            
+          </View>
+        ) : (
+          <View style={styles.container}>
+            <TextInput
+              onChangeText={username => this.setState({ username })}
+              value={this.state.username}
+              placeholder="Nazwa użytkownika"
+              placeholderTextColor="#565554"
+              style={styles.form}
+            />
+            <TextInput
+              onChangeText={passwd => this.setState({ passwd })}
+              value={this.state.passwd}
+              placeholder="Hasło"
+              placeholderTextColor="#565554"
+              secureTextEntry
+              style={styles.form}
+            />
+
+            <View
+              style={{
+                paddingHorizontal: 20,
+                paddingTop: 20
+              }}
+            >
+              <TouchableOpacity onPress={() => this.loginSubmit()}>
+                <View style={styles.button}>
+                  <Text style={styles.buttonText}>
+                    {this.state.loading ? "Wysyłanie..." : "Zaloguj"}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View style={{ paddingHorizontal: 20 }}>
+              <Text
+                style={{
+                  color: "black",
+                  textAlign: "center",
+                  marginVertical: 10
+                }}
+              >
+                LUB
+              </Text>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate("Register")}
+              >
+                <View style={{ ...styles.button, backgroundColor: "#ececec" }}>
+                  <Text style={{ ...styles.buttonText, color: "#333" }}>
+                    Zarejestruj się
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View style={{ alignItems: "center", paddingHorizontal: 10 }}>
+              <Text style={{ color: "black" }}>
+                {this.state.error ? "Logowanie nie powiodło się" : ""}
+              </Text>
+
+              <Text style={{ color: "black" }}>
+                {this.state.shownUser
+                  ? this.state.shownUser === "0"
+                    ? "Wylogowano"
+                    : "Zalogowano jako " + this.state.shownUser
+                  : ""}
+              </Text>
+            </View>
+          </View>
+        )}
       </View>
     );
   }
 }
-
+/*
+<View style={{ paddingHorizontal: 10 }}>
+<Text
+  style={{ color: "white", textAlign: "center", marginVertical: 10 }}
+>
+  LUB
+</Text>
+<TouchableOpacity
+  onPress={() => {
+    store.getState().user = {};
+    store.getState().token = "";
+    this.setState({ shownUser: "0" });
+  }}
+>
+  <View
+    style={{
+      height: 35,
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: "#ff8833",
+      borderRadius: 2
+    }}
+  >
+    <Text style={{ color: "white", fontSize: 18 }}>Wyloguj się</Text>
+  </View>
+</TouchableOpacity>
+</View>
+*/
 const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
@@ -170,15 +213,28 @@ const styles = StyleSheet.create({
     alignItems: "stretch"
   },
   form: {
-    borderWidth: 1,
-    borderColor: "orange",
-    backgroundColor: "orange",
+    borderBottomWidth: 2,
+    borderColor: "#e4e4e4",
+    backgroundColor: "#e8e8e8",
     height: 50,
-    padding: 5,
-    margin: 10,
-    marginLeft: 20,
-    marginRight: 20,
-    fontFamily: "Roboto-Light"
+    padding: 15,
+    margin: 20,
+    marginVertical: 10,
+    borderTopLeftRadius: 4,
+    borderTopRightRadius: 4
+  },
+  button: {
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#ff8833",
+    borderRadius: 4,
+    elevation: 1
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 15,
+    textTransform: "uppercase"
   }
 });
 

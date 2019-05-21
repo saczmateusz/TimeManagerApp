@@ -99,25 +99,25 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "stretch",
-    backgroundColor: "#1a1a1a",
+    backgroundColor: "#f5f5f6",
     paddingHorizontal: 10
   },
   scroll: {
     flexDirection: "column"
   },
   dayTile: {
-    backgroundColor: "orange",
+    backgroundColor: "#f5f5f6",
     borderRadius: 3,
     margin: 5,
     flex: 1
   },
   dayHeader: {
-    color: "white",
+    color: "#333",
     fontSize: 20,
     fontFamily: "Roboto-Bold"
   },
   taskTile: {
-    backgroundColor: "#555555",
+    backgroundColor: "#e1e1e1",
     flex: 1,
     margin: 5,
     paddingHorizontal: 10,
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     borderRadius: 3
   },
   taskText: {
-    color: "white",
+    color: "#333",
     fontSize: 15
   }
 });

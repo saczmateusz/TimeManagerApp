@@ -20,14 +20,14 @@ export default class AddButton extends Component {
 const styles = StyleSheet.create({
   addTaskView: {
     position: "absolute",
-    right: 5,
-    bottom: 5
+    right: 10,
+    bottom: 10
   },
   addTaskTouch: {
     alignItems: "center",
     justifyContent: "center",
-    width: 60,
-    height: 60,
+    width: 70,
+    height: 70,
     backgroundColor: "#ff8833",
     borderRadius: 50
   }
