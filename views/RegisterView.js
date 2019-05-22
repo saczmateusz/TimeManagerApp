@@ -22,7 +22,7 @@ class RegisterView extends Component {
               <Icon name="md-arrow-back" size={30} style={{ color: "white" }} />
             </View>
           </TouchableOpacity>
-          <View style={{ flex: 5, alignItems: "flex-start" }}>
+          <View style={{ flex: 5, alignItems: "center" }}>
             <Text style={styles.header}>Rejestracja</Text>
           </View>
         </View>
@@ -46,6 +46,6 @@ const styles = StyleSheet.create({
   header: {
     color: "white",
     fontSize: 25,
-    paddingLeft: 25
+    paddingRight: 55
   }
 });

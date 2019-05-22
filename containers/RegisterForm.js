@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import axios from "axios";
 import { setUser } from "../reducers/actions/user";
 import { setToken } from "../reducers/actions/token";
+import LoadingScreen from "../components/LoadingScreen";
 
 class RegisterForm extends Component {
   state = {
@@ -60,6 +61,8 @@ class RegisterForm extends Component {
   render() {
     return (
       <View style={styles.container}>
+        {this.state.loading ? <LoadingScreen/> : null}
+        
         <TextInput
           onChangeText={username => this.setState({ username })}
           value={this.state.username}

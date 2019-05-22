@@ -53,6 +53,5 @@ const styles = StyleSheet.create({
   header: {
     color: "white",
     fontSize: 20,
-    paddingLeft: 55
   }
 });

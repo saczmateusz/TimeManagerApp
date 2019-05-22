@@ -11,7 +11,7 @@ import { addTask } from "../reducers/actions/task";
 import axios from "axios";
 import DateTimeButton from "../components/DateTimeButton";
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
-
+import LoadingScreen from "../components/LoadingScreen";
 
 class AddTaskForm extends Component {
   state = {
@@ -42,7 +42,7 @@ class AddTaskForm extends Component {
       this.state.start_date &&
       this.state.end_date &&
       this.state.body &&
-      this.state.priority
+      this.state.priority != ""
     ) {
       this.setState({ loading: true, error: null });
       axios
@@ -97,6 +97,8 @@ class AddTaskForm extends Component {
   render() {
     return (
       <View style={styles.container}>
+        {this.state.loading ? <LoadingScreen/> : null}
+
         <View style={{ marginHorizontal: 20, marginVertical: 10 }}>
           <DateTimeButton
             onSelectDate={this.handleStartDate}
