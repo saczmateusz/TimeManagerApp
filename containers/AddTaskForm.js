@@ -20,7 +20,7 @@ class AddTaskForm extends Component {
     start_date: "",
     end_date: "",
     body: "",
-    priority: "",
+    priority: 0,
     radio_options: [
       {label: 'Brak', value: 0 },
       {label: 'Ważne', value: 1 },
@@ -131,6 +131,7 @@ class AddTaskForm extends Component {
         <RadioForm
             radio_props={this.state.radio_options}
             initial={0}
+            buttonColor={'#ff9800'}
             onPress={(priority) => {this.setState({priority})}}
         />
         </View>
