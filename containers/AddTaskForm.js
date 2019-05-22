@@ -21,12 +21,12 @@ class AddTaskForm extends Component {
     start_date: "",
     end_date: "",
     body: "",
-    priority: 0,
+    priority: 1,
     radio_options: [
-      {label: 'Brak', value: 0 },
-      {label: 'Ważne', value: 1 },
-      {label: 'Pilne', value: 2 },
-      {label: 'Ważne i Pilne', value: 3 }
+      {label: 'Brak', value: 1 },
+      {label: 'Ważne', value: 2 },
+      {label: 'Pilne', value: 3 },
+      {label: 'Ważne i Pilne', value: 4 }
     ]
   };
 
@@ -43,7 +43,7 @@ class AddTaskForm extends Component {
       this.state.start_date &&
       this.state.end_date &&
       this.state.body &&
-      this.state.priority != ""
+      this.state.priority
     ) {
       this.setState({ loading: true, error: null });
       axios
@@ -135,10 +135,10 @@ class AddTaskForm extends Component {
           onValueChange={(itemValue, itemIndex) =>
             this.setState({priority: itemValue})
           }>
-          <Picker.Item label="Brak" value="0" />
-          <Picker.Item label="Ważne" value="1" />
-          <Picker.Item label="Pilne" value="2" />
-          <Picker.Item label="Ważne i pilne" value="3" />
+          <Picker.Item label="Brak" value="1" />
+          <Picker.Item label="Ważne" value="2" />
+          <Picker.Item label="Pilne" value="3" />
+          <Picker.Item label="Ważne i pilne" value="4" />
         </Picker>
         </View>
         <View
