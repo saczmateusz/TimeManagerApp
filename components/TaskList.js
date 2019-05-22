@@ -46,10 +46,48 @@ class TaskList extends Component {
     );
   };
 
+  deleteTask = () => {
+      axios
+        .delete(
+          "/api/tasks/" + this.props.task.id,
+          {
+            headers: {
+              "Content-Type": "application/json"
+            }
+          }
+        );
+      axios
+        .get(
+          "/api/tasks",
+          {
+            headers: {
+              "Content-Type": "application/json"
+            }
+          }
+        )
+        .then(response => {
+          store.getState().user.tasks = response.data;
+        });
+
+        this.props.navigation.navigate("Month");
+      })
+      .catch(error => {
+        
+      });
+  
+
   render() {
     return (
       <View style={styles.container}>
         {this.createDay()}
+        <View style={styles.deleteTaskView}>
+        <TouchableOpacity
+          style={styles.deleteTaskTouch}
+          onPress={() => this.deleteTask()}
+        >
+          <Icon name={"md-subtract"} size={30} color="white" />
+        </TouchableOpacity>
+      </View>
         <TouchableOpacity onPress={() => this.props.navigation.navigate("Day")}>
           <View style={{ ...styles.button }}>
             <Text style={{ ...styles.buttonText }}>Wróć do kalendarza</Text>
@@ -92,7 +130,8 @@ const styles = StyleSheet.create({
   },
   taskText: {
     color: "#333",
-    fontSize: 15
+    fontSize: 15,
+    paddingVertical: 10
   },
   button: {
     height: 40,
@@ -106,5 +145,18 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 15,
     textTransform: "uppercase"
+  },
+  deleteTaskView: {
+    position: "absolute",
+    right: 10,
+    bottom: 10
+  },
+  deleteTaskTouch: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 70,
+    height: 70,
+    backgroundColor: "#ff3333",
+    borderRadius: 50
   }
 });
