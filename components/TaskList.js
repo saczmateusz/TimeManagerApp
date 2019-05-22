@@ -3,11 +3,12 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
-  ScrollView
+  TouchableOpacity
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-//import { Styledds } from "../assets/Styles.js";
+import { connect } from "react-redux";
+import { setUserTasks } from "../reducers/actions/user";
+import axios from "axios";
 
 class TaskList extends Component {
   createDay = () => {
@@ -46,7 +47,7 @@ class TaskList extends Component {
     );
   };
 
-  deleteTask = () => {
+  deleteTask = () => {      
       axios
         .delete(
           "/api/tasks/" + this.props.task.id,
@@ -55,27 +56,21 @@ class TaskList extends Component {
               "Content-Type": "application/json"
             }
           }
-        );
-      axios
-        .get(
-          "/api/tasks",
-          {
-            headers: {
-              "Content-Type": "application/json"
-            }
-          }
         )
         .then(response => {
-          store.getState().user.tasks = response.data;
-        });
-
-        this.props.navigation.navigate("Month");
-      })
-      .catch(error => {
-        
-      });
+          
+          axios.get("/api/tasks")
+            .then(response => {
+              this.props.setUserTasks(response.data)
+              this.props.navigation.navigate("Day")
+            })
+          
+        })
+        .catch(error => {
+          alert("Błąd usuwania zadania.")
+        })
+  }
   
-
   render() {
     return (
       <View style={styles.container}>
@@ -97,7 +92,12 @@ class TaskList extends Component {
     );
   }
 }
-export default TaskList;
+
+const mapStateToProps = null;
+
+const mapActionsToProps = {
+  setUserTasks
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -157,6 +157,9 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     backgroundColor: "#ff3333",
-    borderRadius: 50
+    borderRadius: 50,
+    zIndex: 999
   }
 });
+
+export default connect(null, mapActionsToProps)(TaskList);

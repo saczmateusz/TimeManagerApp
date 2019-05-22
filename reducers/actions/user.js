@@ -4,3 +4,10 @@ export const setUser = (user) => {
         payload: user
     }
 }
+
+export const setUserTasks = (tasks) => {
+    return {
+        type: "SET_USER_TASKS",
+        payload: tasks
+    }
+}
