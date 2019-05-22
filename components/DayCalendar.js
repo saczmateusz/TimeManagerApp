@@ -1,6 +1,11 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView
+} from "react-native";
 import Swiper from "react-native-swiper";
 import AddButton from "./AddButton";
 
@@ -42,16 +47,23 @@ class DayCalendar extends Component {
   createDay = tasks => {
     return tasks.map(task => {
       return (
-        <View key={task.id} style={styles.taskTile}>
-          <Text style={styles.taskText}>Nazwa: {task.body}</Text>
-          <Text style={styles.taskText}>
-            Początek: {task.start_date.substring(11, 16)}
-          </Text>
-          <Text style={styles.taskText}>
-            Koniec: {task.end_date.substring(11, 16)}
-          </Text>
-          <Text style={styles.taskText}>Priorytet: {task.priority}</Text>
-        </View>
+        <TouchableOpacity
+          onPress={() => {
+            this.props.navigation.navigate("Task", {
+              task: task
+            });
+          }}
+        >
+          <View key={task.id} style={styles.taskTile}>
+            <Text style={styles.taskText}>{task.body}</Text>
+            <Text style={styles.taskText2}>
+              Początek: {task.start_date.substring(11, 16)}
+            </Text>
+            <Text style={styles.taskText2}>
+              Koniec: {task.end_date.substring(11, 16)}
+            </Text>
+          </View>
+        </TouchableOpacity>
       );
     });
   };
@@ -127,5 +139,9 @@ const styles = StyleSheet.create({
   taskText: {
     color: "#333",
     fontSize: 15
+  },
+  taskText2: {
+    color: "#333",
+    fontSize: 10
   }
 });
