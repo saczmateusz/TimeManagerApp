@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import SplashScreen from "react-native-splash-screen";
 import { Provider } from "react-redux";
 import { createSwitchNavigator, createAppContainer } from "react-navigation";
-import { setCustomText, setCustomTextInput } from "react-native-global-props";
+import { setCustomText } from "react-native-global-props";
 import store from "./store";
 import "./config/axios";
 
