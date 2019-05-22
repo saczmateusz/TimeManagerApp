@@ -130,10 +130,10 @@ class AddTaskForm extends Component {
           Priorytet
         </Text>
         <Picker
-          selectedValue={this.state.language}
+          selectedValue={this.state.priority}
           style={{height: 80, width: 320}}
           onValueChange={(itemValue, itemIndex) =>
-            this.setState({language: itemValue})
+            this.setState({priority: itemValue})
           }>
           <Picker.Item label="Brak" value="0" />
           <Picker.Item label="Ważne" value="1" />
