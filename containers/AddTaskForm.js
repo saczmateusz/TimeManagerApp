@@ -4,7 +4,8 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  Picker
 } from "react-native";
 import { connect } from "react-redux";
 import { addTask } from "../reducers/actions/task";
@@ -128,12 +129,17 @@ class AddTaskForm extends Component {
           }}>
           Priorytet
         </Text>
-        <RadioForm
-            radio_props={this.state.radio_options}
-            initial={0}
-            buttonColor={'#ff9800'}
-            onPress={(priority) => {this.setState({priority})}}
-        />
+        <Picker
+          selectedValue={this.state.language}
+          style={{height: 80, width: 320}}
+          onValueChange={(itemValue, itemIndex) =>
+            this.setState({language: itemValue})
+          }>
+          <Picker.Item label="Brak" value="0" />
+          <Picker.Item label="Ważne" value="1" />
+          <Picker.Item label="Pilne" value="2" />
+          <Picker.Item label="Ważne i pilne" value="3" />
+        </Picker>
         </View>
         <View
           style={{
