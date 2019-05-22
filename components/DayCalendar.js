@@ -98,7 +98,11 @@ class DayCalendar extends Component {
           showsPagination={false}
           style={styles.swiper}
         >
-          {this.createList(grouped)}
+          {Object.keys(grouped).length ? this.createList(grouped) : (
+            <View style={{flex: 1, alignItems: "center", paddingTop: 20}}>
+              <Text>Nie masz żadnych zadań.</Text>
+            </View>
+          )}
         </Swiper>
         <AddButton navigation={this.props.navigation} />
       </View>
