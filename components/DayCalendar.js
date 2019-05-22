@@ -45,7 +45,7 @@ class DayCalendar extends Component {
   };
 
   createDay = tasks => {
-    return tasks.map(task => {
+    return tasks.sort((a, b) => a.priority < b.priority).map(task => {
       return (
         <TouchableOpacity
           onPress={() => {
