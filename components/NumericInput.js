@@ -21,11 +21,6 @@ export default class NumericInput extends Component {
         if(numbers.indexOf(text[i]) > -1 ) {
             newText = newText + text[i]
         }
-        else {
-            this.setState({ value: '' });
-            alert("Wprowadź tylko cyfry.");
-            return;
-        }
     }
     this.setState({ value: newText })
     this.props.onChangeText(this.state.value)

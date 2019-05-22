@@ -10,7 +10,8 @@ import { connect } from "react-redux";
 import { addTask } from "../reducers/actions/task";
 import axios from "axios";
 import DateTimeButton from "../components/DateTimeButton";
-import NumericInput from "../components/NumericInput";
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+
 
 class AddTaskForm extends Component {
   state = {
@@ -19,7 +20,13 @@ class AddTaskForm extends Component {
     start_date: "",
     end_date: "",
     body: "",
-    priority: ""
+    priority: "",
+    radio_options: [
+      {label: 'Brak', value: 0 },
+      {label: 'Ważne', value: 1 },
+      {label: 'Pilne', value: 2 },
+      {label: 'Ważne i Pilne', value: 3 }
+    ]
   };
 
   handleStartDate = date => {
@@ -109,14 +116,22 @@ class AddTaskForm extends Component {
           placeholderTextColor="#565554"
           style={styles.form}
         />
-        <NumericInput
-          onChangeText={priority => this.setState({ priority })}
-          value={this.state.priority}
-          placeholder="Priorytet"
-          placeholderTextColor="#565554"
-          style={styles.form}
+        <View
+          style={{
+            paddingHorizontal: 20
+          }}>
+        <Text
+          style={{
+            paddingVertical: 10
+          }}>
+          Priorytet
+        </Text>
+        <RadioForm
+            radio_props={this.state.radio_options}
+            initial={0}
+            onPress={(priority) => {this.setState({priority})}}
         />
-
+        </View>
         <View
           style={{
             paddingHorizontal: 10,
