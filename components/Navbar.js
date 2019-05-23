@@ -8,7 +8,6 @@ export default class Navbar extends Component {
   }
   state = {
     mColor: "#565554",
-    wColor: "grey",
     dColor: "#565554",
     aColor: "grey"
   };
@@ -17,9 +16,6 @@ export default class Navbar extends Component {
     switch (this.props.current) {
       case "Month":
         this.setState({ mColor: "orange" });
-        break;
-      case "Week":
-        this.setState({ wColor: "orange" });
         break;
       case "Day":
         this.setState({ dColor: "orange" });
@@ -51,28 +47,6 @@ export default class Navbar extends Component {
               }}
             >
               Miesiąc
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          disabled={true}
-          style={{ flex: 1 }}
-          onPress={() => this.props.navigation.navigate("Week")}
-        >
-          <View style={styles.iconView}>
-            <Icon
-              name="calendar-week"
-              size={30}
-              style={{ color: this.state.wColor }}
-            />
-            <Text
-              style={{
-                color: this.state.wColor,
-                fontSize: 10,
-                fontFamily: "Roboto-Bold"
-              }}
-            >
-              Tydzień
             </Text>
           </View>
         </TouchableOpacity>
