@@ -3,14 +3,24 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { connect } from "react-redux";
 import { setUserTasks } from "../reducers/actions/user";
 import axios from "axios";
+import LoadingScreen from './LoadingScreen';
 
 class TaskList extends Component {
+  constructor() {
+    super();
+  }
+
+  state = {
+    loading: false
+  }
+
   createDay = () => {
     var priorityName = "";
     switch (this.props.task.priority) {
@@ -47,7 +57,23 @@ class TaskList extends Component {
     );
   };
 
+  deleteTaskPrompt = () => {
+    Alert.alert(
+      'Usuwanie zadania',
+      'Czy na pewno chcesz usunać to zadanie?',
+      [
+        {
+          text: 'Tak',
+          onPress: () => this.deleteTask()
+        },
+        {text: 'Nie', style: "cancel"},
+      ],
+      {cancelable: false},
+    );
+  }
+
   deleteTask = () => {      
+      this.setState({loading: true}) 
       axios
         .delete(
           "/api/tasks/" + this.props.task.id,
@@ -61,12 +87,14 @@ class TaskList extends Component {
           
           axios.get("/api/tasks")
             .then(response => {
+              this.setState({loading: false})
               this.props.setUserTasks(response.data)
               this.props.navigation.navigate("Day")
             })
           
         })
         .catch(error => {
+          this.setState({loading: false})
           alert("Błąd usuwania zadania.")
         })
   }
@@ -74,11 +102,12 @@ class TaskList extends Component {
   render() {
     return (
       <View style={styles.container}>
+        {this.state.loading ? <LoadingScreen/> : null}
         {this.createDay()}
         <View style={styles.deleteTaskView}>
         <TouchableOpacity
           style={styles.deleteTaskTouch}
-          onPress={() => this.deleteTask()}
+          onPress={() => this.deleteTaskPrompt()}
         >
           <Icon name={"md-subtract"} size={30} color="white" />
         </TouchableOpacity>
