@@ -89,7 +89,7 @@ class TaskList extends Component {
             .then(response => {
               this.setState({loading: false})
               this.props.setUserTasks(response.data)
-              this.props.navigation.navigate("Day")
+              this.props.navigation.navigate("Day", { ignorePush: true, pop: true })
             })
           
         })
@@ -122,7 +122,7 @@ class TaskList extends Component {
   }
 }
 
-const mapStateToProps = null;
+const mapStateToProps = null
 
 const mapActionsToProps = {
   setUserTasks
@@ -191,4 +191,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect(null, mapActionsToProps)(TaskList);
+export default connect(mapStateToProps, mapActionsToProps)(TaskList);

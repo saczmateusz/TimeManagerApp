@@ -8,7 +8,7 @@ export const pushToHistory = screen => {
 export const popFromHistory = () => {
     return {
       type: "POP_FROM_HISTORY",
-      payload: task
+      payload: null
     };
   };
   

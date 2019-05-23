@@ -38,13 +38,21 @@ export default class App extends Component {
       <Provider store={store}>
         <AppContainer 
           onNavigationStateChange={(prevState, currentState, action) => {
-            if(action.params && !action.params.ignorePush)
+
+            if(action.params && action.params.ignorePush) {
+              if(action.params.pop)
+                store.dispatch({
+                  type: "POP_FROM_HISTORY"
+                })
+                
               return;
+            }
 
             store.dispatch({
               type: "PUSH_TO_HISTORY",
-              payload: prevState.routes[prevState.index].routeName
+              payload: {name: prevState.routes[prevState.index].routeName, params: prevState.routes[prevState.index].params}
             })
+
           }}
         />
       </Provider>
@@ -74,21 +82,21 @@ class LoginScreen extends Component {
       return false
     }
 
-    if(["Login", "Register"].includes(lastRoute)) {
+    if(["Login", "Register"].includes(lastRoute.name)) {
       if(loggedIn) {
-        this.exitPrompt()
+        this.handleBackPress()
         return false
       }
       else {
-        this.props.navigation.navigate(lastRoute, { ignorePush: false })
+        this.props.navigation.navigate(lastRoute.name, { ...lastRoute.params, ignorePush: true })
       }
     }
     else {
       if(loggedIn) {
-        this.props.navigation.navigate(lastRoute, { ignorePush: false })
+        this.props.navigation.navigate(lastRoute.name, { ...lastRoute.params, ignorePush: true })
       }
       else {
-        this.exitPrompt()
+        this.handleBackPress()
         return false
       }
     }
