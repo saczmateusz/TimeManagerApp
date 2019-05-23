@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BackHandler } from "react-native";
+import { BackHandler, Alert } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { Provider } from "react-redux";
 import { createSwitchNavigator, createAppContainer } from "react-navigation";
@@ -54,25 +54,30 @@ export default class App extends Component {
 
 
 class LoginScreen extends Component {
+  constructor() {
+    super();
+
+    this.handleBackPress = this.handleBackPress.bind(this)
+    this.exitPrompt = this.exitPrompt.bind(this)
+  }
   componentDidMount() {
     // I wonder if this gets added more than one time xD
     // Gotta look into this later 
     BackHandler.addEventListener('hardwareBackPress', this.handleBackPress)
   }
-  handleBackPress =() => {
-
-    /* =========== TODO ================ */
+  async handleBackPress() {
     const loggedIn = store.getState().user.email
     const lastRoute = store.getState().history.pop()
     
     if(!lastRoute) {
-
-      return true;
+      this.exitPrompt()
+      return false
     }
 
     if(["Login", "Register"].includes(lastRoute)) {
       if(loggedIn) {
-
+        this.exitPrompt()
+        return false
       }
       else {
         this.props.navigation.navigate(lastRoute, { ignorePush: false })
@@ -83,11 +88,23 @@ class LoginScreen extends Component {
         this.props.navigation.navigate(lastRoute, { ignorePush: false })
       }
       else {
-
+        this.exitPrompt()
+        return false
       }
     }
 
     return true
+  }
+  exitPrompt() {
+    Alert.alert(
+      '',
+      'Czy na pewno chcesz wyjść z aplikacji?',
+      [
+        {text: 'Tak', onPress: () => BackHandler.exitApp()},
+        {text: 'Nie', onPress: () => {}},
+      ],
+      {cancelable: false},
+    );
   }
   render() {
     return <LoginView navigation={this.props.navigation} />;
