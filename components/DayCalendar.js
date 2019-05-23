@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import Swiper from "react-native-swiper";
 import AddButton from "./AddButton";
+import moment from "moment"
 
 class DayCalendar extends Component {
   sortByKey = (array, key) => {
@@ -33,8 +34,10 @@ class DayCalendar extends Component {
       if (days.hasOwnProperty(key)) {
         views.push(
           <View key={key} style={styles.dayTile}>
-            <View style={{ alignItems: "center" }}>
-              <Text style={styles.dayHeader}>{key}</Text>
+            <View style={{ paddingLeft: 8, paddingVertical: 15 }}>
+              <Text style={styles.dayHeader}>
+              { moment(key).format('D MMMM Y') }
+              </Text>
             </View>
             <ScrollView>{this.createDay(days[key])}</ScrollView>
           </View>
@@ -130,7 +133,7 @@ const styles = StyleSheet.create({
   dayHeader: {
     color: "#333",
     fontSize: 20,
-    fontFamily: "Roboto-Bold"
+    alignItems: "flex-start"
   },
   taskTile: {
     backgroundColor: "#e1e1e1",

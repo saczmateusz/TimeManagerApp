@@ -6,6 +6,7 @@ import { createSwitchNavigator, createAppContainer } from "react-navigation";
 import { setCustomText } from "react-native-global-props";
 import store from "./store";
 import "./config/axios";
+import "./config/moment";
 
 import LoginView from "./views/LoginView";
 import RegisterView from "./views/RegisterView";
@@ -44,7 +45,7 @@ export default class App extends Component {
                 store.dispatch({
                   type: "POP_FROM_HISTORY"
                 })
-                
+
               return;
             }
 

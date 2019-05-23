@@ -105,18 +105,13 @@ class TaskList extends Component {
         {this.state.loading ? <LoadingScreen/> : null}
         {this.createDay()}
         <View style={styles.deleteTaskView}>
-        <TouchableOpacity
-          style={styles.deleteTaskTouch}
-          onPress={() => this.deleteTaskPrompt()}
-        >
-          <Icon name={"md-subtract"} size={30} color="white" />
-        </TouchableOpacity>
-      </View>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate("Day")}>
-          <View style={{ ...styles.button }}>
-            <Text style={{ ...styles.buttonText }}>Wróć do kalendarza</Text>
-          </View>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.deleteTaskTouch}
+            onPress={() => this.deleteTaskPrompt()}
+          >
+            <Icon name={"md-subtract"} size={30} color="white" />
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
