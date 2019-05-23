@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { BackHandler } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { Provider } from "react-redux";
 import { createSwitchNavigator, createAppContainer } from "react-navigation";
@@ -13,6 +14,7 @@ import MonthView from "./views/MonthView";
 import WeekView from "./views/WeekView";
 import DayView from "./views/DayView";
 import TaskView from "./views/TaskView";
+
 
 export default class App extends Component {
   constructor() {
@@ -34,13 +36,59 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <AppContainer />
+        <AppContainer 
+          onNavigationStateChange={(prevState, currentState, action) => {
+            if(action.params && !action.params.ignorePush)
+              return;
+
+            store.dispatch({
+              type: "PUSH_TO_HISTORY",
+              payload: prevState.routes[prevState.index].routeName
+            })
+          }}
+        />
       </Provider>
     );
   }
 }
 
+
 class LoginScreen extends Component {
+  componentDidMount() {
+    // I wonder if this gets added more than one time xD
+    // Gotta look into this later 
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackPress)
+  }
+  handleBackPress =() => {
+
+    /* =========== TODO ================ */
+    const loggedIn = store.getState().user.email
+    const lastRoute = store.getState().history.pop()
+    
+    if(!lastRoute) {
+
+      return true;
+    }
+
+    if(["Login", "Register"].includes(lastRoute)) {
+      if(loggedIn) {
+
+      }
+      else {
+        this.props.navigation.navigate(lastRoute, { ignorePush: false })
+      }
+    }
+    else {
+      if(loggedIn) {
+        this.props.navigation.navigate(lastRoute, { ignorePush: false })
+      }
+      else {
+
+      }
+    }
+
+    return true
+  }
   render() {
     return <LoginView navigation={this.props.navigation} />;
   }
