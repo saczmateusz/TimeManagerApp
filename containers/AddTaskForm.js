@@ -121,7 +121,7 @@ class AddTaskForm extends Component {
         <TextInput
           onChangeText={body => this.setState({ body })}
           value={this.state.body}
-          placeholder="Nazwa"
+          placeholder="Treść"
           placeholderTextColor="#565554"
           style={styles.form}
         />
@@ -132,7 +132,7 @@ class AddTaskForm extends Component {
         >
           <Text
             style={{
-              paddingVertical: 10
+              paddingTop: 10
             }}
           >
             Priorytet
@@ -152,7 +152,7 @@ class AddTaskForm extends Component {
         </View>
         <View
           style={{
-            paddingHorizontal: 10,
+            paddingHorizontal: 20,
             paddingTop: 20,
             flexDirection: "column"
           }}
