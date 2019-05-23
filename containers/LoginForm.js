@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import axios from "axios";
 import { setUser } from "../reducers/actions/user";
 import { setToken } from "../reducers/actions/token";
+import LoadingScreen from "../components/LoadingScreen";
 
 class LoginForm extends Component {
   componentDidMount() {
@@ -57,6 +58,8 @@ class LoginForm extends Component {
   render() {
     return (
       <View>
+        {this.state.loading ? <LoadingScreen/> : null}
+
         {this.state.shownUser ? (
           <View  style={{
             paddingHorizontal: 20,

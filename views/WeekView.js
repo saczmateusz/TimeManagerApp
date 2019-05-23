@@ -27,10 +27,10 @@ class WeekView extends Component {
             </View>
           </TouchableOpacity>
         </View>
-        <Navbar navigation={this.props.navigation} current={"Week"} />
         <View style={{ flex: 7 }}>
           <WeekCalendar navigation={this.props.navigation} />
         </View>
+        <Navbar navigation={this.props.navigation} current={"Week"} />
       </View>
     );
   }
@@ -53,6 +53,5 @@ const styles = StyleSheet.create({
   header: {
     color: "white",
     fontSize: 20,
-    paddingLeft: 55
   }
 });

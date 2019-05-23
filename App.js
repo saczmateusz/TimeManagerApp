@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import SplashScreen from "react-native-splash-screen";
 import { Provider } from "react-redux";
 import { createSwitchNavigator, createAppContainer } from "react-navigation";
-import { setCustomText, setCustomTextInput } from "react-native-global-props";
+import { setCustomText } from "react-native-global-props";
 import store from "./store";
 import "./config/axios";
 
@@ -12,6 +12,7 @@ import AddTaskView from "./views/AddTaskView";
 import MonthView from "./views/MonthView";
 import WeekView from "./views/WeekView";
 import DayView from "./views/DayView";
+import TaskView from "./views/TaskView";
 
 export default class App extends Component {
   constructor() {
@@ -81,13 +82,21 @@ class DayScreen extends Component {
   }
 }
 
+class TaskScreen extends Component {
+  render() {
+    var task = this.props.navigation.getParam("task", {});
+    return <TaskView navigation={this.props.navigation} task={task} />;
+  }
+}
+
 const AppSwitchNavigator = createSwitchNavigator({
   Login: { screen: LoginScreen },
   Register: { screen: RegisterScreen },
   AddTask: { screen: AddTaskScreen },
   Month: { screen: MonthScreen },
   Week: { screen: WeekScreen },
-  Day: { screen: DayScreen }
+  Day: { screen: DayScreen },
+  Task: { screen: TaskScreen }
 });
 
 const AppContainer = createAppContainer(AppSwitchNavigator);

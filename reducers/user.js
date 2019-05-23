@@ -5,6 +5,12 @@ const user = (state = {}, action) => {
         ...state,
         ...action.payload
       };
+    case "SET_USER_TASKS":
+      let newState = {
+        ...state,
+        tasks: action.payload
+      }
+      return newState;
     default:
       return state
   }

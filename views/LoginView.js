@@ -14,7 +14,7 @@ class LoginView extends Component {
     return (
       <View style={{ flex: 1, flexDirection: "column" }}>
         <View style={styles.banner}>
-          <View style={{ flex: 5, alignItems: "flex-start" }}>
+          <View style={{ flex: 1, alignItems: "center" }}>
             <Text style={styles.header}>Logowanie</Text>
           </View>
         </View>
@@ -36,8 +36,7 @@ const styles = StyleSheet.create({
   },
   header: {
     color: "white",
-    fontSize: 25,
-    paddingLeft: 25
+    fontSize: 25
   }
 });
 

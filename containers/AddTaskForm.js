@@ -4,12 +4,19 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  Picker
 } from "react-native";
 import { connect } from "react-redux";
 import { addTask } from "../reducers/actions/task";
 import axios from "axios";
 import DateTimeButton from "../components/DateTimeButton";
+import RadioForm, {
+  RadioButton,
+  RadioButtonInput,
+  RadioButtonLabel
+} from "react-native-simple-radio-button";
+import LoadingScreen from "../components/LoadingScreen";
 
 class AddTaskForm extends Component {
   state = {
@@ -18,7 +25,13 @@ class AddTaskForm extends Component {
     start_date: "",
     end_date: "",
     body: "",
-    priority: ""
+    priority: 1,
+    radio_options: [
+      { label: "Brak", value: 1 },
+      { label: "Ważne", value: 2 },
+      { label: "Pilne", value: 3 },
+      { label: "Ważne i Pilne", value: 4 }
+    ]
   };
 
   handleStartDate = date => {
@@ -62,8 +75,10 @@ class AddTaskForm extends Component {
           //dodac lokalnego taska recznie do taskow usera
           //ale tak jest smieszniej i wiecej zabawy
           //przy okazji nauczylem sie reduxa
-          //bo najpierw to aktualizowanie taskow usera bylo w MonthCalendar, ale przenioslem,
-          //bo tu jest bardziej uniwersalne, nie pisze 3 razy tego samego (month, week, day update)
+          //bo najpierw to aktualizowanie taskow usera bylo w
+          //MonthCalendar, ale przenioslem,
+          //bo tu jest bardziej uniwersalne, nie pisze 3 razy
+          //tego samego (month, week, day update)
           //XD
           if (store.getState().task.body) {
             store.getState().user.tasks.push(store.getState().task);
@@ -89,6 +104,8 @@ class AddTaskForm extends Component {
   render() {
     return (
       <View style={styles.container}>
+        {this.state.loading ? <LoadingScreen /> : null}
+
         <View style={{ marginHorizontal: 20, marginVertical: 10 }}>
           <DateTimeButton
             onSelectDate={this.handleStartDate}
@@ -108,14 +125,31 @@ class AddTaskForm extends Component {
           placeholderTextColor="#565554"
           style={styles.form}
         />
-        <TextInput
-          onChangeText={priority => this.setState({ priority })}
-          value={this.state.priority}
-          placeholder="Priorytet"
-          placeholderTextColor="#565554"
-          style={styles.form}
-        />
-
+        <View
+          style={{
+            paddingHorizontal: 20
+          }}
+        >
+          <Text
+            style={{
+              paddingVertical: 10
+            }}
+          >
+            Priorytet
+          </Text>
+          <Picker
+            selectedValue={this.state.priority}
+            style={{ height: 80, width: 320 }}
+            onValueChange={(itemValue, itemIndex) =>
+              this.setState({ priority: itemValue })
+            }
+          >
+            <Picker.Item label="Brak" value="1" />
+            <Picker.Item label="Ważne" value="2" />
+            <Picker.Item label="Pilne" value="3" />
+            <Picker.Item label="Ważne i pilne" value="4" />
+          </Picker>
+        </View>
         <View
           style={{
             paddingHorizontal: 10,
@@ -158,7 +192,7 @@ const styles = StyleSheet.create({
     padding: 5,
     margin: 10,
     marginLeft: 20,
-    marginRight: 20,
+    marginRight: 20
     //fontFamily: "Roboto-Light"
   }
 });

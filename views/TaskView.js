@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import MonthCalendar from "../components/MonthCalendar";
 import Navbar from "../components/Navbar";
+import TaskList from "../components/TaskList";
 
-class MonthView extends Component {
+class TaskView extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -32,14 +32,14 @@ class MonthView extends Component {
             flex: 7
           }}
         >
-          <MonthCalendar navigation={this.props.navigation} />
+          <TaskList navigation={this.props.navigation} task={this.props.task} />
         </View>
-        <Navbar navigation={this.props.navigation} current={"Month"} />
+        <Navbar navigation={this.props.navigation} current={"Task"} />
       </View>
     );
   }
 }
-export default MonthView;
+export default TaskView;
 
 const styles = StyleSheet.create({
   container: {
