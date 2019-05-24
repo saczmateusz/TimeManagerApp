@@ -90,7 +90,7 @@ class TaskList extends Component {
             style={styles.deleteTaskTouch}
             onPress={() => this.deleteTaskPrompt()}
           >
-            <Icon name={"md-trash"} size={30} color="white" />
+            <Icon name={"md-trash"} size={30} color="#ff5555" />
           </TouchableOpacity>
         </View>
       </View>
