@@ -59,8 +59,8 @@ class DayCalendar extends Component {
         >
           <View key={task.id} style={styles.taskTile}>
           <Text style={styles.taskText2}>
-               {["Brak", "Ważne", "Pilne", "Ważne i pilne"][task.priority - 1]}
-            </Text>
+               Priorytet: {["Brak", "Ważne", "Pilne", "Ważne i pilne"][task.priority - 1]}
+          </Text>
             <Text style={styles.taskText}>{task.body}</Text>
           </View>
         </TouchableOpacity>
