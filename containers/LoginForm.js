@@ -17,7 +17,7 @@ class LoginForm extends Component {
   componentDidMount() {
     this.setState({ shownUser: this.props.user.username });
 
-    this.checkSavedUser();
+    if(!this.props.user.username) this.checkSavedUser();
   }
 
   state = {
