@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { setUserTasks } from "../reducers/actions/user";
 import axios from "axios";
 import LoadingScreen from "./LoadingScreen";
+import moment from 'moment'
 
 class TaskList extends Component {
   constructor() {
@@ -18,25 +19,51 @@ class TaskList extends Component {
   createDay = () => {
     return (
       <View style={styles.dayTile}>
-        <View style={styles.taskTile}>
-        <Text style={styles.dayHeader}>
-            {this.props.task.body}
-          </Text>
-          <Text style={styles.taskText}>
-            Początek: {this.props.task.start_date.substring(11, 16)}
-          </Text>
-          <Text style={styles.taskText}>
-            Koniec: {this.props.task.end_date.substring(11, 16)}
-          </Text>
-          <Text style={styles.taskText}>
-            Priorytet:{" "}
-            {
-              ["Brak", "Ważne", "Pilne", "Ważne i pilne"][
-                this.props.task.priority - 1
-              ]
-            }
-          </Text>
-        </View>
+        <Text style={styles.taskText2}>
+          Status
+        </Text>
+        <Text style={styles.taskText}>
+          {
+            moment(this.props.task.start_date).isAfter(moment()) ? "Oczekujące" : 
+              (
+                moment(this.props.task.end_date).isAfter(moment()) ? "W trakcie" : "Przeterminowane"
+              )
+          }
+        </Text>
+        <Text style={styles.taskText2}>
+          Treść
+        </Text>
+        <Text style={styles.taskText}>
+          {this.props.task.body}
+        </Text>
+        <Text style={styles.taskText2}>
+          Priorytet
+        </Text>
+        <Text style={styles.taskText}>
+          {
+            ["Brak", "Ważne", "Pilne", "Ważne i pilne"][
+            this.props.task.priority - 1
+            ]
+          }
+        </Text>
+        <Text style={styles.taskText2}>
+          Start
+        </Text>
+        <Text style={styles.taskText3}>
+          { moment(this.props.task.start_date).fromNow() } 
+        </Text>
+        <Text style={styles.taskText4}>
+          { moment(this.props.task.start_date).format('D MMMM Y, HH:mm') }
+        </Text>
+        <Text style={styles.taskText2}>
+          Koniec
+        </Text>
+        <Text style={styles.taskText3}>
+        { moment(this.props.task.end_date).fromNow() }
+        </Text>
+        <Text style={styles.taskText4}>
+        { moment(this.props.task.end_date).format('D MMMM Y, HH:mm') }    
+        </Text>
       </View>
     );
   };
@@ -115,28 +142,19 @@ const styles = StyleSheet.create({
     flexDirection: "column"
   },
   dayTile: {
-    backgroundColor: "#f5f5f6",
-    borderRadius: 3,
-    margin: 5,
-    flex: 1
+    backgroundColor: "#fff",
+    flex: 1,
+    paddingHorizontal: 15,
+    paddingVertical: 15,
+    marginVertical: 20,
+    marginHorizontal: 10,
+    borderRadius: 2,
+    elevation: 1
   },
   dayHeader: {
     color: "#333",
     fontSize: 20,
     fontFamily: "Roboto-Bold"
-  },
-  taskTile: {
-    backgroundColor: "#e1e1e1",
-    flex: 1,
-    margin: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 3
-  },
-  taskText: {
-    color: "#333",
-    fontSize: 15,
-    paddingVertical: 10
   },
   button: {
     height: 40,
@@ -153,16 +171,35 @@ const styles = StyleSheet.create({
   },
   deleteTaskView: {
     position: "absolute",
-    right: 20,
-    bottom: 15
+    right: 30,
+    bottom: 35
   },
   deleteTaskTouch: {
     alignItems: "center",
     justifyContent: "center",
     width: 30,
     height: 30,
-    zIndex: 999
-  }
+    zIndex: 999,
+    elevation: 2
+  },
+  taskText2: {
+    color: "#888",
+    fontSize: 10
+  },
+  taskText: {
+    color: "#333",
+    fontSize: 19,
+    paddingBottom: 20
+  },
+  taskText3: {
+    color: "#333",
+    fontSize: 19
+  },
+  taskText4: {
+    color: "#777",
+    fontSize: 15,
+    paddingBottom: 20
+  },
 });
 
 export default connect(
