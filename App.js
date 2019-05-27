@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BackHandler, Alert } from "react-native";
+import { BackHandler, Alert, AsyncStorage } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { Provider } from "react-redux";
 import { createSwitchNavigator, createAppContainer } from "react-navigation";
@@ -70,8 +70,6 @@ class LoginScreen extends Component {
     this.exitPrompt = this.exitPrompt.bind(this)
   }
   componentDidMount() {
-    // I wonder if this gets added more than one time xD
-    // Gotta look into this later 
     BackHandler.addEventListener('hardwareBackPress', this.handleBackPress)
   }
   async handleBackPress() {

@@ -18,10 +18,10 @@ class TaskList extends Component {
   createDay = () => {
     return (
       <View style={styles.dayTile}>
-        <View style={{ alignItems: "center" }}>
-          <Text style={styles.dayHeader}>{this.props.task.body}</Text>
-        </View>
         <View style={styles.taskTile}>
+        <Text style={styles.dayHeader}>
+            {this.props.task.body}
+          </Text>
           <Text style={styles.taskText}>
             Początek: {this.props.task.start_date.substring(11, 16)}
           </Text>

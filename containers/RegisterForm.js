@@ -4,7 +4,8 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  AsyncStorage
 } from "react-native";
 import { connect } from "react-redux";
 import axios from "axios";
@@ -36,24 +37,27 @@ class RegisterForm extends Component {
             response.data.user.tasks = [];
             this.props.setUser(response.data.user);
             this.props.setToken(response.data.token);
-            this.setState({ error: null, loading: false });
+            this.setState({...this.state, error: null, loading: false });
 
             axios.defaults.headers.common["Authorization"] = `Bearer ${
               response.data.token
             }`;
 
+            AsyncStorage.setItem("USER", JSON.stringify({
+              username: this.state.username,
+              password: this.state.passwd
+            }))
+
             this.props.navigation.navigate("Day");
           })
           .catch(error => {
             this.setState({ error, loading: false });
-          });
 
-        this.setState({
-          username: "",
-          email: "",
-          passwd: "",
-          passrt: ""
-        });
+            this.setState({
+              passwd: "",
+              passrt: ""
+            });
+          });
       } else alert("Hasła różne");
     } else alert("Uzupełnij wszystkie pola");
   };

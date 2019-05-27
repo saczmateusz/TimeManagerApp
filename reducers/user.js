@@ -5,6 +5,8 @@ const user = (state = {}, action) => {
         ...state,
         ...action.payload
       };
+    case "UNSET_USER":
+      return {}
     case "SET_USER_TASKS":
       let newState = {
         ...state,

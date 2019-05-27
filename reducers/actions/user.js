@@ -11,3 +11,10 @@ export const setUserTasks = (tasks) => {
         payload: tasks
     }
 }
+
+export const unsetUser = () => {
+    return {
+        type: "UNSET_USER",
+        payload: null
+    }
+}
