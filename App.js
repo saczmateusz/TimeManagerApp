@@ -12,7 +12,7 @@ import LoginView from "./views/LoginView";
 import RegisterView from "./views/RegisterView";
 import AddTaskView from "./views/AddTaskView";
 import MonthView from "./views/MonthView";
-import WeekView from "./views/WeekView";
+import ArchiveView from "./views/ArchiveView";
 import DayView from "./views/DayView";
 import TaskView from "./views/TaskView";
 
@@ -40,13 +40,22 @@ export default class App extends Component {
         <AppContainer 
           onNavigationStateChange={(prevState, currentState, action) => {
 
+            /* Ale spaghetti XDDD */
+
+            if(["Day", "Month", "Archive"].includes(prevState.routes[prevState.index].routeName) &&
+               ["Day", "Month", "Archive"].includes(currentState.routes[currentState.index].routeName))
+               return
+
+            if(store.getState().history.length && store.getState().history.slice(-1)[0].name == prevState.routes[prevState.index].routeName)
+              return
+
             if(action.params && action.params.ignorePush) {
               if(action.params.pop)
                 store.dispatch({
                   type: "POP_FROM_HISTORY"
                 })
 
-              return;
+              return
             }
 
             store.dispatch({
@@ -72,19 +81,20 @@ class LoginScreen extends Component {
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackPress)
   }
-  async handleBackPress() {
+  handleBackPress() {
     const loggedIn = store.getState().user.email
     const lastRoute = store.getState().history.pop()
+
     
     if(!lastRoute) {
       this.exitPrompt()
-      return false
+      return true
     }
 
     if(["Login", "Register"].includes(lastRoute.name)) {
       if(loggedIn) {
         this.handleBackPress()
-        return false
+        return true
       }
       else {
         this.props.navigation.navigate(lastRoute.name, { ...lastRoute.params, ignorePush: true })
@@ -96,7 +106,7 @@ class LoginScreen extends Component {
       }
       else {
         this.handleBackPress()
-        return false
+        return true
       }
     }
 
@@ -141,9 +151,9 @@ class MonthScreen extends Component {
   }
 }
 
-class WeekScreen extends Component {
+class ArchiveScreen extends Component {
   render() {
-    return <WeekView navigation={this.props.navigation} />;
+    return <ArchiveView navigation={this.props.navigation} />;
   }
 }
 
@@ -166,9 +176,9 @@ const AppSwitchNavigator = createSwitchNavigator({
   Register: { screen: RegisterScreen },
   AddTask: { screen: AddTaskScreen },
   Month: { screen: MonthScreen },
-  Week: { screen: WeekScreen },
   Day: { screen: DayScreen },
-  Task: { screen: TaskScreen }
+  Task: { screen: TaskScreen },
+  Archive: { screen: ArchiveScreen }
 });
 
 const AppContainer = createAppContainer(AppSwitchNavigator);

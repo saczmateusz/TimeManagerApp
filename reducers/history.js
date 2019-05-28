@@ -4,6 +4,10 @@ const history = (state = [], action) => {
       case "PUSH_TO_HISTORY":
         newState = [...state]
         newState.push(action.payload)
+
+        if(newState.length > 10)
+          newState.shift()
+
         return newState
       case "POP_FROM_HISTORY":
         newState = [...state]

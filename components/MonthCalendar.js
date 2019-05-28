@@ -99,7 +99,9 @@ export default class MonthCalendar extends Component {
       if (days.hasOwnProperty(key)) {
         const len = days[key].length;
         days[key] = {
-          dots: this.fun(len < 6 ? len : 5)
+          key,
+          dots: this.fun(len < 6 ? len : 5),
+          color: 'black'
         };
       }
     }
@@ -127,7 +129,7 @@ export default class MonthCalendar extends Component {
               todayTextColor: "#ff8833", //dzisiaj
               dayTextColor: "#565554", // dni
               textDisabledColor: "#b6c1cd", // dni spoza miesiąca
-              dotColor: "#00adf5",
+              dotColor: "black",
               selectedDotColor: "#ffffff",
               arrowColor: "#ff9800",
               monthTextColor: "#ff9800",
@@ -146,7 +148,6 @@ export default class MonthCalendar extends Component {
             markingType="multi-dot"
           />
         </View>
-        <AddButton navigation={this.props.navigation} />
       </View>
     );
   }
