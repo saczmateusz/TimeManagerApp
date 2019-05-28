@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import Swiper from "react-native-swiper";
 import AddButton from "./AddButton";
+import moment from "moment"
 
 class DayCalendar extends Component {
   sortByKey = (array, key) => {
@@ -33,8 +34,10 @@ class DayCalendar extends Component {
       if (days.hasOwnProperty(key)) {
         views.push(
           <View key={key} style={styles.dayTile}>
-            <View style={{ alignItems: "center" }}>
-              <Text style={styles.dayHeader}>{key}</Text>
+            <View style={{ paddingLeft: 8, paddingVertical: 15 }}>
+              <Text style={styles.dayHeader}>
+              { moment(key).format('D MMMM Y') }
+              </Text>
             </View>
             <ScrollView>{this.createDay(days[key])}</ScrollView>
           </View>
@@ -55,13 +58,10 @@ class DayCalendar extends Component {
           }}
         >
           <View key={task.id} style={styles.taskTile}>
+          <Text style={styles.taskText2}>
+               Priorytet: {["Brak", "Ważne", "Pilne", "Ważne i pilne"][task.priority - 1]}
+          </Text>
             <Text style={styles.taskText}>{task.body}</Text>
-            <Text style={styles.taskText2}>
-              Początek: {task.start_date.substring(11, 16)}
-            </Text>
-            <Text style={styles.taskText2}>
-              Koniec: {task.end_date.substring(11, 16)}
-            </Text>
           </View>
         </TouchableOpacity>
       );
@@ -128,24 +128,26 @@ const styles = StyleSheet.create({
     flex: 1
   },
   dayHeader: {
-    color: "#333",
+    color: "#555",
     fontSize: 20,
-    fontFamily: "Roboto-Bold"
+    alignItems: "flex-start"
   },
   taskTile: {
-    backgroundColor: "#e1e1e1",
+    backgroundColor: "#fff",
     flex: 1,
     margin: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 3
+    paddingHorizontal: 15,
+    paddingVertical: 15,
+    marginBottom: 10,
+    borderRadius: 2,
+    elevation: 1
   },
   taskText: {
     color: "#333",
-    fontSize: 15
+    fontSize: 19
   },
   taskText2: {
-    color: "#333",
+    color: "#888",
     fontSize: 10
   }
 });

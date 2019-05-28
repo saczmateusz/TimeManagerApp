@@ -1,10 +1,12 @@
 import React, { Component } from "react";
+import { BackHandler, Alert, AsyncStorage } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { Provider } from "react-redux";
 import { createSwitchNavigator, createAppContainer } from "react-navigation";
 import { setCustomText } from "react-native-global-props";
 import store from "./store";
 import "./config/axios";
+import "./config/moment";
 
 import LoginView from "./views/LoginView";
 import RegisterView from "./views/RegisterView";
@@ -13,6 +15,7 @@ import MonthView from "./views/MonthView";
 import WeekView from "./views/WeekView";
 import DayView from "./views/DayView";
 import TaskView from "./views/TaskView";
+
 
 export default class App extends Component {
   constructor() {
@@ -34,13 +37,82 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <AppContainer />
+        <AppContainer 
+          onNavigationStateChange={(prevState, currentState, action) => {
+
+            if(action.params && action.params.ignorePush) {
+              if(action.params.pop)
+                store.dispatch({
+                  type: "POP_FROM_HISTORY"
+                })
+
+              return;
+            }
+
+            store.dispatch({
+              type: "PUSH_TO_HISTORY",
+              payload: {name: prevState.routes[prevState.index].routeName, params: prevState.routes[prevState.index].params}
+            })
+
+          }}
+        />
       </Provider>
     );
   }
 }
 
+
 class LoginScreen extends Component {
+  constructor() {
+    super();
+
+    this.handleBackPress = this.handleBackPress.bind(this)
+    this.exitPrompt = this.exitPrompt.bind(this)
+  }
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackPress)
+  }
+  async handleBackPress() {
+    const loggedIn = store.getState().user.email
+    const lastRoute = store.getState().history.pop()
+    
+    if(!lastRoute) {
+      this.exitPrompt()
+      return false
+    }
+
+    if(["Login", "Register"].includes(lastRoute.name)) {
+      if(loggedIn) {
+        this.handleBackPress()
+        return false
+      }
+      else {
+        this.props.navigation.navigate(lastRoute.name, { ...lastRoute.params, ignorePush: true })
+      }
+    }
+    else {
+      if(loggedIn) {
+        this.props.navigation.navigate(lastRoute.name, { ...lastRoute.params, ignorePush: true })
+      }
+      else {
+        this.handleBackPress()
+        return false
+      }
+    }
+
+    return true
+  }
+  exitPrompt() {
+    Alert.alert(
+      '',
+      'Czy na pewno chcesz wyjść z aplikacji?',
+      [
+        {text: 'Tak', onPress: () => BackHandler.exitApp()},
+        {text: 'Nie', onPress: () => {}},
+      ],
+      {cancelable: false},
+    );
+  }
   render() {
     return <LoginView navigation={this.props.navigation} />;
   }

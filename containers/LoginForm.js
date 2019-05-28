@@ -4,17 +4,20 @@ import {
   Text,
   TextInput,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  AsyncStorage
 } from "react-native";
 import { connect } from "react-redux";
 import axios from "axios";
 import { setUser } from "../reducers/actions/user";
-import { setToken } from "../reducers/actions/token";
+import { setToken, unsetUser } from "../reducers/actions/token";
 import LoadingScreen from "../components/LoadingScreen";
 
 class LoginForm extends Component {
   componentDidMount() {
     this.setState({ shownUser: this.props.user.username });
+
+    if(!this.props.user.username) this.checkSavedUser();
   }
 
   state = {
@@ -25,7 +28,7 @@ class LoginForm extends Component {
     shownUser: ""
   };
 
-  loginSubmit = () => {
+  loginSubmit() {
     if (this.state.username && this.state.passwd) {
       this.setState({ loading: true, error: null });
       axios
@@ -42,18 +45,33 @@ class LoginForm extends Component {
             response.data.token
           }`;
 
+          AsyncStorage.setItem("USER", JSON.stringify({
+            username: this.state.username,
+            password: this.state.passwd
+          }))
+
           this.props.navigation.navigate("Day");
         })
         .catch(error => {
+          this.setState({
+            passwd: ""
+          });
+
           this.setState({ error, loading: false });
         });
-
-      this.setState({
-        username: "",
-        passwd: ""
-      });
     } else alert("Uzupełnij wszystkie pola");
   };
+
+  async checkSavedUser() {
+    let user = await AsyncStorage.getItem("USER")
+    user = JSON.parse(user)
+    if(!user) return
+
+    this.setState({
+      username: user.username,
+      passwd: user.password
+    }, this.loginSubmit)
+  }
 
   render() {
     return (
@@ -83,9 +101,7 @@ class LoginForm extends Component {
                   Wróć do kalendarza
                 </Text>
               </View>
-            </TouchableOpacity>
-
-            
+            </TouchableOpacity>       
               <Text
                 style={{
                   color: "black",
@@ -97,7 +113,8 @@ class LoginForm extends Component {
               </Text>
               <TouchableOpacity
                onPress={() => {
-                store.getState().user = {};
+                AsyncStorage.removeItem("USER")
+                this.props.unsetUser;
                 store.getState().token = "";
                 this.setState({ shownUser: "" });
               }}
@@ -248,6 +265,7 @@ const mapStateToProps = state => ({
 
 const mapActionsToProps = {
   setUser,
+  unsetUser,
   setToken
 };
 

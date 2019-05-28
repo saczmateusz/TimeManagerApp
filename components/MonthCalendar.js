@@ -49,7 +49,9 @@ LocaleConfig.defaultLocale = "pl";
 export default class MonthCalendar extends Component {
   state = {
     glob: 0,
-    dotArray: [ // TODO: widoczność na tle
+    dotArray: [
+      // TODO: widoczność na tle
+      //Mateusz: Na ciemnym tle wszystkie były widoczne ( ͡° ͜ʖ ͡°)
       { color: "#ff8080" },
       { color: "#ffff80" },
       { color: "#0080ff" },
@@ -119,11 +121,11 @@ export default class MonthCalendar extends Component {
             theme={{
               backgroundColor: "#f5f5f6",
               calendarBackground: "#f5f5f6",
-              textSectionTitleColor: "grey",//dni tygodnia
+              textSectionTitleColor: "grey", //dni tygodnia
               selectedDayBackgroundColor: "#00adf5",
               selectedDayTextColor: "#ffffff",
-              todayTextColor: "#ff8833",//dzisiaj
-              dayTextColor: "#565554",// dni
+              todayTextColor: "#ff8833", //dzisiaj
+              dayTextColor: "#565554", // dni
               textDisabledColor: "#b6c1cd", // dni spoza miesiąca
               dotColor: "#00adf5",
               selectedDotColor: "#ffffff",

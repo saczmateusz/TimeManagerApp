@@ -1,93 +1,125 @@
 import React, { Component } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { connect } from "react-redux";
 import { setUserTasks } from "../reducers/actions/user";
 import axios from "axios";
+import LoadingScreen from "./LoadingScreen";
+import moment from 'moment'
 
 class TaskList extends Component {
+  constructor() {
+    super();
+  }
+
+  state = {
+    loading: false
+  };
+
   createDay = () => {
-    var priorityName = "";
-    switch (this.props.task.priority) {
-      case 1:
-        priorityName = "Brak";
-        break;
-      case 2:
-        priorityName = "Ważne";
-        break;
-      case 3:
-        priorityName = "Pilne";
-        break;
-      case 4:
-        priorityName = "Ważne i Pilne";
-        break;
-      default:
-        priorityName = "Schrodingera";
-    }
     return (
       <View style={styles.dayTile}>
-        <View style={{ alignItems: "center" }}>
-          <Text style={styles.dayHeader}>{this.props.task.body}</Text>
-        </View>
-        <View style={styles.taskTile}>
-          <Text style={styles.taskText}>
-            Początek: {this.props.task.start_date.substring(11, 16)}
-          </Text>
-          <Text style={styles.taskText}>
-            Koniec: {this.props.task.end_date.substring(11, 16)}
-          </Text>
-          <Text style={styles.taskText}>Priorytet: {priorityName}</Text>
-        </View>
+        <Text style={styles.taskText2}>
+          Status
+        </Text>
+        <Text style={styles.taskText}>
+          {
+            moment(this.props.task.start_date).isAfter(moment()) ? "Oczekujące" : 
+              (
+                moment(this.props.task.end_date).isAfter(moment()) ? "W trakcie" : "Przeterminowane"
+              )
+          }
+        </Text>
+        <Text style={styles.taskText2}>
+          Treść
+        </Text>
+        <Text style={styles.taskText}>
+          {this.props.task.body}
+        </Text>
+        <Text style={styles.taskText2}>
+          Priorytet
+        </Text>
+        <Text style={styles.taskText}>
+          {
+            ["Brak", "Ważne", "Pilne", "Ważne i pilne"][
+            this.props.task.priority - 1
+            ]
+          }
+        </Text>
+        <Text style={styles.taskText2}>
+          Start
+        </Text>
+        <Text style={styles.taskText3}>
+          { moment(this.props.task.start_date).fromNow() } 
+        </Text>
+        <Text style={styles.taskText4}>
+          { moment(this.props.task.start_date).format('D MMMM Y, HH:mm') }
+        </Text>
+        <Text style={styles.taskText2}>
+          Koniec
+        </Text>
+        <Text style={styles.taskText3}>
+        { moment(this.props.task.end_date).fromNow() }
+        </Text>
+        <Text style={styles.taskText4}>
+        { moment(this.props.task.end_date).format('D MMMM Y, HH:mm') }    
+        </Text>
       </View>
     );
   };
 
-  deleteTask = () => {      
-      axios
-        .delete(
-          "/api/tasks/" + this.props.task.id,
-          {
-            headers: {
-              "Content-Type": "application/json"
-            }
-          }
-        )
-        .then(response => {
-          
-          axios.get("/api/tasks")
-            .then(response => {
-              this.props.setUserTasks(response.data)
-              this.props.navigation.navigate("Day")
-            })
-          
-        })
-        .catch(error => {
-          alert("Błąd usuwania zadania.")
-        })
-  }
-  
+  deleteTaskPrompt = () => {
+    Alert.alert(
+      "Usuwanie zadania",
+      "Czy na pewno chcesz usunąć to zadanie?",
+      [
+        {
+          text: "Tak",
+          onPress: () => this.deleteTask()
+        },
+        { text: "Nie", style: "cancel" }
+      ],
+      { cancelable: false }
+    );
+  };
+
+  deleteTask = () => {
+    this.setState({ loading: true });
+    axios
+      .delete("/api/tasks/" + this.props.task.id, {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(response => {
+        axios.get("/api/tasks").then(response => {
+          this.setState({ loading: false });
+          this.props.setUserTasks(response.data);
+          this.props.navigation.navigate("Day", {
+            ignorePush: true,
+            pop: true
+          });
+        });
+      })
+      .catch(error => {
+        this.setState({ loading: false });
+        alert("Błąd usuwania zadania.");
+      });
+  };
+
   render() {
     return (
       <View style={styles.container}>
+        {this.state.loading ? <LoadingScreen /> : null}
         {this.createDay()}
         <View style={styles.deleteTaskView}>
-        <TouchableOpacity
-          style={styles.deleteTaskTouch}
-          onPress={() => this.deleteTask()}
-        >
-          <Icon name={"md-subtract"} size={30} color="white" />
-        </TouchableOpacity>
-      </View>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate("Day")}>
-          <View style={{ ...styles.button }}>
-            <Text style={{ ...styles.buttonText }}>Wróć do kalendarza</Text>
-          </View>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.deleteTaskTouch}
+            onPress={() => this.deleteTaskPrompt()}
+          >
+            <Icon name={"md-trash"} size={30} color="#ff5555" />
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -110,28 +142,19 @@ const styles = StyleSheet.create({
     flexDirection: "column"
   },
   dayTile: {
-    backgroundColor: "#f5f5f6",
-    borderRadius: 3,
-    margin: 5,
-    flex: 1
+    backgroundColor: "#fff",
+    flex: 1,
+    paddingHorizontal: 15,
+    paddingVertical: 15,
+    marginVertical: 20,
+    marginHorizontal: 10,
+    borderRadius: 2,
+    elevation: 1
   },
   dayHeader: {
     color: "#333",
     fontSize: 20,
     fontFamily: "Roboto-Bold"
-  },
-  taskTile: {
-    backgroundColor: "#e1e1e1",
-    flex: 1,
-    margin: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 3
-  },
-  taskText: {
-    color: "#333",
-    fontSize: 15,
-    paddingVertical: 10
   },
   button: {
     height: 40,
@@ -148,18 +171,38 @@ const styles = StyleSheet.create({
   },
   deleteTaskView: {
     position: "absolute",
-    right: 10,
-    bottom: 10
+    right: 30,
+    bottom: 35
   },
   deleteTaskTouch: {
     alignItems: "center",
     justifyContent: "center",
-    width: 70,
-    height: 70,
-    backgroundColor: "#ff3333",
-    borderRadius: 50,
-    zIndex: 999
-  }
+    width: 30,
+    height: 30,
+    zIndex: 999,
+    elevation: 2
+  },
+  taskText2: {
+    color: "#888",
+    fontSize: 10
+  },
+  taskText: {
+    color: "#333",
+    fontSize: 19,
+    paddingBottom: 20
+  },
+  taskText3: {
+    color: "#333",
+    fontSize: 19
+  },
+  taskText4: {
+    color: "#777",
+    fontSize: 15,
+    paddingBottom: 20
+  },
 });
 
-export default connect(null, mapActionsToProps)(TaskList);
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(TaskList);

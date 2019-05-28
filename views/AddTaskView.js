@@ -8,20 +8,6 @@ export default class AddTaskView extends Component {
     return (
       <View style={{ flex: 1, flexDirection: "column" }}>
         <View style={styles.banner}>
-          <TouchableOpacity
-            style={{ flex: 1 }}
-            onPress={() => this.props.navigation.navigate("Month")}
-          >
-            <View
-              style={{
-                height: 50,
-                alignItems: "center",
-                justifyContent: "center"
-              }}
-            >
-              <Icon name="md-arrow-back" size={30} style={{ color: "white" }} />
-            </View>
-          </TouchableOpacity>
           <View style={{ flex: 5, alignItems: "center" }}>
             <Text style={styles.header}>Dodaj</Text>
           </View>
@@ -44,7 +30,6 @@ const styles = StyleSheet.create({
   },
   header: {
     color: "white",
-    fontSize: 25,
-    paddingRight: 55
+    fontSize: 25
   }
 });
