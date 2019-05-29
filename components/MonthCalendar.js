@@ -53,16 +53,16 @@ export default class MonthCalendar extends Component {
       // TODO: widoczność na tle
       //Mateusz: Na ciemnym tle wszystkie były widoczne ( ͡° ͜ʖ ͡°)
       { color: "#ff8080" },
-      { color: "#ffff80" },
       { color: "#0080ff" },
-      { color: "#80ff80" },
       { color: "#ff8040" },
-      { color: "#80ffff" },
+      { color: "#0080c0" },
       { color: "#ff80c0" },
       { color: "#00ff80" },
-      { color: "#0080c0" },
-      { color: "#ff80ff" },
       { color: "#8080ff" },
+      { color: "#ff80ff" },
+      { color: "#80ff80" },
+      { color: "#80ffff" },
+      { color: "#ffff80" },
       { color: "#00ffff" }
     ]
   };
