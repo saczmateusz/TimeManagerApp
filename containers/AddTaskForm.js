@@ -11,19 +11,16 @@ import { connect } from "react-redux";
 import { addTask } from "../reducers/actions/task";
 import axios from "axios";
 import DateTimeButton from "../components/DateTimeButton";
-import RadioForm, {
-  RadioButton,
-  RadioButtonInput,
-  RadioButtonLabel
-} from "react-native-simple-radio-button";
 import LoadingScreen from "../components/LoadingScreen";
+import moment from "moment";
 
 class AddTaskForm extends Component {
   state = {
     loading: false,
     error: null,
-    start_date: "",
-    end_date: "",
+    start_date: this.props.day,
+    end_date: this.props.day,
+    name: "Wybierz datę zakończenia",
     body: "",
     priority: 1,
     radio_options: [
@@ -35,7 +32,7 @@ class AddTaskForm extends Component {
   };
 
   handleStartDate = date => {
-    this.setState({ start_date: date });
+    this.setState({ start_date: date, end_date: date, name: date });
   };
 
   handleEndDate = date => {
@@ -119,13 +116,13 @@ class AddTaskForm extends Component {
         <View style={{ marginHorizontal: 20, marginVertical: 10 }}>
           <DateTimeButton
             onSelectDate={this.handleStartDate}
-            name="rozpoczęcia"
+            name="Wybierz datę rozpoczęcia"
           />
         </View>
         <View style={{ marginHorizontal: 20, marginVertical: 10 }}>
           <DateTimeButton
             onSelectDate={this.handleEndDate}
-            name="zakończenia"
+            name={this.state.name}
           />
         </View>
         <TextInput

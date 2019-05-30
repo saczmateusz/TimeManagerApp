@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import AddEventForm from "../containers/AddTaskForm";
+import AddTaskForm from "../containers/AddTaskForm";
 
 export default class AddTaskView extends Component {
   render() {
@@ -13,7 +13,10 @@ export default class AddTaskView extends Component {
           </View>
         </View>
         <View style={{ flex: 8, backgroundColor: "#f5f5f6" }}>
-          <AddEventForm navigation={this.props.navigation} />
+          <AddTaskForm
+            navigation={this.props.navigation}
+            day={this.props.day}
+          />
         </View>
       </View>
     );

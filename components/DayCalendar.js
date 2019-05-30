@@ -75,7 +75,8 @@ class DayCalendar extends Component {
               <Text style={styles.taskText}>{task.body}</Text>
               <View style={{ flexDirection: "row" }}>
                 <Text style={styles.taskText4}>
-                  {moment(task.start_date).format("HH:mm")} -
+                  {moment(task.start_date).format("HH:mm")}
+                  {" - "}
                 </Text>
                 <Text style={styles.taskText4}>
                   {moment(task.end_date).format("HH:mm")}
