@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import Swiper from "react-native-swiper";
 import AddButton from "./AddButton";
-import moment from "moment"
+import moment from "moment";
 
 class DayCalendar extends Component {
   sortByKey = (array, key) => {
@@ -29,13 +29,12 @@ class DayCalendar extends Component {
   };
 
   getColor(prio) {
-
-    const color = ["grey", "yellow", "orange", "red"][prio - 1]
+    const color = ["grey", "yellow", "orange", "red"][prio - 1];
 
     return {
       borderBottomWidth: 3,
       borderColor: color
-    }
+    };
   }
 
   createList = days => {
@@ -46,7 +45,7 @@ class DayCalendar extends Component {
           <View key={key} style={styles.dayTile}>
             <View style={{ paddingLeft: 8, paddingVertical: 15 }}>
               <Text style={styles.dayHeader}>
-              { moment(key).format('D MMMM Y') }
+                {moment(key).format("D MMMM Y")}
               </Text>
             </View>
             <ScrollView>{this.createDay(days[key])}</ScrollView>
@@ -58,21 +57,34 @@ class DayCalendar extends Component {
   };
 
   createDay = tasks => {
-    return tasks.sort((a, b) => a.start_date > b.start_date).map(task => {
-      return (
-        <TouchableOpacity
-          onPress={() => {
-            this.props.navigation.navigate("Task", {
-              task: task
-            });
-          }}
-        >
-          <View key={task.id} style={{...styles.taskTile, ...this.getColor(task.priority)}}>
-            <Text style={styles.taskText}>{task.body}</Text>
-          </View>
-        </TouchableOpacity>
-      );
-    });
+    return tasks
+      .sort((a, b) => a.start_date > b.start_date)
+      .map(task => {
+        return (
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.navigate("Task", {
+                task: task
+              });
+            }}
+          >
+            <View
+              key={task.id}
+              style={{ ...styles.taskTile, ...this.getColor(task.priority) }}
+            >
+              <Text style={styles.taskText}>{task.body}</Text>
+              <View style={{ flexDirection: "row" }}>
+                <Text style={styles.taskText4}>
+                  {moment(task.start_date).format("HH:mm")} -
+                </Text>
+                <Text style={styles.taskText4}>
+                  {moment(task.end_date).format("HH:mm")}
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        );
+      });
   };
 
   findIndexOfDate = obj => {
@@ -105,8 +117,10 @@ class DayCalendar extends Component {
           showsPagination={false}
           style={styles.swiper}
         >
-          {Object.keys(grouped).length ? this.createList(grouped) : (
-            <View style={{flex: 1, alignItems: "center", paddingTop: 20}}>
+          {Object.keys(grouped).length ? (
+            this.createList(grouped)
+          ) : (
+            <View style={{ flex: 1, alignItems: "center", paddingTop: 20 }}>
               <Text>Nie masz żadnych zadań.</Text>
             </View>
           )}
@@ -156,5 +170,9 @@ const styles = StyleSheet.create({
   taskText2: {
     color: "#888",
     fontSize: 10
+  },
+  taskText4: {
+    color: "#777",
+    fontSize: 15
   }
 });
