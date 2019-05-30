@@ -85,7 +85,9 @@ class AddTaskForm extends Component {
             store.getState().task = {};
           }
           this.props.navigation.navigate("Day", {
-            day: response.data.start_date.substring(0, 10)
+            day: response.data.start_date.substring(0, 10),
+            ignorePush: true,
+            pop: true
           });
         })
         .catch(error => {
