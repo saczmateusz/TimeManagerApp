@@ -28,6 +28,16 @@ class DayCalendar extends Component {
     }, {});
   };
 
+  getColor(prio) {
+
+    const color = ["grey", "yellow", "orange", "red"][prio - 1]
+
+    return {
+      borderBottomWidth: 3,
+      borderColor: color
+    }
+  }
+
   createList = days => {
     var views = [];
     for (var key in days) {
@@ -48,7 +58,7 @@ class DayCalendar extends Component {
   };
 
   createDay = tasks => {
-    return tasks.sort((a, b) => a.priority < b.priority).map(task => {
+    return tasks.sort((a, b) => a.start_date > b.start_date).map(task => {
       return (
         <TouchableOpacity
           onPress={() => {
@@ -57,10 +67,7 @@ class DayCalendar extends Component {
             });
           }}
         >
-          <View key={task.id} style={styles.taskTile}>
-          <Text style={styles.taskText2}>
-               Priorytet: {["Brak", "Ważne", "Pilne", "Ważne i pilne"][task.priority - 1]}
-          </Text>
+          <View key={task.id} style={{...styles.taskTile, ...this.getColor(task.priority)}}>
             <Text style={styles.taskText}>{task.body}</Text>
           </View>
         </TouchableOpacity>
