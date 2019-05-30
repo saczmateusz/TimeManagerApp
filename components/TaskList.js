@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { setUserTasks } from "../reducers/actions/user";
 import axios from "axios";
 import LoadingScreen from "./LoadingScreen";
-import moment from 'moment'
+import moment from "moment";
 
 class TaskList extends Component {
   constructor() {
@@ -19,50 +19,37 @@ class TaskList extends Component {
   createDay = () => {
     return (
       <View style={styles.dayTile}>
-        <Text style={styles.taskText2}>
-          Status
-        </Text>
+        <Text style={styles.taskText2}>Status</Text>
         <Text style={styles.taskText}>
-          {
-            moment(this.props.task.start_date).isAfter(moment()) ? "Oczekujące" : 
-              (
-                moment(this.props.task.end_date).isAfter(moment()) ? "W trakcie" : "Przeterminowane"
-              )
-          }
+          {moment(this.props.task.start_date).isAfter(moment())
+            ? "Oczekujące"
+            : moment(this.props.task.end_date).isAfter(moment())
+            ? "W trakcie"
+            : "Przeterminowane"}
         </Text>
-        <Text style={styles.taskText2}>
-          Treść
-        </Text>
-        <Text style={styles.taskText}>
-          {this.props.task.body}
-        </Text>
-        <Text style={styles.taskText2}>
-          Priorytet
-        </Text>
+        <Text style={styles.taskText2}>Treść</Text>
+        <Text style={styles.taskText}>{this.props.task.body}</Text>
+        <Text style={styles.taskText2}>Priorytet</Text>
         <Text style={styles.taskText}>
           {
             ["Brak", "Ważne", "Pilne", "Ważne i pilne"][
-            this.props.task.priority - 1
+              this.props.task.priority - 1
             ]
           }
         </Text>
-        <Text style={styles.taskText2}>
-          Start
-        </Text>
+        <Text style={styles.taskText2}>Start</Text>
         <Text style={styles.taskText3}>
-          { moment(this.props.task.start_date).fromNow() } 
+          {moment(this.props.task.start_date).fromNow()}
         </Text>
         <Text style={styles.taskText4}>
-          { moment(this.props.task.start_date).format('D MMMM Y, HH:mm') }
+          {moment(this.props.task.start_date).format("D MMMM Y, HH:mm")}
         </Text>
-        <Text style={styles.taskText2}>
-          Koniec
-        </Text>
+        <Text style={styles.taskText2}>Koniec</Text>
         <Text style={styles.taskText3}>
-        { moment(this.props.task.end_date).fromNow() }
+          {moment(this.props.task.end_date).fromNow()}
         </Text>
         <Text style={styles.taskText4}>
-        { moment(this.props.task.end_date).format('D MMMM Y, HH:mm') }    
+          {moment(this.props.task.end_date).format("D MMMM Y, HH:mm")}
         </Text>
       </View>
     );
@@ -199,7 +186,7 @@ const styles = StyleSheet.create({
     color: "#777",
     fontSize: 15,
     paddingBottom: 20
-  },
+  }
 });
 
 export default connect(

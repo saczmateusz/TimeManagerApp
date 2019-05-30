@@ -11,6 +11,11 @@ import AddButton from "./AddButton";
 import moment from "moment";
 
 class DayCalendar extends Component {
+  state = {
+    index: 0,
+    currentDate: ""
+  };
+
   sortByKey = (array, key) => {
     return array.sort(function(a, b) {
       var x = a[key];
@@ -56,10 +61,67 @@ class DayCalendar extends Component {
     return views;
   };
 
+  chooseTileStyle = status => {
+    return [
+      {
+        backgroundColor: "#ebebeb",
+        flex: 1,
+        margin: 5,
+        paddingHorizontal: 15,
+        paddingVertical: 15,
+        marginBottom: 10,
+        borderRadius: 2,
+        elevation: 1
+      },
+      {
+        backgroundColor: "#fff",
+        flex: 1,
+        margin: 5,
+        paddingHorizontal: 15,
+        paddingVertical: 15,
+        marginBottom: 10,
+        borderRadius: 2,
+        elevation: 1
+      },
+      {
+        backgroundColor: "#ddd",
+        flex: 1,
+        margin: 5,
+        paddingHorizontal: 15,
+        paddingVertical: 15,
+        marginBottom: 10,
+        borderRadius: 2,
+        elevation: 1
+      }
+    ][status - 1];
+  };
+
+  chooseTextStyle = status => {
+    return [
+      {
+        color: "#333",
+        fontSize: 19
+      },
+      {
+        color: "#333",
+        fontSize: 19
+      },
+      {
+        color: "#888",
+        fontSize: 19
+      }
+    ][status - 1];
+  };
+
   createDay = tasks => {
     return tasks
       .sort((a, b) => a.start_date > b.start_date)
       .map(task => {
+        var status = moment(task.start_date).isAfter(moment())
+          ? 1
+          : moment(task.end_date).isAfter(moment())
+          ? 2
+          : 3;
         return (
           <TouchableOpacity
             onPress={() => {
@@ -70,9 +132,14 @@ class DayCalendar extends Component {
           >
             <View
               key={task.id}
-              style={{ ...styles.taskTile, ...this.getColor(task.priority) }}
+              style={{
+                ...this.chooseTileStyle(status),
+                ...this.getColor(task.priority)
+              }}
             >
-              <Text style={styles.taskText}>{task.body}</Text>
+              <Text style={{ ...this.chooseTextStyle(status) }}>
+                {task.body}
+              </Text>
               <View style={{ flexDirection: "row" }}>
                 <Text style={styles.taskText4}>
                   {moment(task.start_date).format("HH:mm")}
@@ -168,12 +235,8 @@ const styles = StyleSheet.create({
     color: "#333",
     fontSize: 19
   },
-  taskText2: {
-    color: "#888",
-    fontSize: 10
-  },
   taskText4: {
-    color: "#777",
+    color: "#888",
     fontSize: 15
   }
 });
