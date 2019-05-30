@@ -103,6 +103,14 @@ class AddTaskForm extends Component {
     } else alert("Uzupełnij wszystkie pola");
   };
 
+  getColor(prio) {
+    const color = ["grey", "yellow", "orange", "red"][prio - 1];
+
+    return {
+      backgroundColor: color
+    };
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -139,18 +147,30 @@ class AddTaskForm extends Component {
           >
             Priorytet
           </Text>
-          <Picker
-            selectedValue={this.state.priority}
-            style={{ height: 80, width: 320 }}
-            onValueChange={(itemValue, itemIndex) =>
-              this.setState({ priority: itemValue })
-            }
+          <View
+            style={{
+              flexDirection: "row"
+            }}
           >
-            <Picker.Item label="Brak" value="1" />
-            <Picker.Item label="Ważne" value="2" />
-            <Picker.Item label="Pilne" value="3" />
-            <Picker.Item label="Ważne i pilne" value="4" />
-          </Picker>
+            <Picker
+              selectedValue={this.state.priority}
+              style={{ height: 80, width: 270 }}
+              onValueChange={(itemValue, itemIndex) =>
+                this.setState({ priority: itemValue })
+              }
+            >
+              <Picker.Item label="Brak" value="1" />
+              <Picker.Item label="Ważne" value="2" />
+              <Picker.Item label="Pilne" value="3" />
+              <Picker.Item label="Ważne i pilne" value="4" />
+            </Picker>
+            <View
+              style={{
+                ...styles.priocolor,
+                ...this.getColor(this.state.priority)
+              }}
+            />
+          </View>
         </View>
         <View
           style={{
@@ -195,7 +215,13 @@ const styles = StyleSheet.create({
     margin: 10,
     marginLeft: 20,
     marginRight: 20
-    //fontFamily: "Roboto-Light"
+  },
+  priocolor: {
+    width: 30,
+    height: 30,
+    borderRadius: 50,
+    marginTop: 25,
+    marginLeft: 17
   }
 });
 
