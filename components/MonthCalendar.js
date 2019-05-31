@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, StyleSheet } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import AddButton from "./AddButton";
+import moment from "moment";
 
 LocaleConfig.locales["pl"] = {
   monthNames: [
@@ -47,71 +48,54 @@ LocaleConfig.locales["pl"] = {
 LocaleConfig.defaultLocale = "pl";
 
 export default class MonthCalendar extends Component {
-  state = {
-    glob: 0,
-    dotArray: [
-      // TODO: widoczność na tle
-      //Mateusz: Na ciemnym tle wszystkie były widoczne ( ͡° ͜ʖ ͡°)
-      { color: "#ff8080" },
-      { color: "#0080ff" },
-      { color: "#ff8040" },
-      { color: "#0080c0" },
-      { color: "#ff80c0" },
-      { color: "#00ff80" },
-      { color: "#8080ff" },
-      { color: "#ff80ff" },
-      { color: "#80ff80" },
-      { color: "#80ffff" },
-      { color: "#ffff80" },
-      { color: "#00ffff" }
-    ]
-  };
-
-  sortByKey = (array, key) => {
-    return array.sort(function(a, b) {
-      var x = a[key];
-      var y = b[key];
-      return x < y ? -1 : x > y ? 1 : 0;
+  dateList = tasks => {
+    var days = [];
+    tasks.forEach(function(task) {
+      var start = task.start_date.substring(0, 10);
+      var end = task.end_date.substring(0, 10);
+      for (var m = moment(start); m.diff(end, "days") <= 0; m.add(1, "days")) {
+        days = [...days, m.format("YYYY-MM-DD")];
+      }
     });
+    return days.sort();
   };
 
-  groupByDate = data => {
-    return data.reduce(function(group, object) {
-      group[object.start_date.substring(0, 10)] =
-        group[object.start_date.substring(0, 10)] || [];
-      group[object.start_date.substring(0, 10)].push(object);
-      return group;
-    }, {});
-  };
-
-  fun = len => {
-    var tab = [];
-    for (var i = 0; i < len; ++i) {
-      tab.push(
-        this.state.dotArray[this.state.glob++ % this.state.dotArray.length]
-      );
-    }
-    return tab;
-  };
-
-  createList = days => {
-    for (var key in days) {
-      if (days.hasOwnProperty(key)) {
-        const len = days[key].length;
-        days[key] = {
-          key,
-          dots: this.fun(len < 6 ? len : 5),
-          color: 'black'
-        };
+  distinctDateCount = tasks => {
+    const dates = this.dateList(tasks);
+    var dateCount = {};
+    var current = null;
+    var cnt = 1;
+    for (var i = 1; i <= dates.length; ++i) {
+      if (dates[i] !== current) {
+        dateCount[dates[i - 1]] = { key: dates[i - 1], count: cnt };
+        current = dates[i];
+        cnt = 1;
+      } else {
+        cnt++;
       }
     }
+    return dateCount;
+  };
+
+  dotList = tasks => {
+    const dates = this.distinctDateCount(tasks);
+    var dots = {};
+    for (var date in dates) {
+      if (dates.hasOwnProperty(date)) {
+        dots[date] = {
+          key: date,
+          dots: []
+        };
+        for (var i = 0; i < dates[date].count; ++i) {
+          dots[date].dots = [...dots[date].dots, { color: "#999" }];
+        }
+      }
+    }
+    return dots;
   };
 
   render() {
-    const dotList = this.groupByDate(
-      this.sortByKey(store.getState().user.tasks, "start_date")
-    );
-    this.createList(dotList);
+    var dots = this.dotList(store.getState().user.tasks);
     return (
       <View style={styles.container}>
         <View style={{ flex: 6, alignItems: "stretch" }}>
@@ -143,7 +127,7 @@ export default class MonthCalendar extends Component {
             onDayPress={day => {
               this.props.navigation.navigate("Day", { day: day.dateString });
             }}
-            markedDates={dotList}
+            markedDates={dots}
             // Date marking style [simple/period/multi-dot/custom]. Default = 'simple'
             markingType="multi-dot"
           />
