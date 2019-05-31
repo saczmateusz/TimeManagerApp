@@ -11,19 +11,16 @@ import { connect } from "react-redux";
 import { addTask } from "../reducers/actions/task";
 import axios from "axios";
 import DateTimeButton from "../components/DateTimeButton";
-import RadioForm, {
-  RadioButton,
-  RadioButtonInput,
-  RadioButtonLabel
-} from "react-native-simple-radio-button";
 import LoadingScreen from "../components/LoadingScreen";
+import moment from "moment";
 
 class AddTaskForm extends Component {
   state = {
     loading: false,
     error: null,
-    start_date: "",
-    end_date: "",
+    start_date: this.props.day,
+    end_date: this.props.day,
+    name: "Wybierz datę zakończenia",
     body: "",
     priority: 1,
     radio_options: [
@@ -35,7 +32,7 @@ class AddTaskForm extends Component {
   };
 
   handleStartDate = date => {
-    this.setState({ start_date: date });
+    this.setState({ start_date: date, end_date: date, name: date });
   };
 
   handleEndDate = date => {
@@ -103,6 +100,14 @@ class AddTaskForm extends Component {
     } else alert("Uzupełnij wszystkie pola");
   };
 
+  getColor(prio) {
+    const color = ["grey", "yellow", "orange", "red"][prio - 1];
+
+    return {
+      backgroundColor: color
+    };
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -111,13 +116,13 @@ class AddTaskForm extends Component {
         <View style={{ marginHorizontal: 20, marginVertical: 10 }}>
           <DateTimeButton
             onSelectDate={this.handleStartDate}
-            name="rozpoczęcia"
+            name="Wybierz datę rozpoczęcia"
           />
         </View>
         <View style={{ marginHorizontal: 20, marginVertical: 10 }}>
           <DateTimeButton
             onSelectDate={this.handleEndDate}
-            name="zakończenia"
+            name={this.state.name}
           />
         </View>
         <TextInput
@@ -139,18 +144,30 @@ class AddTaskForm extends Component {
           >
             Priorytet
           </Text>
-          <Picker
-            selectedValue={this.state.priority}
-            style={{ height: 80, width: 320 }}
-            onValueChange={(itemValue, itemIndex) =>
-              this.setState({ priority: itemValue })
-            }
+          <View
+            style={{
+              flexDirection: "row"
+            }}
           >
-            <Picker.Item label="Brak" value="1" />
-            <Picker.Item label="Ważne" value="2" />
-            <Picker.Item label="Pilne" value="3" />
-            <Picker.Item label="Ważne i pilne" value="4" />
-          </Picker>
+            <Picker
+              selectedValue={this.state.priority}
+              style={{ height: 80, width: 270 }}
+              onValueChange={(itemValue, itemIndex) =>
+                this.setState({ priority: itemValue })
+              }
+            >
+              <Picker.Item label="Brak" value="1" />
+              <Picker.Item label="Ważne" value="2" />
+              <Picker.Item label="Pilne" value="3" />
+              <Picker.Item label="Ważne i pilne" value="4" />
+            </Picker>
+            <View
+              style={{
+                ...styles.priocolor,
+                ...this.getColor(this.state.priority)
+              }}
+            />
+          </View>
         </View>
         <View
           style={{
@@ -195,7 +212,13 @@ const styles = StyleSheet.create({
     margin: 10,
     marginLeft: 20,
     marginRight: 20
-    //fontFamily: "Roboto-Light"
+  },
+  priocolor: {
+    width: 30,
+    height: 30,
+    borderRadius: 50,
+    marginTop: 25,
+    marginLeft: 17
   }
 });
 

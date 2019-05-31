@@ -30,11 +30,7 @@ export default class DateTimeButton extends Component {
     return (
       <>
         <Button
-          title={
-            this.state.date
-              ? this.state.date
-              : "wybierz datę " + this.props.name
-          }
+          title={this.state.date ? this.state.date : this.props.name}
           onPress={this.showDateTimePicker}
           color="#ff8833"
         />

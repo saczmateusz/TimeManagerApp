@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import moment from "moment";
 
 export default class Navbar extends Component {
   constructor(props) {
@@ -52,7 +53,11 @@ export default class Navbar extends Component {
         </TouchableOpacity>
         <TouchableOpacity
           style={{ flex: 1 }}
-          onPress={() => this.props.navigation.navigate("Day")}
+          onPress={() =>
+            this.props.navigation.navigate("Day", {
+              day: moment().format("YYYY-MM-DD")
+            })
+          }
         >
           <View style={styles.iconView}>
             <Icon

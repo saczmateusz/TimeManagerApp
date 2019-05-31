@@ -14,7 +14,7 @@ class TaskView extends Component {
           </View>
           <TouchableOpacity
             style={{ flex: 1 }}
-            onPress={() => this.props.navigation.navigate("Login")}
+            onPress={() => this.props.navigation.navigate("User")}
           >
             <View
               style={{
