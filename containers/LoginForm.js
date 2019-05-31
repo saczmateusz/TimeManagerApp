@@ -12,12 +12,13 @@ import axios from "axios";
 import { setUser } from "../reducers/actions/user";
 import { setToken, unsetUser } from "../reducers/actions/token";
 import LoadingScreen from "../components/LoadingScreen";
+import moment from "moment";
 
 class LoginForm extends Component {
   componentDidMount() {
     this.setState({ shownUser: this.props.user.username });
 
-    if(!this.props.user.username) this.checkSavedUser();
+    if (!this.props.user.username) this.checkSavedUser();
   }
 
   state = {
@@ -45,12 +46,17 @@ class LoginForm extends Component {
             response.data.token
           }`;
 
-          AsyncStorage.setItem("USER", JSON.stringify({
-            username: this.state.username,
-            password: this.state.passwd
-          }))
+          AsyncStorage.setItem(
+            "USER",
+            JSON.stringify({
+              username: this.state.username,
+              password: this.state.passwd
+            })
+          );
 
-          this.props.navigation.navigate("Day");
+          this.props.navigation.navigate("Day", {
+            day: moment().format("YYYY-MM-DD")
+          });
         })
         .catch(error => {
           this.setState({
@@ -60,29 +66,34 @@ class LoginForm extends Component {
           this.setState({ error, loading: false });
         });
     } else alert("Uzupełnij wszystkie pola");
-  };
+  }
 
   async checkSavedUser() {
-    let user = await AsyncStorage.getItem("USER")
-    user = JSON.parse(user)
-    if(!user) return
+    let user = await AsyncStorage.getItem("USER");
+    user = JSON.parse(user);
+    if (!user) return;
 
-    this.setState({
-      username: user.username,
-      passwd: user.password
-    }, this.loginSubmit)
+    this.setState(
+      {
+        username: user.username,
+        passwd: user.password
+      },
+      this.loginSubmit
+    );
   }
 
   render() {
     return (
       <View>
-        {this.state.loading ? <LoadingScreen/> : null}
+        {this.state.loading ? <LoadingScreen /> : null}
 
         {this.state.shownUser ? (
-          <View  style={{
-            paddingHorizontal: 20,
-            paddingTop: 20
-          }}>
+          <View
+            style={{
+              paddingHorizontal: 20,
+              paddingTop: 20
+            }}
+          >
             <Text
               style={{
                 color: "black",
@@ -91,22 +102,21 @@ class LoginForm extends Component {
               }}
             >
               {"Zalogowano jako " + this.state.shownUser}
-            </Text>     
-              <TouchableOpacity
-               onPress={() => {
-                AsyncStorage.removeItem("USER")
+            </Text>
+            <TouchableOpacity
+              onPress={() => {
+                AsyncStorage.removeItem("USER");
                 store.getState().user = {};
                 store.getState().token = "";
                 this.setState({ shownUser: "" });
               }}
-              >
-                <View style={{ ...styles.button, backgroundColor: "#ececec" }}>
-                  <Text style={{ ...styles.buttonText, color: "#333" }}>
-                    Wyloguj się
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            
+            >
+              <View style={{ ...styles.button, backgroundColor: "#ececec" }}>
+                <Text style={{ ...styles.buttonText, color: "#333" }}>
+                  Wyloguj się
+                </Text>
+              </View>
+            </TouchableOpacity>
           </View>
         ) : (
           <View style={styles.container}>

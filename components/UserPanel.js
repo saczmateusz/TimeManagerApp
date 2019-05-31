@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  AsyncStorage
+} from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { CheckBox } from "react-native-elements";
 
@@ -72,6 +78,7 @@ class UserPanel extends Component {
               store.getState().user = {};
               store.getState().token = "";
               this.setState({ shownUser: "" });
+              this.props.navigation.navigate("Login");
             }}
           >
             <View style={{ ...styles.button, backgroundColor: "#ececec" }}>

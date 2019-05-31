@@ -12,6 +12,7 @@ import axios from "axios";
 import { setUser } from "../reducers/actions/user";
 import { setToken } from "../reducers/actions/token";
 import LoadingScreen from "../components/LoadingScreen";
+import moment from "moment";
 
 class RegisterForm extends Component {
   state = {
@@ -37,18 +38,23 @@ class RegisterForm extends Component {
             response.data.user.tasks = [];
             this.props.setUser(response.data.user);
             this.props.setToken(response.data.token);
-            this.setState({...this.state, error: null, loading: false });
+            this.setState({ ...this.state, error: null, loading: false });
 
             axios.defaults.headers.common["Authorization"] = `Bearer ${
               response.data.token
             }`;
 
-            AsyncStorage.setItem("USER", JSON.stringify({
-              username: this.state.username,
-              password: this.state.passwd
-            }))
+            AsyncStorage.setItem(
+              "USER",
+              JSON.stringify({
+                username: this.state.username,
+                password: this.state.passwd
+              })
+            );
 
-            this.props.navigation.navigate("Day");
+            this.props.navigation.navigate("Day", {
+              day: moment().format("YYYY-MM-DD")
+            });
           })
           .catch(error => {
             this.setState({ error, loading: false });
@@ -65,8 +71,8 @@ class RegisterForm extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {this.state.loading ? <LoadingScreen/> : null}
-        
+        {this.state.loading ? <LoadingScreen /> : null}
+
         <TextInput
           onChangeText={username => this.setState({ username })}
           value={this.state.username}
@@ -100,14 +106,12 @@ class RegisterForm extends Component {
         <View
           style={{
             paddingHorizontal: 10,
-            paddingTop: 20,
-           // flexDirection: "column"
+            paddingTop: 20
+            // flexDirection: "column"
           }}
         >
           <TouchableOpacity onPress={() => this.registerSubmit()}>
-            <View
-              style={styles.button}
-            >
+            <View style={styles.button}>
               <Text style={styles.buttonText}>
                 {this.state.loading ? "Wysyłanie..." : "Zarejestruj się"}
               </Text>
@@ -172,7 +176,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontSize: 15,
-    textTransform: "uppercase" 
+    textTransform: "uppercase"
   }
 });
 
