@@ -15,7 +15,7 @@ import MonthView from "./views/MonthView";
 import ArchiveView from "./views/ArchiveView";
 import DayView from "./views/DayView";
 import TaskView from "./views/TaskView";
-
+import UserView from "./views/UserView";
 
 export default class App extends Component {
   constructor() {
@@ -37,32 +37,43 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <AppContainer 
+        <AppContainer
           onNavigationStateChange={(prevState, currentState, action) => {
-
             /* Ale spaghetti XDDD */
 
-            if(["Day", "Month", "Archive"].includes(prevState.routes[prevState.index].routeName) &&
-               ["Day", "Month", "Archive"].includes(currentState.routes[currentState.index].routeName))
-               return
+            if (
+              ["Day", "Month", "Archive"].includes(
+                prevState.routes[prevState.index].routeName
+              ) &&
+              ["Day", "Month", "Archive"].includes(
+                currentState.routes[currentState.index].routeName
+              )
+            )
+              return;
 
-            if(store.getState().history.length && store.getState().history.slice(-1)[0].name == prevState.routes[prevState.index].routeName)
-              return
+            if (
+              store.getState().history.length &&
+              store.getState().history.slice(-1)[0].name ==
+                prevState.routes[prevState.index].routeName
+            )
+              return;
 
-            if(action.params && action.params.ignorePush) {
-              if(action.params.pop)
+            if (action.params && action.params.ignorePush) {
+              if (action.params.pop)
                 store.dispatch({
                   type: "POP_FROM_HISTORY"
-                })
+                });
 
-              return
+              return;
             }
 
             store.dispatch({
               type: "PUSH_TO_HISTORY",
-              payload: {name: prevState.routes[prevState.index].routeName, params: prevState.routes[prevState.index].params}
-            })
-
+              payload: {
+                name: prevState.routes[prevState.index].routeName,
+                params: prevState.routes[prevState.index].params
+              }
+            });
           }}
         />
       </Provider>
@@ -70,57 +81,58 @@ export default class App extends Component {
   }
 }
 
-
 class LoginScreen extends Component {
   constructor() {
     super();
 
-    this.handleBackPress = this.handleBackPress.bind(this)
-    this.exitPrompt = this.exitPrompt.bind(this)
+    this.handleBackPress = this.handleBackPress.bind(this);
+    this.exitPrompt = this.exitPrompt.bind(this);
   }
   componentDidMount() {
-    BackHandler.addEventListener('hardwareBackPress', this.handleBackPress)
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
   }
   handleBackPress() {
-    const loggedIn = store.getState().user.email
-    const lastRoute = store.getState().history.pop()
+    const loggedIn = store.getState().user.email;
+    const lastRoute = store.getState().history.pop();
 
-    
-    if(!lastRoute) {
-      this.exitPrompt()
-      return true
+    if (!lastRoute) {
+      this.exitPrompt();
+      return true;
     }
 
-    if(["Login", "Register"].includes(lastRoute.name)) {
-      if(loggedIn) {
-        this.handleBackPress()
-        return true
+    if (["Login", "Register"].includes(lastRoute.name)) {
+      if (loggedIn) {
+        this.handleBackPress();
+        return true;
+      } else {
+        this.props.navigation.navigate(lastRoute.name, {
+          ...lastRoute.params,
+          ignorePush: true
+        });
       }
-      else {
-        this.props.navigation.navigate(lastRoute.name, { ...lastRoute.params, ignorePush: true })
-      }
-    }
-    else {
-      if(loggedIn) {
-        this.props.navigation.navigate(lastRoute.name, { ...lastRoute.params, ignorePush: true })
-      }
-      else {
-        this.handleBackPress()
-        return true
+    } else {
+      if (loggedIn) {
+        this.props.navigation.navigate(lastRoute.name, {
+          ...lastRoute.params,
+          ignorePush: true
+        });
+      } else {
+        this.handleBackPress();
+        return true;
       }
     }
 
-    return true
+    return true;
   }
   exitPrompt() {
     Alert.alert(
-      '',
-      'Czy na pewno chcesz wyjść z aplikacji?',
+      "",
+      "Czy na pewno chcesz wyjść z aplikacji?",
       [
-        {text: 'Tak', onPress: () => BackHandler.exitApp()},
-        {text: 'Nie', onPress: () => {}},
+        { text: "Tak", onPress: () => BackHandler.exitApp() },
+        { text: "Nie", onPress: () => {} }
       ],
-      {cancelable: false},
+      { cancelable: false }
     );
   }
   render() {
@@ -171,6 +183,12 @@ class TaskScreen extends Component {
   }
 }
 
+class UserScreen extends Component {
+  render() {
+    return <UserView navigation={this.props.navigation} />;
+  }
+}
+
 const AppSwitchNavigator = createSwitchNavigator({
   Login: { screen: LoginScreen },
   Register: { screen: RegisterScreen },
@@ -178,6 +196,7 @@ const AppSwitchNavigator = createSwitchNavigator({
   Month: { screen: MonthScreen },
   Day: { screen: DayScreen },
   Task: { screen: TaskScreen },
+  User: { screen: UserScreen },
   Archive: { screen: ArchiveScreen }
 });
 
