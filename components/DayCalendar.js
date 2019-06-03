@@ -35,16 +35,6 @@ class DayCalendar extends Component {
   chooseTileStyle = status => {
     return [
       {
-        backgroundColor: "#ebebeb",
-        flex: 1,
-        margin: 5,
-        paddingHorizontal: 15,
-        paddingVertical: 15,
-        marginBottom: 10,
-        borderRadius: 2,
-        elevation: 1
-      },
-      {
         backgroundColor: "#fff",
         flex: 1,
         margin: 5,
@@ -56,6 +46,16 @@ class DayCalendar extends Component {
       },
       {
         backgroundColor: "#fff",
+        flex: 1,
+        margin: 5,
+        paddingHorizontal: 15,
+        paddingVertical: 15,
+        marginBottom: 10,
+        borderRadius: 2,
+        elevation: 1
+      },
+      {
+        backgroundColor: "#ddd",
         flex: 1,
         margin: 5,
         paddingHorizontal: 15,

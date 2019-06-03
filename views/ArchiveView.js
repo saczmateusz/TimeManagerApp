@@ -18,7 +18,7 @@ class ArchiveView extends Component {
 
     const tempTasks = this.props.tasks.filter(
       task => moment(task.end_date).isBefore(now)
-    )
+    ).sort((a, b) => a.start_date < b.start_date)
 
     this.setState({
       tasks: tempTasks
