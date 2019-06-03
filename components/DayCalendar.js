@@ -270,9 +270,9 @@ class DayCalendar extends Component {
       return key;
     });
     var start = moment(moment(datelist[0]));
-    start.subtract(90, "days");
+    start.subtract(30, "days");
     var end = moment(moment(datelist[datelist.length - 1]));
-    end.add(90, "days");
+    end.add(30, "days");
     var days = [];
     for (var m = start; m.diff(end, "days") <= 0; m.add(1, "days")) {
       days = [...days, m.format("YYYY-MM-DD")];

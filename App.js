@@ -17,6 +17,7 @@ import ArchiveView from "./views/ArchiveView";
 import DayView from "./views/DayView";
 import TaskView from "./views/TaskView";
 import UserView from "./views/UserView";
+import PassView from "./views/PassView";
 
 export default class App extends Component {
   constructor() {
@@ -196,6 +197,12 @@ class UserScreen extends Component {
   }
 }
 
+class PassScreen extends Component {
+  render() {
+    return <PassView navigation={this.props.navigation} />;
+  }
+}
+
 const AppSwitchNavigator = createSwitchNavigator({
   Start: { screen: StartScreen },
   Login: { screen: LoginScreen },
@@ -205,7 +212,8 @@ const AppSwitchNavigator = createSwitchNavigator({
   Day: { screen: DayScreen },
   Task: { screen: TaskScreen },
   User: { screen: UserScreen },
-  Archive: { screen: ArchiveScreen }
+  Archive: { screen: ArchiveScreen },
+  PassRec: { screen: PassScreen }
 });
 
 const AppContainer = createAppContainer(AppSwitchNavigator);
