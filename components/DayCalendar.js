@@ -55,7 +55,7 @@ class DayCalendar extends Component {
         elevation: 1
       },
       {
-        backgroundColor: "#ddd",
+        backgroundColor: "#fff",
         flex: 1,
         margin: 5,
         paddingHorizontal: 15,
@@ -171,7 +171,8 @@ class DayCalendar extends Component {
                   {moment(days[key]).format("D MMMM Y")}
                 </Text>
               </View>
-              <ScrollView>
+              <ScrollView
+                style={{ paddingLeft: 8 }}>
                 <Text>Nie masz zadań na ten dzień</Text>
               </ScrollView>
             </View>
