@@ -151,7 +151,7 @@ class AddTaskForm extends Component {
           >
             <Picker
               selectedValue={this.state.priority}
-              style={{ height: 80, width: 270 }}
+              style={{ height: 80, width: 270, ...styles.form, padding: 0, margin: 0 }}
               onValueChange={(itemValue, itemIndex) =>
                 this.setState({ priority: itemValue })
               }
@@ -178,13 +178,7 @@ class AddTaskForm extends Component {
         >
           <TouchableOpacity onPress={() => this.addTaskSubmit()}>
             <View
-              style={{
-                height: 35,
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#ff8833",
-                borderRadius: 2
-              }}
+              style={styles.button}
             >
               <Text style={{ color: "white", fontSize: 18 }}>
                 {this.state.loading ? "Wysyłanie..." : "Dodaj"}
@@ -204,14 +198,23 @@ const styles = StyleSheet.create({
     alignItems: "stretch"
   },
   form: {
-    borderWidth: 1,
+    borderBottomWidth: 2,
     borderColor: "#e4e4e4",
     backgroundColor: "#e8e8e8",
     height: 50,
-    padding: 5,
-    margin: 10,
-    marginLeft: 20,
-    marginRight: 20
+    padding: 15,
+    margin: 20,
+    marginVertical: 10,
+    borderTopLeftRadius: 4,
+    borderTopRightRadius: 4
+  },
+  button: {
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#ff8833",
+    borderRadius: 4,
+    elevation: 1
   },
   priocolor: {
     width: 30,
