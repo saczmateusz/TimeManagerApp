@@ -8,6 +8,7 @@ import store from "./store";
 import "./config/axios";
 import "./config/moment";
 
+import StartView from "./views/StartView";
 import LoginView from "./views/LoginView";
 import RegisterView from "./views/RegisterView";
 import AddTaskView from "./views/AddTaskView";
@@ -81,7 +82,7 @@ export default class App extends Component {
   }
 }
 
-class LoginScreen extends Component {
+class StartScreen extends Component {
   constructor() {
     super();
 
@@ -135,6 +136,12 @@ class LoginScreen extends Component {
       { cancelable: false }
     );
   }
+  render() {
+    return <StartView navigation={this.props.navigation} />;
+  }
+}
+
+class LoginScreen extends Component {
   render() {
     return <LoginView navigation={this.props.navigation} />;
   }
@@ -190,6 +197,7 @@ class UserScreen extends Component {
 }
 
 const AppSwitchNavigator = createSwitchNavigator({
+  Start: { screen: StartScreen },
   Login: { screen: LoginScreen },
   Register: { screen: RegisterScreen },
   AddTask: { screen: AddTaskScreen },
