@@ -5,41 +5,6 @@ import moment from 'moment'
 import { ScrollView, View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Navbar from "../components/Navbar";
 
-const archiveTaskCard = task =>
-  <TouchableOpacity
-  onPress={() => {
-    this.props.navigation.navigate("Task", {
-      task: task
-    });
-  }}
-  >
-  <View
-    key={task.date}
-    style={{
-      backgroundColor: "#fff",
-      flex: 1,
-      paddingHorizontal: 15,
-      paddingVertical: 15,
-      marginBottom: 10,
-      borderRadius: 2,
-      elevation: 1
-    }}
-  >
-    <Text style={{         
-      color: "#333",
-      fontSize: 19 
-    }}>
-      {task.body}
-    </Text>
-    <Text style={{         
-      color: "#777",
-      fontSize: 12 
-    }}>
-      {moment(task.end_date).fromNow()}
-    </Text>
-  </View>
-  </TouchableOpacity>
-
 class ArchiveView extends Component {
   constructor() {
     super()
@@ -61,11 +26,45 @@ class ArchiveView extends Component {
   }
   listTasks() {
     const tasks = this.state.tasks.map(
-      task => archiveTaskCard(task)
+      task => this.archiveTaskCard(task)
     )
 
     return tasks
   }
+  archiveTaskCard = task =>
+    <TouchableOpacity
+    onPress={() => {
+      this.props.navigation.navigate("Task", {
+        task: task
+      });
+    }}
+    >
+    <View
+      key={task.date}
+      style={{
+        backgroundColor: "#fff",
+        flex: 1,
+        paddingHorizontal: 15,
+        paddingVertical: 15,
+        marginBottom: 10,
+        borderRadius: 2,
+        elevation: 1
+      }}
+    >
+      <Text style={{         
+        color: "#333",
+        fontSize: 19 
+      }}>
+        {task.body}
+      </Text>
+      <Text style={{         
+        color: "#777",
+        fontSize: 12 
+      }}>
+        {moment(task.end_date).fromNow()}
+      </Text>
+    </View>
+    </TouchableOpacity>
   render() {
     return (
       <View style={styles.container}>
