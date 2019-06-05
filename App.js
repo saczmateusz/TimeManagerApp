@@ -7,6 +7,7 @@ import { setCustomText } from "react-native-global-props";
 import store from "./store";
 import "./config/axios";
 import "./config/moment";
+import "./config/notifications";
 
 import StartView from "./views/StartView";
 import LoginView from "./views/LoginView";
@@ -18,6 +19,8 @@ import DayView from "./views/DayView";
 import TaskView from "./views/TaskView";
 import UserView from "./views/UserView";
 import PassView from "./views/PassView";
+
+import NotificationManager from './components/NotificationManager';
 
 export default class App extends Component {
   constructor() {
