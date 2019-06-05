@@ -68,7 +68,9 @@ class AddTaskForm extends Component {
         )
         .then(response => {
           this.props.addTask(response.data);
-          
+
+          NotificationManager.scheduleNotification(response.data.id, "Powiadomienie", response.data.body, moment(response.data.start_date).toDate())
+
           this.setState({
             error: null,
             loading: false
