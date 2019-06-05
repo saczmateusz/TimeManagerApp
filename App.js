@@ -7,7 +7,9 @@ import { setCustomText } from "react-native-global-props";
 import store from "./store";
 import "./config/axios";
 import "./config/moment";
+import "./config/notifications";
 
+import StartView from "./views/StartView";
 import LoginView from "./views/LoginView";
 import RegisterView from "./views/RegisterView";
 import AddTaskView from "./views/AddTaskView";
@@ -16,6 +18,9 @@ import ArchiveView from "./views/ArchiveView";
 import DayView from "./views/DayView";
 import TaskView from "./views/TaskView";
 import UserView from "./views/UserView";
+import PassView from "./views/PassView";
+
+import NotificationManager from './components/NotificationManager';
 
 export default class App extends Component {
   constructor() {
@@ -81,7 +86,7 @@ export default class App extends Component {
   }
 }
 
-class LoginScreen extends Component {
+class StartScreen extends Component {
   constructor() {
     super();
 
@@ -136,6 +141,12 @@ class LoginScreen extends Component {
     );
   }
   render() {
+    return <StartView navigation={this.props.navigation} />;
+  }
+}
+
+class LoginScreen extends Component {
+  render() {
     return <LoginView navigation={this.props.navigation} />;
   }
 }
@@ -189,7 +200,14 @@ class UserScreen extends Component {
   }
 }
 
+class PassScreen extends Component {
+  render() {
+    return <PassView navigation={this.props.navigation} />;
+  }
+}
+
 const AppSwitchNavigator = createSwitchNavigator({
+  Start: { screen: StartScreen },
   Login: { screen: LoginScreen },
   Register: { screen: RegisterScreen },
   AddTask: { screen: AddTaskScreen },
@@ -197,7 +215,8 @@ const AppSwitchNavigator = createSwitchNavigator({
   Day: { screen: DayScreen },
   Task: { screen: TaskScreen },
   User: { screen: UserScreen },
-  Archive: { screen: ArchiveScreen }
+  Archive: { screen: ArchiveScreen },
+  PassRec: { screen: PassScreen }
 });
 
 const AppContainer = createAppContainer(AppSwitchNavigator);

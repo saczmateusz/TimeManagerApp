@@ -5,13 +5,15 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  Picker
+  Picker,
+  CheckBox
 } from "react-native";
 import { connect } from "react-redux";
 import { addTask } from "../reducers/actions/task";
 import axios from "axios";
 import DateTimeButton from "../components/DateTimeButton";
 import LoadingScreen from "../components/LoadingScreen";
+import NotificationManager from "../components/NotificationManager";
 import moment from "moment";
 
 class AddTaskForm extends Component {
@@ -20,6 +22,7 @@ class AddTaskForm extends Component {
     error: null,
     start_date: this.props.day,
     end_date: this.props.day,
+    has_notification: false,
     name: "Wybierz datę zakończenia",
     body: "",
     priority: 1,
@@ -32,7 +35,7 @@ class AddTaskForm extends Component {
   };
 
   handleStartDate = date => {
-    this.setState({ start_date: date, end_date: date, name: date });
+    this.setState({ start_date: date });
   };
 
   handleEndDate = date => {
@@ -54,7 +57,8 @@ class AddTaskForm extends Component {
             start_date: this.state.start_date,
             end_date: this.state.end_date,
             body: this.state.body,
-            priority: this.state.priority
+            priority: this.state.priority,
+            has_notification: this.state.has_notification
           },
           {
             headers: {
@@ -64,19 +68,14 @@ class AddTaskForm extends Component {
         )
         .then(response => {
           this.props.addTask(response.data);
+
+          NotificationManager.scheduleNotification(response.data.id, "Powiadomienie", response.data.body, moment(response.data.start_date).toDate())
+
           this.setState({
             error: null,
             loading: false
           });
-          //wiem, ze reducer tutaj jest niepotrzebny i wystarczyloby
-          //dodac lokalnego taska recznie do taskow usera
-          //ale tak jest smieszniej i wiecej zabawy
-          //przy okazji nauczylem sie reduxa
-          //bo najpierw to aktualizowanie taskow usera bylo w
-          //MonthCalendar, ale przenioslem,
-          //bo tu jest bardziej uniwersalne, nie pisze 3 razy
-          //tego samego (month, week, day update)
-          //XD
+
           if (store.getState().task.body) {
             store.getState().user.tasks.push(store.getState().task);
             store.getState().task = {};
@@ -89,14 +88,10 @@ class AddTaskForm extends Component {
         })
         .catch(error => {
           this.setState({ error, loading: false });
+          
         });
 
-      this.setState({
-        start_date: "",
-        end_date: "",
-        body: "",
-        priority: ""
-      });
+
     } else alert("Uzupełnij wszystkie pola");
   };
 
@@ -117,12 +112,17 @@ class AddTaskForm extends Component {
           <DateTimeButton
             onSelectDate={this.handleStartDate}
             name="Wybierz datę rozpoczęcia"
+            mindate={moment()}
+            message={"Nie możesz wybrać daty z przeszłości"}
           />
         </View>
         <View style={{ marginHorizontal: 20, marginVertical: 10 }}>
           <DateTimeButton
-            onSelectDate={this.handleEndDate}
-            name={this.state.name}
+              onSelectDate={this.handleEndDate}
+              name="Wybierz datę zakończenia"
+              mindate={this.state.start_date}
+              disabled={!this.state.start_date}
+              message={"Musisz wybrać datę późniejszą od daty zakończenia"}
           />
         </View>
         <TextInput
@@ -151,7 +151,7 @@ class AddTaskForm extends Component {
           >
             <Picker
               selectedValue={this.state.priority}
-              style={{ height: 80, width: 270 }}
+              style={{ height: 80, width: 270, ...styles.form, padding: 0, margin: 0 }}
               onValueChange={(itemValue, itemIndex) =>
                 this.setState({ priority: itemValue })
               }
@@ -169,6 +169,17 @@ class AddTaskForm extends Component {
             />
           </View>
         </View>
+
+        <TouchableOpacity onPress={() => this.setState({ has_notification: !this.state.has_notification})}>
+          <View style={{ flexDirection: 'column', marginHorizontal: 15, marginVertical: 10 }}>
+            <View style={{ flexDirection: 'row' }}>
+              <CheckBox
+                value={this.state.has_notification}
+              />
+              <Text style={{marginTop: 5}}> Dodaj powiadomienie </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
         <View
           style={{
             paddingHorizontal: 20,
@@ -178,13 +189,7 @@ class AddTaskForm extends Component {
         >
           <TouchableOpacity onPress={() => this.addTaskSubmit()}>
             <View
-              style={{
-                height: 35,
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#ff8833",
-                borderRadius: 2
-              }}
+              style={styles.button}
             >
               <Text style={{ color: "white", fontSize: 18 }}>
                 {this.state.loading ? "Wysyłanie..." : "Dodaj"}
@@ -201,17 +206,27 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
     paddingTop: 20,
-    alignItems: "stretch"
+    alignItems: "stretch",
+    backgroundColor: "#fff"
   },
   form: {
-    borderWidth: 1,
+    borderBottomWidth: 2,
     borderColor: "#e4e4e4",
     backgroundColor: "#e8e8e8",
     height: 50,
-    padding: 5,
-    margin: 10,
-    marginLeft: 20,
-    marginRight: 20
+    padding: 15,
+    margin: 20,
+    marginVertical: 10,
+    borderTopLeftRadius: 4,
+    borderTopRightRadius: 4
+  },
+  button: {
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#ff8833",
+    borderRadius: 4,
+    elevation: 1
   },
   priocolor: {
     width: 30,

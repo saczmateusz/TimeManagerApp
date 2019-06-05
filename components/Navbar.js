@@ -10,7 +10,7 @@ export default class Navbar extends Component {
   state = {
     mColor: "#565554",
     dColor: "#565554",
-    aColor: "grey"
+    aColor: "#565554"
   };
 
   componentDidMount() {
@@ -77,7 +77,6 @@ export default class Navbar extends Component {
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          disabled={true}
           style={{ flex: 1 }}
           onPress={() => this.props.navigation.navigate("Archive")}
         >

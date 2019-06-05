@@ -98,7 +98,7 @@ export default class MonthCalendar extends Component {
     var dots = this.dotList(store.getState().user.tasks);
     return (
       <View style={styles.container}>
-        <View style={{ flex: 6, alignItems: "stretch" }}>
+        <View style={{ flex: 6, alignItems: "stretch", margin: 10, elevation: 1, backgroundColor: "#fff" }}>
           <Calendar
             firstDay={1}
             style={{
@@ -106,7 +106,7 @@ export default class MonthCalendar extends Component {
             }}
             theme={{
               backgroundColor: "#f5f5f6",
-              calendarBackground: "#f5f5f6",
+              calendarBackground: "#fff",
               textSectionTitleColor: "grey", //dni tygodnia
               selectedDayBackgroundColor: "#00adf5",
               selectedDayTextColor: "#ffffff",

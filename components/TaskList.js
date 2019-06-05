@@ -7,6 +7,8 @@ import axios from "axios";
 import LoadingScreen from "./LoadingScreen";
 import moment from "moment";
 
+import NotificationManager from '../components/NotificationManager'
+
 class TaskList extends Component {
   constructor() {
     super();
@@ -79,13 +81,21 @@ class TaskList extends Component {
         }
       })
       .then(response => {
+
+        if(this.props.task.has_notification) {
+          NotificationManager.cancelNotification(this.props.task.id)
+        }
+
         axios.get("/api/tasks").then(response => {
           this.setState({ loading: false });
           this.props.setUserTasks(response.data);
+
           this.props.navigation.navigate("Day", {
+            day: this.props.task.start_date.substring(0, 10),
             ignorePush: true,
             pop: true
           });
+
         });
       })
       .catch(error => {

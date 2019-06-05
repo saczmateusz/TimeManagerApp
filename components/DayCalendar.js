@@ -35,7 +35,7 @@ class DayCalendar extends Component {
   chooseTileStyle = status => {
     return [
       {
-        backgroundColor: "#ebebeb",
+        backgroundColor: "#fff",
         flex: 1,
         margin: 5,
         paddingHorizontal: 15,
@@ -171,7 +171,8 @@ class DayCalendar extends Component {
                   {moment(days[key]).format("D MMMM Y")}
                 </Text>
               </View>
-              <ScrollView>
+              <ScrollView
+                style={{ paddingLeft: 8 }}>
                 <Text>Nie masz zadań na ten dzień</Text>
               </ScrollView>
             </View>
@@ -269,9 +270,9 @@ class DayCalendar extends Component {
       return key;
     });
     var start = moment(moment(datelist[0]));
-    start.subtract(90, "days");
+    start.subtract(5, "days");
     var end = moment(moment(datelist[datelist.length - 1]));
-    end.add(90, "days");
+    end.add(5, "days");
     var days = [];
     for (var m = start; m.diff(end, "days") <= 0; m.add(1, "days")) {
       days = [...days, m.format("YYYY-MM-DD")];

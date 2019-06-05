@@ -8,11 +8,13 @@ export default class DateTimeButton extends Component {
     super(props);
     this.state = {
       isVisible: false,
-      date: ""
+      date: "",
+      datetime: null
     };
   }
 
   showDateTimePicker = () => {
+    if(this.props.disabled) return;
     this.setState({ isVisible: true });
   };
 
@@ -21,7 +23,15 @@ export default class DateTimeButton extends Component {
   };
 
   handleDatePicked = datetime => {
-    this.setState({ date: moment(datetime).format("YYYY-MM-DD HH:mm:ss") });
+    if(moment(datetime).isBefore(this.props.mindate)) {
+      this.hideDateTimePicker();
+      this.showDateTimePicker();
+      alert(this.props.message)
+
+      return
+    }
+
+    this.setState({ datetime: datetime, date: moment(datetime).format("YYYY-MM-DD HH:mm:ss") });
     this.props.onSelectDate(this.state.date);
     this.hideDateTimePicker();
   };
@@ -32,7 +42,7 @@ export default class DateTimeButton extends Component {
         <Button
           title={this.state.date ? this.state.date : this.props.name}
           onPress={this.showDateTimePicker}
-          color="#ff8833"
+          color={this.props.disabled ? "#ffb580" : "#ff8833"}
         />
         <DateTimePicker
           isVisible={this.state.isVisible}
@@ -40,6 +50,7 @@ export default class DateTimeButton extends Component {
           onCancel={this.hideDateTimePicker}
           mode={"datetime"}
           datePickerModeAndroid={"spinner"}
+          date={moment(this.props.mindate).toDate()}
         />
       </>
     );
