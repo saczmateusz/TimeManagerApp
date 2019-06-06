@@ -192,7 +192,10 @@ class DayCalendar extends Component {
           : moment(task.end_date).isAfter(moment())
           ? 2
           : 3;
-        var periodic = task.start_date === task.end_date ? false : true;
+        var periodic =
+          task.start_date.substring(0, 10) === task.end_date.substring(0, 10)
+            ? false
+            : true;
         return (
           <TouchableOpacity
             onPress={() => {
