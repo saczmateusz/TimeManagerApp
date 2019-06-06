@@ -45,30 +45,6 @@ class UserPanel extends Component {
             >
               {"Adres e-mail: " + this.state.email}
             </Text>
-            <Text
-              style={{
-                color: "#666",
-                fontSize: 16,
-                marginVertical: 10
-              }}
-            >
-              Ustawienia:
-            </Text>
-            <CheckBox
-              title="Wyświetlaj zarchiwizowane zadania"
-              checked={this.state.checked}
-              checkedColor="orange"
-              uncheckedColor="grey"
-              onPress={() => {
-                this.setState({ checked: !this.state.checked });
-              }}
-              containerStyle={{
-                paddingHorizontal: 5,
-                borderColor: "#fff",
-                backgroundColor: "#fff"
-              }}
-              textStyle={{ fontWeight: "normal" }}
-            />
           </View>
         </View>
         <View style={{ flex: 1 }}>
@@ -178,3 +154,23 @@ const styles = StyleSheet.create({
 });
 
 export default UserPanel;
+
+/*
+
+            <CheckBox
+              title="Wyświetlaj zarchiwizowane zadania"
+              checked={this.state.checked}
+              checkedColor="orange"
+              uncheckedColor="grey"
+              onPress={() => {
+                this.setState({ checked: !this.state.checked });
+              }}
+              containerStyle={{
+                paddingHorizontal: 5,
+                borderColor: "#fff",
+                backgroundColor: "#fff"
+              }}
+              textStyle={{ fontWeight: "normal" }}
+            />
+
+*/
