@@ -53,6 +53,10 @@ class TaskList extends Component {
         <Text style={styles.taskText4}>
           {moment(this.props.task.end_date).format("D MMMM Y, HH:mm")}
         </Text>
+        <Text style={styles.taskText2}>Powiadomienie</Text>
+        <Text style={styles.taskText3}>
+          { this.props.task.has_notification ? "Tak" : "Nie" }
+        </Text>
       </View>
     );
   };
